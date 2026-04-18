@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import Home from "./Home";
 
 export const metadata: Metadata = {
-  title: "NFTNG",
+  title: "NFTNG | Unchain Summer",
   description: "NFTNG is a platform for...",
 };
 
