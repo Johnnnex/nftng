@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { Button, SVGClient } from "@/components";
+import { Button, FAQs, Input, Newsletter, SVGClient } from "@/components";
 import { cn } from "@/lib";
 import { helveticaNeue } from "./layout";
 import { Icon } from "@iconify/react";
@@ -56,7 +56,7 @@ export default function Home() {
           ),
         )}
       </section>
-      <section className="px-7.5 max-w-450 pt-24 pb-5.5 mx-auto">
+      <section className="max-w-450 px-7.5 pt-24 pb-5.5 mx-auto">
         <h2
           className={cn(
             "text-black text-[2.25rem] mb-2 font-normal",
@@ -93,7 +93,7 @@ export default function Home() {
         </div>
         <Button className="w-fit mx-auto block">View Pitch Deck</Button>
       </section>
-      <section className="px-7.5 max-w-450 mx-auto pt-10 pb-6.75">
+      <section className="max-w-450 px-7.5 mx-auto pt-10 pb-6.75">
         <h2
           className={cn(
             "text-black text-[2.25rem] mb-1.25 font-normal",
@@ -236,7 +236,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="px-7.5 max-w-450 pt-8.75 mx-auto">
+      <section className="max-w-450 px-7.5 pt-8.75 mx-auto">
         <h2 className={cn("text-black text-[2.25rem] font-medium")}>
           Creating Successful events
         </h2>
@@ -345,7 +345,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="px-7.5 max-w-450 pt-12.5 pb-2.5 mx-auto">
+      <section className="max-w-450 px-7.5 pt-12.5 pb-2.5 mx-auto">
         <h2 className={cn("text-black text-[2.25rem] mb-6.75 font-medium")}>
           Upcoming Event
         </h2>
@@ -362,16 +362,9 @@ export default function Home() {
         </figure>
       </section>
 
-      <section className="px-7.5 w-fit py-7.5 flex items-center mx-auto">
-        <SVGClient src="/svg/faq-illustration.svg" />
-        <div className="border">
-          <h2 className="font-normal text-[2.25rem] text-center mb-4">FAQs</h2>
-          <p className="text-[#000000B2] text-[1.125rem] font-normal max-w-96 text-center mx-auto mb-8">
-            Decoding the System: Clear Answers for Strategic Impact.
-          </p>
-          <div className="flex gap-2"></div>
-        </div>
-      </section>
+      <FAQs />
+
+      <Newsletter />
     </>
   );
 }
