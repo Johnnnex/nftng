@@ -20,7 +20,7 @@ const Newsletter = () => {
           </h2>
           <div className="flex gap-2.25">
             <Input className="w-90" placeholder="Input Email..." />
-            <Button className="bg-black font-medium text-[.625rem] rounded-lg min-w-21.75">
+            <Button className="bg-black font-medium text-[.875rem] rounded-lg min-w-21.75">
               Subscribe
             </Button>
           </div>
