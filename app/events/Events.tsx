@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { Button, FAQs, Newsletter } from "@/components";
+import { Button, FAQs } from "@/components";
 import { cn } from "@/lib";
 import { Icon } from "@iconify/react";
 

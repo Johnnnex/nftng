@@ -1,5 +1,4 @@
 import { helveticaNeue } from "@/app/layout";
-import React from "react";
 import { Input } from "./Input";
 import { Button } from "./Button";
 import { SVGClient } from "./SVGClient";
@@ -87,7 +86,7 @@ const Footer = () => {
                 children: [
                   { name: "X (Twitter)", url: "/twitter" },
                   { name: "Telegram", url: "/telegram" },
-                  { name: "LinkedIN", url: "/linkedin" },
+                  { name: "LinkedIn", url: "/linkedin" },
                   { name: "Instagram", url: "/instagram" },
                 ],
               },
