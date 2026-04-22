@@ -4,6 +4,12 @@
   --font-sans: var(--font-poppins);
 }
 
+body,
+html,
+main {
+  font-family: var(--font-sans) !important;
+}
+
 button {
   cursor: pointer !important;
 }
