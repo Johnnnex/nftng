@@ -1,6 +1,6 @@
 import { cn } from "@/lib";
 import { helveticaNeue } from "../layout";
-import { Button, FAQs, Input, Newsletter, SVGClient } from "@/components";
+import { Button, FAQs, Input, SVGClient } from "@/components";
 import { Icon } from "@iconify/react";
 
 const Contact = () => {
@@ -99,7 +99,7 @@ const Contact = () => {
                   color: "#000",
                   content: "Speak to someone smart",
                   cta: {
-                    link: "tel:+1 584 543 0000",
+                    link: "tel:+15845430000",
                     text: "+1 584 543 0000",
                   },
                 },
@@ -210,8 +210,6 @@ const Contact = () => {
       </section>
 
       <FAQs />
-
-      <Newsletter />
     </>
   );
 };

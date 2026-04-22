@@ -147,8 +147,6 @@ const Events = () => {
       </section>
 
       <FAQs />
-
-      <Newsletter />
     </>
   );
 };

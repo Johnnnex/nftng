@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { Button, FAQs, Newsletter, SVGClient } from "@/components";
+import { Button, FAQs, SVGClient } from "@/components";
 import { cn } from "@/lib";
 import { helveticaNeue } from "./layout";
 import { Icon } from "@iconify/react";
@@ -363,8 +363,6 @@ export default function Home() {
       </section>
 
       <FAQs />
-
-      <Newsletter />
     </>
   );
 }

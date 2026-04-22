@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { FAQs, Newsletter, SVGClient } from "@/components";
+import { FAQs, SVGClient } from "@/components";
 import { helveticaNeue } from "../layout";
 import { cn } from "@/lib";
 
@@ -235,8 +235,6 @@ const About = () => {
       </section>
 
       <FAQs />
-
-      <Newsletter />
     </>
   );
 };
