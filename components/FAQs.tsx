@@ -35,11 +35,17 @@ export const FAQs = () => {
   };
 
   return (
-    <section className="px-7.5 w-fit pb-2 pt-7.5 flex items-center mx-auto">
-      <SVGClient src="/svg/faq-illustration.svg" />
-      <div className="">
-        <h2 className="font-normal text-[2.25rem] text-center mb-4">FAQs</h2>
-        <p className="text-[#000000B2] text-[1.125rem] font-normal max-w-96 text-center mx-auto mb-8">
+    <section className="lg:px-7.5 px-4 w-fit lg:pb-2 pb-8 pt-22.5 md:pt-7.5 relative flex items-center mx-auto">
+      <SVGClient className="hidden lg:block" src="/svg/faq-illustration.svg" />
+      <SVGClient
+        className="md:hidden absolute top-4"
+        src="/svg/faq-illustration-sm.svg"
+      />
+      <div>
+        <h2 className="font-normal text-[1.875rem] md:text-[2.25rem] text-center lg:mb-4 mb-2">
+          FAQs
+        </h2>
+        <p className="text-[#000000B2] text-[1rem] md:text-[1.125rem] font-normal max-w-96 text-center mx-auto mb-8">
           Decoding the System: Clear Answers for Strategic Impact.
         </p>
         <div className="flex flex-col gap-2">
@@ -48,7 +54,7 @@ export const FAQs = () => {
             return (
               <div
                 key={`__item__${index}`}
-                className="bg-[#F1F1F1] border border-[#0000000D] rounded-[.625rem] w-154 overflow-hidden"
+                className="bg-[#F1F1F1] border border-[#0000000D] rounded-[.625rem] max-w-154 overflow-hidden"
               >
                 <button
                   onClick={() => toggle(index)}

@@ -31,7 +31,6 @@ const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [getInvolvedOpen, setGetInvolvedOpen] = useState(false);
 
-
   return (
     <header className="fixed z-3 w-full left-0 top-4">
       <div className="max-w-400 w-[95%] mx-auto">
@@ -70,29 +69,31 @@ const Header = () => {
                           <div className="bg-[#003223] rounded-[.625rem] min-w-56 overflow-hidden shadow-[0_12px_40px_0_rgba(0,0,0,0.45)] border border-white/10">
                             <div className="h-0.75 w-full bg-linear-to-r from-[#6EC93E]/0 via-[#6EC93E] to-[#6EC93E]/0" />
                             <div className="p-1.5 flex flex-col">
-                              {item?.dropDownItems?.map((childItem, childIndex) => (
-                                <Link
-                                  href={childItem?.href}
-                                  className={cn(
-                                    "group/item flex items-center justify-between gap-6 px-3 py-2.5 rounded-md text-[.8125rem] font-medium transition-all duration-200",
-                                    childItem?.href === pathname
-                                      ? "bg-[#6EC93E]/15 text-[#6EC93E]"
-                                      : "text-[#FFFFFF80] hover:text-white hover:bg-white/5",
-                                  )}
-                                  key={`__${childIndex}__${index}__`}
-                                >
-                                  {childItem?.name}
-                                  <Icon
-                                    icon={"ant-design:arrow-up-outlined"}
+                              {item?.dropDownItems?.map(
+                                (childItem, childIndex) => (
+                                  <Link
+                                    href={childItem?.href}
                                     className={cn(
-                                      "rotate-45 w-3 h-3 transition-all duration-200 opacity-0 -translate-x-1",
+                                      "group/item flex items-center justify-between gap-6 px-3 py-2.5 rounded-md text-[.8125rem] font-medium transition-all duration-200",
                                       childItem?.href === pathname
-                                        ? "opacity-100 translate-x-0 text-[#6EC93E]"
-                                        : "group-hover/item:opacity-100 group-hover/item:translate-x-0",
+                                        ? "bg-[#6EC93E]/15 text-[#6EC93E]"
+                                        : "text-[#FFFFFF80] hover:text-white hover:bg-white/5",
                                     )}
-                                  />
-                                </Link>
-                              ))}
+                                    key={`__${childIndex}__${index}__`}
+                                  >
+                                    {childItem?.name}
+                                    <Icon
+                                      icon={"ant-design:arrow-up-outlined"}
+                                      className={cn(
+                                        "rotate-45 w-3 h-3 transition-all duration-200 opacity-0 -translate-x-1",
+                                        childItem?.href === pathname
+                                          ? "opacity-100 translate-x-0 text-[#6EC93E]"
+                                          : "group-hover/item:opacity-100 group-hover/item:translate-x-0",
+                                      )}
+                                    />
+                                  </Link>
+                                ),
+                              )}
                             </div>
                           </div>
                         </div>
@@ -107,7 +108,7 @@ const Header = () => {
           </nav>
 
           <div className="flex gap-2">
-            <Button className="p-1.25 hidden pl-5 text-[.8125rem] rounded-md items-center font-medium gap-3.5 md:flex">
+            <Button className="p-1.25! hidden pl-5! text-[.8125rem] rounded-md items-center font-medium gap-3.5 md:flex">
               Launch EchoFi
               <span className="h-7.5 w-7.5 rounded-[.1875rem] bg-white flex items-center justify-center">
                 <Icon
@@ -119,7 +120,7 @@ const Header = () => {
 
             <Button
               onClick={() => setIsOpen((prev) => !prev)}
-              className="rounded-sm lg:hidden w-8.5 h-8.5 md:h-10 md:w-10 flex items-center justify-center p-0"
+              className="rounded-sm lg:hidden w-8.5 h-8.5 md:h-10 md:w-10 flex items-center justify-center p-0!"
             >
               <Icon
                 className={cn(
@@ -136,7 +137,9 @@ const Header = () => {
         <div
           className={cn(
             "lg:hidden bg-[#003223] rounded-b-[.625rem] overflow-hidden transition-all duration-300 ease-in-out",
-            isOpen ? "max-h-screen opacity-100" : "max-h-0 opacity-0 pointer-events-none",
+            isOpen
+              ? "max-h-screen opacity-100"
+              : "max-h-0 opacity-0 pointer-events-none",
           )}
         >
           <div className="px-3 pb-5 pt-2 border-t border-white/10">
@@ -149,7 +152,7 @@ const Header = () => {
                       <div>
                         <button
                           onClick={() => setGetInvolvedOpen((prev) => !prev)}
-                          className="w-full flex items-center justify-between py-3.5 px-3 rounded-[.5rem] text-[.9375rem] font-medium text-[#FFFFFF99] hover:text-white hover:bg-white/5 transition-all duration-200"
+                          className="w-full flex items-center justify-between py-3.5 px-3 rounded-lg text-[.9375rem] font-medium text-[#FFFFFF99] hover:text-white hover:bg-white/5 transition-all duration-200"
                         >
                           {item.name}
                           <Icon
@@ -174,9 +177,12 @@ const Header = () => {
                               <li key={`__mob_child__${ci}`}>
                                 <Link
                                   href={child.href}
-                                  onClick={() => { setIsOpen(false); setGetInvolvedOpen(false); }}
+                                  onClick={() => {
+                                    setIsOpen(false);
+                                    setGetInvolvedOpen(false);
+                                  }}
                                   className={cn(
-                                    "block py-2.5 px-3 rounded-[.375rem] text-[.875rem] font-medium transition-all duration-200",
+                                    "block py-2.5 px-3 rounded-md text-[.875rem] font-medium transition-all duration-200",
                                     child.href === pathname
                                       ? "text-[#6EC93E] bg-[#6EC93E]/10"
                                       : "text-[#FFFFFF80] hover:text-white hover:bg-white/5",
@@ -194,7 +200,7 @@ const Header = () => {
                         href={item.href!}
                         onClick={() => setIsOpen(false)}
                         className={cn(
-                          "block py-3.5 px-3 rounded-[.5rem] text-[.9375rem] font-medium transition-all duration-200",
+                          "block py-3.5 px-3 rounded-lg text-[.9375rem] font-medium transition-all duration-200",
                           isActive
                             ? "text-[#6EC93E] bg-[#6EC93E]/10"
                             : "text-[#FFFFFF99] hover:text-white hover:bg-white/5",
@@ -208,7 +214,7 @@ const Header = () => {
               })}
             </ul>
 
-            <Button className="w-full p-1.25 pl-5 text-[.8125rem] rounded-md flex md:hidden items-center font-medium gap-3.5 justify-between">
+            <Button className="w-full p-1.25! pl-5! text-[.8125rem] rounded-md flex md:hidden items-center font-medium gap-3.5 justify-between">
               Launch EchoFi
               <span className="h-7.5 w-7.5 rounded-[.1875rem] bg-white flex items-center justify-center">
                 <Icon

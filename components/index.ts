@@ -1,4 +1,5 @@
 export * from "./Header";
+export * from "./BrandSlider";
 export * from "./Footer";
 export * from "./SVGClient";
 export * from "./Button";

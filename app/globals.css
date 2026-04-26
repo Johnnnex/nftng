@@ -13,3 +13,113 @@ main {
 button {
   cursor: pointer !important;
 }
+
+/* ── Brand marquee ─────────────────────────────────────────── */
+.marquee-anim[data-animated="true"] .inner {
+  animation: marquee 18s linear infinite;
+}
+
+.marquee-anim[data-animated="true"]:hover .inner {
+  animation-play-state: paused;
+}
+
+.marquee-anim[data-animated="true"] {
+  -webkit-mask: linear-gradient(90deg, transparent, black 15%, black 85%, transparent);
+          mask: linear-gradient(90deg, transparent, black 15%, black 85%, transparent);
+}
+
+.marquee-anim[data-animated="false"] {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  padding-inline: 1.875rem;
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(calc(-50% - var(--marquee-gap, 3.125rem)));
+  }
+}
+
+/* ── Glare sweep (cards — auto looping) ───────────────────── */
+.glare {
+  position: relative;
+  overflow: hidden;
+}
+
+.glare::after {
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    120deg,
+    rgba(0, 0, 0, 0) 25%,
+    rgba(0, 0, 0, 0.12) 50%,
+    rgba(0, 0, 0, 0) 75%
+  );
+  animation: glare-sweep 12s linear infinite;
+}
+
+/* ── Button glaze (hover-triggered sweep) ──────────────────── */
+.btn-glaze-primary,
+.btn-glaze-secondary {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-glaze-primary::after,
+.btn-glaze-secondary::after {
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  transform: translateX(-200%);
+  transition: transform 0.6s ease;
+}
+
+.btn-glaze-primary::after {
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0) 25%,
+    rgba(255, 255, 255, 0.22) 50%,
+    rgba(255, 255, 255, 0) 75%
+  );
+}
+
+.btn-glaze-secondary::after {
+  background: linear-gradient(
+    120deg,
+    rgba(0, 0, 0, 0) 25%,
+    rgba(0, 0, 0, 0.1) 50%,
+    rgba(0, 0, 0, 0) 75%
+  );
+}
+
+.btn-glaze-primary:hover::after,
+.btn-glaze-secondary:hover::after {
+  transform: translateX(200%);
+}
+
+@keyframes glare-sweep {
+  0%   { transform: translateX(-1000px); }
+  20%  { transform: translateX(3000px); }
+  40%  { transform: translateX(3000px); }
+  60%  { transform: translateX(-1000px); }
+  80%  { transform: translateX(-1000px); }
+  100% { transform: translateX(-1000px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-anim .inner,
+  .glare::after,
+  .btn-glaze::after {
+    animation: none;
+  }
+}

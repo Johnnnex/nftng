@@ -17,7 +17,8 @@ const Button = ({
   return (
     <button
       className={cn(
-        "p-[.625rem_2.125rem] rounded-[.625rem] cursor-pointer",
+        "p-[.5625rem_.8125rem] md:p-[.625rem_2.125rem] rounded-[.625rem] text-[.875rem] cursor-pointer",
+        variant === "primary" ? "btn-glaze-primary" : "btn-glaze-secondary",
         variant === "primary"
           ? "bg-[#6EC93E] text-white"
           : "text-black border border-[#6EC93E]",

@@ -56,7 +56,7 @@ const Input = (props: InputProps) => {
         id={name}
         type={inputType}
         className={cn(
-          "bg-white h-11 text-[.875rem] font-normal text-[#000000B2] outline-none p-[.875rem_.625rem] rounded-lg",
+          "bg-white h-10 md:h-11 text-[.75rem] md:text-[.875rem] font-normal text-[#000000B2] outline-none p-[.875rem_.625rem] rounded-lg",
           className,
         )}
         {...inputProps}

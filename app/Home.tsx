@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
-import { Button, FAQs, SVGClient } from "@/components";
+import type { CSSProperties } from "react";
+import { Button, FAQs, SVGClient, BrandSlider } from "@/components";
 import { cn } from "@/lib";
 import { helveticaNeue } from "./layout";
 import { Icon } from "@iconify/react";
@@ -7,15 +8,20 @@ import { Icon } from "@iconify/react";
 export default function Home() {
   return (
     <>
-      <section className="pt-47.25 pb-15 relative">
-        <figure className="absolute inset-0 h-full w-full bg-[url(/images/main-hero-bg.png)] bg-cover bg-center" />
-        <h1 className="text-black font-medium max-w-188.75 text-center mx-auto text-[3.125rem] leading-16.25">
+      <section className="md:pt-47.25 pt-29.25 pb-15 relative">
+        <figure className="absolute inset-0 z-[-1] h-full w-full bg-[url(/images/main-hero-bg.png)] bg-cover bg-center" />
+
+        <h1 className="text-black font-medium max-w-90.75 w-[95%] md:max-w-188.75 text-center mx-auto text-[1.5rem] mb-1 md:mb-0 md:text-[3.125rem] leading-7.25 md:leading-16.25">
           Empowering Africa&apos;s{" "}
           <span className="bg-linear-to-r from-black via-[#114815] to-[#F6DF0B] bg-clip-text text-transparent relative">
             Creative
             <SVGClient
               src="/svg/pen-drawing.svg"
-              className="absolute z-[-1] translate-y-full bottom-6 -right-2"
+              className="absolute hidden md:block z-[-1] translate-y-full bottom-6 -right-2"
+            />
+            <SVGClient
+              src="/svg/pen-drawing-sm.svg"
+              className="absolute md:hidden z-[-1] translate-y-full bottom-3.5 -right-1"
             />
           </span>{" "}
           Future With{" "}
@@ -23,63 +29,72 @@ export default function Home() {
             Blockchain
           </span>
         </h1>
-        <p className="text-[#000000B2] max-w-133.5 mx-auto text-center font-normal text-[1.125rem] mb-6">
+        <p className="text-[#000000B2] max-w-86 w-[95%] md:max-w-133.5 mx-auto text-center font-normal text-[.875rem] md:text-[1.125rem] mb-6">
           At Unchain Summer, we harness the power of Blockchain to drive
           innovation, creativity, and opportunity across Africa
         </p>
         <div className="flex gap-4 mx-auto w-fit items-center">
-          <Button>Get Tickets</Button>
-          <Button variant="secondary">View Pitch Deck</Button>
+          <Button className="md:min-w-36.75">Get Tickets</Button>
+          <Button className="md:min-w-36.75" variant="secondary">
+            View Pitch Deck
+          </Button>
         </div>
-        <figure className="w-fit mx-auto mt-3 mb-8">
+        <figure className="lg:w-fit w-[95%] mx-auto mt-6.75 md:mt-3 mb-8">
           <img
+            className="hidden w-full md:block"
             src="/svg/main-hero-illustration.svg"
             alt="Main Hero Illustration"
           />
+          <img
+            className="md:hidden max-w-100 w-full mx-auto"
+            src="/svg/main-hero-illustration-sm.svg"
+            alt="Main Hero Illustration"
+          />
         </figure>
-        <div className="flex gap-4 overflow-x-hidden">
-          {["", "", "", "", "", "", "", "", ""]?.map((item, index) => (
-            <span
-              className="bg-[#F1F1F1] rounded-xl w-56.5 h-58"
-              key={`__item__${item}__${index}`}
-            />
-          ))}
+        <div className="overflow-hidden">
+          <div
+            className="marquee-anim"
+            data-animated="true"
+            style={{ "--marquee-gap": "0.5rem" } as CSSProperties}
+          >
+            <div className="inner flex md:gap-4 gap-1.25 w-max">
+              {Array.from({ length: 20 }, (_, index) => (
+                <span
+                  className="glare bg-[#F1F1F1] shrink-0 rounded-xl aspect-[.947] w-30 md:w-56.5 md:h-58"
+                  key={`__card__${index}`}
+                />
+              ))}
+            </div>
+          </div>
         </div>
       </section>
-      <section className="bg-[#003223] flex items-center gap-50 py-5.25 px-13.25">
-        {["pulseng", "sportsbet", "theguardian", "thecable"]?.map(
-          (item, index) => (
-            <SVGClient
-              key={`__item__${item}__${index}`}
-              src={`/svg/${item}.svg`}
-            />
-          ),
-        )}
-      </section>
-      <section className="max-w-450 px-7.5 pt-24 pb-5.5 mx-auto">
+
+      <BrandSlider />
+
+      <section className="max-w-450 lg:px-7.5 px-4 pt-12.25 lg:pt-24 pb-12.25 lg:pb-5.5 mx-auto">
         <h2
           className={cn(
-            "text-black text-[2.25rem] mb-2 font-normal",
+            "text-black text-[1.5rem] md:text-[2.25rem] mb-2.5 md:mb-2 font-normal",
             helveticaNeue.className,
           )}
         >
           Get A Grasp Of Our System
         </h2>
-        <p className="w-191.5 font-normal text-[#000000B2] mb-12 text-[1.125rem]">
+        <p className="max-w-191.5 font-normal text-[#000000B2] lg:mb-12 mb-7 text-[1rem] md:text-[1.125rem]">
           Explore the comprehensive framework of our ecosystem, showcasing our
           proven track record in the Web3 space and the strategic impact of our
           global events.
         </p>
-        <div className="grid grid-cols-6 mb-12 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 mb-6.5 lg:mb-12 gap-x-3.5 gap-y-3 lg:gap-4">
           {Array.from({ length: 7 }, (_, index) => (
             <figure
               className={cn(
                 "overflow-hidden",
                 index === 3
-                  ? "rounded-[0_1.875rem_0_1.875rem]"
+                  ? "order-last lg:order-0 aspect-[.92] md:aspect-auto rounded-[0_1.875rem_0_1.875rem]"
                   : index === 6
-                    ? "rounded-[1.875rem_0_1.875rem_0]"
-                    : "col-span-2 rounded-xl aspect-[1.778]",
+                    ? "order-last lg:order-0 aspect-[.92] md:aspect-auto rounded-[1.875rem_0_1.875rem_0]"
+                    : "col-span-2 lg:col-span-2 rounded-xl aspect-[1.778]",
               )}
               key={`__item___${index}`}
             >
@@ -93,23 +108,24 @@ export default function Home() {
         </div>
         <Button className="w-fit mx-auto block">View Pitch Deck</Button>
       </section>
-      <section className="max-w-450 px-7.5 mx-auto pt-10 pb-6.75">
+
+      <section className="max-w-450 px-4 lg:px-7.5 mx-auto pt-10 pb-6.75">
         <h2
           className={cn(
-            "text-black text-[2.25rem] mb-1.25 font-normal",
+            "text-black text-[1.5rem] md:text-[2.25rem] mb-2.25 md:mb-2 font-normal",
             helveticaNeue.className,
           )}
         >
           We&apos;ve Got Mission!
         </h2>
-        <p className="w-142 font-normal text-[#000000B2] mb-10 text-[1.125rem]">
+        <p className="max-w-142 font-normal text-[#000000B2] mb-5.75 lg:mb-10 text-[1rem] md:text-[1.125rem]">
           To create inclusive, well-structured experiences that advance Web3
           education, collaboration, and adoption across Africa
         </p>
-        <div className="grid grid-cols-3 gap-4">
-          <div className="p-4 border border-[#0000000D] bg-[#F1F1F1] rounded-[1.25rem]">
+        <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-3 gap-3.5 md:gap-4">
+          <div className="p-4 border lg:col-span-1 md:col-span-2 border-[#0000000D] bg-[#F1F1F1] rounded-[1.25rem]">
             <div className="pt-1 mb-6 flex flex-col gap-2">
-              <div className="bg-white w-[59%] items-center shadow-[0_4px_10px_0_rgba(0,0,0,0.25)] p-2 rounded-[.625rem] flex gap-2.5">
+              <div className="bg-white w-[70%] lg:w-[59%] items-center shadow-[0_4px_10px_0_rgba(0,0,0,0.25)] p-2 rounded-[.625rem] flex gap-2.5">
                 <span className="w-7.5 flex items-center justify-center aspect-square bg-[#F1F1F1] rounded-[50%]">
                   <Icon
                     height={"1.25rem"}
@@ -118,11 +134,11 @@ export default function Home() {
                   />
                 </span>
                 <div className="flex flex-1 gap-2 pr-4 flex-col">
-                  <span className="bg-[#F1F1F1] h-2 animate-pulse [animation-duration:1.5s] [animation-delay:300ms] rounded-[999999px] w-40" />
-                  <span className="bg-[#F1F1F1] animate-pulse self-end h-2 [animation-duration:1.5s] rounded-[999999px] w-40" />
+                  <span className="bg-[#F1F1F1] h-2 animate-pulse [animation-duration:1.5s] [animation-delay:300ms] rounded-[999999px] w-[75%]" />
+                  <span className="bg-[#F1F1F1] animate-pulse self-end h-2 [animation-duration:1.5s] rounded-[999999px] w-[75%]" />
                 </div>
               </div>
-              <div className="bg-white self-end items-center shadow-[0_4px_10px_0_rgba(0,0,0,0.25)] p-2 w-[59%] rounded-[.625rem] flex gap-2.5">
+              <div className="bg-white self-end items-center shadow-[0_4px_10px_0_rgba(0,0,0,0.25)] p-2 w-[70%] lg:w-[59%] rounded-[.625rem] flex gap-2.5">
                 <span className="w-7.5 flex items-center justify-center aspect-square bg-[#6EC93E] rounded-[50%]">
                   <Icon
                     height={"1.25rem"}
@@ -131,8 +147,8 @@ export default function Home() {
                   />
                 </span>
                 <div className="flex flex-1 gap-2 pr-4 flex-col">
-                  <span className="bg-[#F1F1F1] h-2 animate-pulse [animation-duration:1.5s] [animation-delay:300ms] rounded-[999999px] w-40" />
-                  <span className="bg-[#F1F1F1] animate-pulse self-end h-2 [animation-duration:1.5s] rounded-[999999px] w-40" />
+                  <span className="bg-[#F1F1F1] h-2 animate-pulse [animation-duration:1.5s] [animation-delay:300ms] rounded-[999999px] w-[75%]" />
+                  <span className="bg-[#F1F1F1] animate-pulse self-end h-2 [animation-duration:1.5s] rounded-[999999px] w-[75%]" />
                 </div>
               </div>
             </div>
@@ -144,10 +160,10 @@ export default function Home() {
               empower African creatives with the resources they need to thrive.
             </p>
           </div>
-          <div className="flex gap-1.25 flex-col justify-between">
+          <div className="flex gap-3.5 md:gap-1.25 lg:col-span-1 md:col-span-2 flex-col justify-between">
             <div className="p-4 border border-[#0000000D] bg-[#F1F1F1] rounded-[1.25rem]">
               <div className="pt-1 mb-5">
-                <div className="bg-white w-[50%] shadow-[0_4px_10px_0_rgba(0,0,0,0.25)] p-2.5 rounded-[.625rem] flex flex-col gap-1.5">
+                <div className="bg-white w-[65%] md:w-[60%] lg:w-[50%] shadow-[0_4px_10px_0_rgba(0,0,0,0.25)] p-2.5 rounded-[.625rem] flex flex-col gap-1.5">
                   <div className="gap-px flex items-center">
                     {Array.from({ length: 5 }, (_, index) => (
                       <Icon
@@ -201,7 +217,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div className="p-4 border border-[#0000000D] bg-[#F1F1F1] rounded-[1.25rem]">
+          <div className="p-4 border border-[#0000000D] lg:col-span-1 lg:col-start-3 md:col-start-2 md:col-span-2 bg-[#F1F1F1] rounded-[1.25rem]">
             <div className="pt-1 mb-7">
               <div className="bg-white items-center shadow-[0_4px_10px_0_rgba(0,0,0,0.25)] px-4 py-2.5 rounded-2xl flex gap-3.25">
                 <span className="w-10 flex items-center justify-center aspect-square bg-[#6EC93E] rounded-[50%]">
@@ -236,25 +252,29 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="max-w-450 px-7.5 pt-8.75 mx-auto">
-        <h2 className={cn("text-black text-[2.25rem] font-medium")}>
+      <section className="max-w-450 px-4 lg:px-7.5 pt-8.75 mx-auto">
+        <h2
+          className={cn(
+            "text-black text-[1.5rem] md:text-[2.25rem] mb-4.25 lg:mb-0 font-medium",
+          )}
+        >
           Creating Successful events
         </h2>
-        <p className="w-163.25 font-normal text-[#000000B2] mb-6.75 text-[1.125rem]">
+        <p className="max-w-163.25 font-normal text-[#000000B2] mb-4.25 lg:mb-6.75 text-[1rem] md:text-[1.125rem]">
           We are dedicated to hosting impactful gatherings that foster
           innovation and growth within the digital landscape. Our events serve
           as a hub for education, networking, and community building across the
           continent.
         </p>
-        <div className="flex gap-4 mb-12.5">
-          <figure className="aspect-[1.622] w-[39%] overflow-hidden rounded-2xl">
+        <div className="flex flex-col md:flex-row md:flex-wrap lg:flex-nowrap gap-4 mb-12.5">
+          <figure className="aspect-[1.622] md:w-[calc(50%-0.5rem)] lg:w-[39%] overflow-hidden rounded-2xl">
             <img
               src="/images/home-img-10.png"
               className="w-full h-full object-cover"
               alt="NFTNG EVENT"
             />
           </figure>
-          <div className="bg-[#F1F1F1] w-[26%] rounded-2xl">
+          <div className="bg-[#F1F1F1] pb-11 md:w-[calc(50%-0.5rem)] lg:w-[26%] rounded-2xl">
             <div className="flex pt-4.75 items-start pr-4.75 mb-5 justify-between">
               <Icon
                 icon={"bi:quote"}
@@ -266,12 +286,12 @@ export default function Home() {
                 It all started somewhere
               </span>
             </div>
-            <p className="max-w-94.25 text-[1.25rem] font-normal text-[#000000CC] mx-4">
+            <p className="max-w-94.25 text-[1rem] md:text-[1.25rem] font-normal text-[#000000CC] mx-4">
               we provide accessible web3 eductaion to bridge knowledege gaps and
               empower African creatives with the resources they need to thrive
             </p>
           </div>
-          <div className="w-[35%] flex flex-col justify-between">
+          <div className="md:w-[65%] md:mx-auto lg:w-[35%] lg:mx-0 flex flex-col gap-4 md:gap-3 justify-between">
             <div className="flex gap-4">
               {["/images/home-img-11.png", "/images/home-img-12.png"]?.map(
                 (item, index) => (
@@ -291,7 +311,7 @@ export default function Home() {
             <h4 className="font-medium text-black text-[1.875rem]">
               Unchain Summer 2025
             </h4>
-            <Button className="p-1.25 pl-5 text-[.875rem] rounded-md items-center font-medium justify-between text-black flex">
+            <Button className="p-1.25! pl-5! text-[.875rem] rounded-md items-center font-medium justify-between text-black flex">
               View Gallery
               <span className="h-7.5 w-7.5 rounded-[.1875rem] bg-white flex items-center justify-center">
                 <Icon
@@ -302,9 +322,9 @@ export default function Home() {
             </Button>
           </div>
         </div>
-        <div className="flex gap-4 w-[88%] mx-auto">
-          <div className="w-[39%] flex flex-col">
-            <h4 className="font-medium text-black text-[2.5rem]">
+        <div className="flex flex-col md:flex-row md:flex-wrap lg:flex-nowrap gap-4 lg:w-[88%] mx-auto">
+          <div className="md:w-[calc(50%-0.5rem)] lg:w-[39%] flex flex-col">
+            <h4 className="font-medium text-black text-[2rem] md:text-[2.5rem]">
               Sunset Soirée
             </h4>
 
@@ -317,7 +337,7 @@ export default function Home() {
                 />
               </figure>
 
-              <Button className="pr-1.25 py-3.25 pl-5 text-[.875rem] rounded-md items-center font-medium justify-between text-white flex">
+              <Button className="pr-1.25! hidden md:flex py-3.25! pl-5! text-[.875rem] rounded-md items-center font-medium justify-between text-white">
                 View Gallery
                 <span className="h-7.5 w-7.5 rounded-[.1875rem] bg-white flex items-center justify-center">
                   <Icon
@@ -328,30 +348,44 @@ export default function Home() {
               </Button>
             </div>
           </div>
-          <figure className="w-[29%] rounded-2xl overflow-hidden">
+          <figure className="md:w-[calc(50%-0.5rem)] lg:w-[29%] rounded-2xl overflow-hidden">
             <img
               src="/images/home-img-14.png"
               className="w-full h-full object-cover"
               alt="Home Image 14"
             />
           </figure>
-          <figure className="aspect-[.98] rounded-2xl overflow-hidden w-[31%]">
+          <figure className="aspect-[.98] rounded-2xl overflow-hidden md:w-[50%] md:mx-auto lg:w-[31%] lg:mx-0">
             <img
               src="/images/home-img-15.png"
               className="w-full h-full object-cover"
               alt="Home Image 15"
             />
           </figure>
+
+          <Button className="pr-1.25! flex md:hidden py-3.25! pl-5! text-[.875rem] rounded-md items-center font-medium justify-between text-white">
+            View Gallery
+            <span className="h-7.5 w-7.5 rounded-[.1875rem] bg-white flex items-center justify-center">
+              <Icon
+                className="text-black rotate-45 w-4.5 h-4.5"
+                icon={"ant-design:arrow-up-outlined"}
+              />
+            </span>
+          </Button>
         </div>
       </section>
 
-      <section className="max-w-450 px-7.5 pt-12.5 pb-2.5 mx-auto">
-        <h2 className={cn("text-black text-[2.25rem] mb-6.75 font-medium")}>
+      <section className="max-w-450 px-4 lg:px-7.5 pt-12.5 pb-2.5 mx-auto">
+        <h2
+          className={cn(
+            "text-black text-[1.75rem] md:text-[2.25rem] mb-5 lg:mb-6.75 font-medium",
+          )}
+        >
           Upcoming Event
         </h2>
         <figure
           style={{ backgroundImage: "url('/images/home-img-16.png')" }}
-          className="aspect-[3.34] flex items-center justify-center bg-center bg-cover rounded-2xl"
+          className="aspect-[.98] md:aspect-[2] lg:aspect-[3.34] flex items-center justify-center bg-center bg-cover rounded-2xl"
         >
           <div className="w-fit h-fit relative">
             <SVGClient src="/svg/logo-ue-lg.svg" />

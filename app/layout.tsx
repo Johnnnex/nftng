@@ -104,8 +104,8 @@ export default function RootLayout({
     <html lang="en" className={`${poppins.variable} h-full antialiased`}>
       <body className="bg-white">
         <Header />
-        {/* <main>{children}</main> */}
-        {/* <Footer /> */}
+        <main>{children}</main>
+        <Footer />
       </body>
     </html>
   );
