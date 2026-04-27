@@ -6,12 +6,12 @@ import { Icon } from "@iconify/react";
 const Events = () => {
   return (
     <>
-      <section className="pt-38.5 px-7.5 pb-9 max-w-450 mx-auto">
-        <h1 className="text-black text-[3.125rem] font-medium w-274.75 mb-2.25">
+      <section className="md:pt-38.5 pt-33.75 lg:px-7.5 px-4 pb-9 max-w-450 mx-auto">
+        <h1 className="text-black text-[1.75rem] md:text-[3.125rem] md:w-[90%] font-medium max-w-274.75 mb-2.25">
           Creating memorable experiences and meaningful mentorship through our
           events
         </h1>
-        <p className="text-[#000000B2] font-normal w-141 text-[1.125rem] mb-6.25">
+        <p className="text-[#000000B2] font-normal max-w-141 text-[1rem] md:text-[1.125rem] mb-6.25">
           Unchain Summer harnesses blockchain to spark creativity and innovation
           across Africa, spotlighting the talent shaping the African Web3
           community.
@@ -19,8 +19,10 @@ const Events = () => {
         <Button>Get Tickets</Button>
       </section>
 
-      <section className="pt-22.25 px-7.5 pb-9 max-w-450 mx-auto">
-        <h2 className="text-black font-medium text-[2.5rem] mb-9.25">Events</h2>
+      <section className="pt-22.25 px-4 lg:px-7.5 pb-9 max-w-450 mx-auto">
+        <h2 className="text-black font-medium text-[1.5rem] md:text-[2.5rem] mb-4 lg:mb-9.25">
+          Events
+        </h2>
 
         <div className="grid grid-cols-4 gap-3.75">
           {[

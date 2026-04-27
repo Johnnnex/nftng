@@ -85,15 +85,15 @@ export default function Home() {
           proven track record in the Web3 space and the strategic impact of our
           global events.
         </p>
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 mb-6.5 lg:mb-12 gap-x-3.5 gap-y-3 lg:gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 mb-6.5 lg:mb-12 gap-x-3.5 gap-y-3 lg:gap-4">
           {Array.from({ length: 7 }, (_, index) => (
             <figure
               className={cn(
                 "overflow-hidden",
                 index === 3
-                  ? "order-last lg:order-0 aspect-[.92] md:aspect-auto rounded-[0_1.875rem_0_1.875rem]"
+                  ? "order-last lg:order-0 aspect-[.92] sm:aspect-auto rounded-[0_1.875rem_0_1.875rem]"
                   : index === 6
-                    ? "order-last lg:order-0 aspect-[.92] md:aspect-auto rounded-[1.875rem_0_1.875rem_0]"
+                    ? "order-last lg:order-0 aspect-[.92] sm:aspect-auto rounded-[1.875rem_0_1.875rem_0]"
                     : "col-span-2 lg:col-span-2 rounded-xl aspect-[1.778]",
               )}
               key={`__item___${index}`}
@@ -122,8 +122,8 @@ export default function Home() {
           To create inclusive, well-structured experiences that advance Web3
           education, collaboration, and adoption across Africa
         </p>
-        <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-3 gap-3.5 md:gap-4">
-          <div className="p-4 border lg:col-span-1 md:col-span-2 border-[#0000000D] bg-[#F1F1F1] rounded-[1.25rem]">
+        <div className="grid grid-cols-1 sm:grid-cols-4 lg:grid-cols-3 gap-3.5 md:gap-4">
+          <div className="p-4 border lg:col-span-1 sm:col-span-2 border-[#0000000D] bg-[#F1F1F1] rounded-[1.25rem]">
             <div className="pt-1 mb-6 flex flex-col gap-2">
               <div className="bg-white w-[70%] lg:w-[59%] items-center shadow-[0_4px_10px_0_rgba(0,0,0,0.25)] p-2 rounded-[.625rem] flex gap-2.5">
                 <span className="w-7.5 flex items-center justify-center aspect-square bg-[#F1F1F1] rounded-[50%]">
@@ -160,7 +160,7 @@ export default function Home() {
               empower African creatives with the resources they need to thrive.
             </p>
           </div>
-          <div className="flex gap-3.5 md:gap-1.25 lg:col-span-1 md:col-span-2 flex-col justify-between">
+          <div className="flex gap-3.5 md:gap-1.25 lg:col-span-1 sm:col-span-2 flex-col justify-between">
             <div className="p-4 border border-[#0000000D] bg-[#F1F1F1] rounded-[1.25rem]">
               <div className="pt-1 mb-5">
                 <div className="bg-white w-[65%] md:w-[60%] lg:w-[50%] shadow-[0_4px_10px_0_rgba(0,0,0,0.25)] p-2.5 rounded-[.625rem] flex flex-col gap-1.5">
@@ -217,7 +217,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div className="p-4 border border-[#0000000D] lg:col-span-1 lg:col-start-3 md:col-start-2 md:col-span-2 bg-[#F1F1F1] rounded-[1.25rem]">
+          <div className="p-4 border border-[#0000000D] lg:col-span-1 lg:col-start-3 sm:col-start-2 sm:col-span-2 bg-[#F1F1F1] rounded-[1.25rem]">
             <div className="pt-1 mb-7">
               <div className="bg-white items-center shadow-[0_4px_10px_0_rgba(0,0,0,0.25)] px-4 py-2.5 rounded-2xl flex gap-3.25">
                 <span className="w-10 flex items-center justify-center aspect-square bg-[#6EC93E] rounded-[50%]">
@@ -266,15 +266,15 @@ export default function Home() {
           as a hub for education, networking, and community building across the
           continent.
         </p>
-        <div className="flex flex-col md:flex-row md:flex-wrap lg:flex-nowrap gap-4 mb-12.5">
-          <figure className="aspect-[1.622] md:w-[calc(50%-0.5rem)] lg:w-[39%] overflow-hidden rounded-2xl">
+        <div className="flex flex-col sm:flex-row sm:flex-wrap lg:flex-nowrap gap-4 mb-12.5">
+          <figure className="aspect-[1.622] sm:w-[calc(50%-0.5rem)] lg:w-[39%] overflow-hidden rounded-2xl">
             <img
               src="/images/home-img-10.png"
               className="w-full h-full object-cover"
               alt="NFTNG EVENT"
             />
           </figure>
-          <div className="bg-[#F1F1F1] pb-11 md:w-[calc(50%-0.5rem)] lg:w-[26%] rounded-2xl">
+          <div className="bg-[#F1F1F1] pb-11 sm:w-[calc(50%-0.5rem)] lg:w-[26%] rounded-2xl">
             <div className="flex pt-4.75 items-start pr-4.75 mb-5 justify-between">
               <Icon
                 icon={"bi:quote"}
@@ -291,7 +291,7 @@ export default function Home() {
               empower African creatives with the resources they need to thrive
             </p>
           </div>
-          <div className="md:w-[65%] md:mx-auto lg:w-[35%] lg:mx-0 flex flex-col gap-4 md:gap-3 justify-between">
+          <div className="sm:w-[65%] sm:mx-auto lg:w-[35%] lg:mx-0 flex flex-col gap-4 sm:gap-3 justify-between">
             <div className="flex gap-4">
               {["/images/home-img-11.png", "/images/home-img-12.png"]?.map(
                 (item, index) => (
@@ -322,8 +322,8 @@ export default function Home() {
             </Button>
           </div>
         </div>
-        <div className="flex flex-col md:flex-row md:flex-wrap lg:flex-nowrap gap-4 lg:w-[88%] mx-auto">
-          <div className="md:w-[calc(50%-0.5rem)] lg:w-[39%] flex flex-col">
+        <div className="flex flex-col sm:flex-row sm:flex-wrap lg:flex-nowrap gap-4 lg:w-[88%] mx-auto">
+          <div className="sm:w-[calc(50%-0.5rem)] lg:w-[39%] flex flex-col">
             <h4 className="font-medium text-black text-[2rem] md:text-[2.5rem]">
               Sunset Soirée
             </h4>
@@ -337,7 +337,7 @@ export default function Home() {
                 />
               </figure>
 
-              <Button className="pr-1.25! hidden md:flex py-3.25! pl-5! text-[.875rem] rounded-md items-center font-medium justify-between text-white">
+              <Button className="pr-1.25! hidden sm:flex py-3.25! pl-5! text-[.875rem] rounded-md items-center font-medium justify-between text-white">
                 View Gallery
                 <span className="h-7.5 w-7.5 rounded-[.1875rem] bg-white flex items-center justify-center">
                   <Icon
@@ -348,14 +348,14 @@ export default function Home() {
               </Button>
             </div>
           </div>
-          <figure className="md:w-[calc(50%-0.5rem)] lg:w-[29%] rounded-2xl overflow-hidden">
+          <figure className="sm:w-[calc(50%-0.5rem)] lg:w-[29%] rounded-2xl overflow-hidden">
             <img
               src="/images/home-img-14.png"
               className="w-full h-full object-cover"
               alt="Home Image 14"
             />
           </figure>
-          <figure className="aspect-[.98] rounded-2xl overflow-hidden md:w-[50%] md:mx-auto lg:w-[31%] lg:mx-0">
+          <figure className="aspect-[.98] rounded-2xl overflow-hidden sm:w-[50%] sm:mx-auto lg:w-[31%] lg:mx-0">
             <img
               src="/images/home-img-15.png"
               className="w-full h-full object-cover"
@@ -363,7 +363,7 @@ export default function Home() {
             />
           </figure>
 
-          <Button className="pr-1.25! flex md:hidden py-3.25! pl-5! text-[.875rem] rounded-md items-center font-medium justify-between text-white">
+          <Button className="pr-1.25! flex sm:hidden py-3.25! pl-5! text-[.875rem] rounded-md items-center font-medium justify-between text-white">
             View Gallery
             <span className="h-7.5 w-7.5 rounded-[.1875rem] bg-white flex items-center justify-center">
               <Icon
@@ -385,7 +385,7 @@ export default function Home() {
         </h2>
         <figure
           style={{ backgroundImage: "url('/images/home-img-16.png')" }}
-          className="aspect-[.98] md:aspect-[2] lg:aspect-[3.34] flex items-center justify-center bg-center bg-cover rounded-2xl"
+          className="aspect-[.98] sm:aspect-[2] lg:aspect-[3.34] flex items-center justify-center bg-center bg-cover rounded-2xl"
         >
           <div className="w-fit h-fit relative">
             <SVGClient src="/svg/logo-ue-lg.svg" />

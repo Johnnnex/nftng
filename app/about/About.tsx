@@ -208,7 +208,7 @@ const About = () => {
               linkedinUrl: "",
               image: "praise.png",
               title: "Welfare & Logistics Lead",
-              className: "lg:col-start-8 col-span-2 sm:col-start-2",
+              className: "lg:col-start-8 col-span-2 sm:col-start-2 md:col-start-auto",
             },
           ]?.map((item, index) => (
             <figure
