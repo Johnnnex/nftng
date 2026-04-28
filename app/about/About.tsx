@@ -53,13 +53,13 @@ const About = () => {
           </span>
         </div>
         <div className="bg-[#FF6400] w-full sm:w-[calc(55%-0.75rem)] lg:w-[34.7%] order-3 lg:order-0 flex flex-col bg-blend-overlay rounded-xl bg-[url(/images/noise-bg-black.png)] p-[2.625rem_1.25rem_2.1875rem_1.25rem]">
-          <span className="text-white mb-1.25 text-[1rem] font-medium">
+          <span className="text-white mb-1.25 text-[1rem] text-center sm:text-left font-medium">
             Total attendees
           </span>
-          <span className="text-white font-medium text-[2.375rem]">
+          <span className="text-white font-medium text-center sm:text-left text-[2.375rem]">
             238,716+
           </span>
-          <span className="text-[#FFFFFFB2] text-[1.125rem] font-medium w-76.25">
+          <span className="text-[#FFFFFFB2] text-[1.125rem] text-center sm:text-left mx-auto sm:ml-0 font-medium w-76.25">
             Grown through our trusted platform and community
           </span>
         </div>
@@ -208,7 +208,8 @@ const About = () => {
               linkedinUrl: "",
               image: "praise.png",
               title: "Welfare & Logistics Lead",
-              className: "lg:col-start-8 col-span-2 sm:col-start-2 md:col-start-auto",
+              className:
+                "lg:col-start-8 col-span-2 sm:col-start-2 md:col-start-auto",
             },
           ]?.map((item, index) => (
             <figure
