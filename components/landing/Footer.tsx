@@ -1,7 +1,5 @@
 import { helveticaNeue } from "@/app/layout";
-import { Input } from "./Input";
-import { Button } from "./Button";
-import { SVGClient } from "./SVGClient";
+import { Input, Button, SVGClient } from "@/components/common";
 import { cn } from "@/lib";
 import Link from "next/link";
 

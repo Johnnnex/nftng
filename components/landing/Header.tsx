@@ -1,8 +1,8 @@
 "use client";
 
 import { Icon } from "@iconify/react";
-import { Button } from "./Button";
-import { SVGClient } from "./SVGClient";
+import { Button, SVGClient, MagneticButton } from "@/components/common";
+import { HoverScramble } from "@/components/motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib";
@@ -99,7 +99,9 @@ const Header = () => {
                         </div>
                       </>
                     ) : (
-                      <Link href={item.href!}>{item.name}</Link>
+                      <Link href={item.href!}>
+                        <HoverScramble text={item.name} />
+                      </Link>
                     )}
                   </li>
                 );
@@ -108,15 +110,17 @@ const Header = () => {
           </nav>
 
           <div className="flex gap-2">
-            <Button className="p-1.25! hidden pl-5! text-[.8125rem] rounded-md items-center font-medium gap-3.5 md:flex">
-              Launch EchoFi
-              <span className="h-7.5 w-7.5 rounded-[.1875rem] bg-white flex items-center justify-center">
-                <Icon
-                  className="text-[#6EC93E] rotate-45 w-4.5 h-4.5"
-                  icon={"ant-design:arrow-up-outlined"}
-                />
-              </span>
-            </Button>
+            <MagneticButton>
+              <Button className="p-1.25! hidden pl-5! text-[.8125rem] rounded-md items-center font-medium gap-3.5 md:flex">
+                Launch EchoFi
+                <span className="h-7.5 w-7.5 rounded-[.1875rem] bg-white flex items-center justify-center">
+                  <Icon
+                    className="text-[#6EC93E] rotate-45 w-4.5 h-4.5"
+                    icon={"ant-design:arrow-up-outlined"}
+                  />
+                </span>
+              </Button>
+            </MagneticButton>
 
             <Button
               onClick={() => setIsOpen((prev) => !prev)}

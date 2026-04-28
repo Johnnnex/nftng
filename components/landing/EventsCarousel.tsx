@@ -6,7 +6,7 @@ import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import { Icon } from "@iconify/react";
 import { cn } from "@/lib";
-import { Button } from "./Button";
+import { Button } from "@/components/common";
 
 const eventsData = [
   {

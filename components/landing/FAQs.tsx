@@ -2,7 +2,7 @@
 
 import { Icon } from "@iconify/react";
 import { useState } from "react";
-import { SVGClient } from "./SVGClient";
+import { SVGClient } from "@/components/common";
 
 const faqs = [
   {

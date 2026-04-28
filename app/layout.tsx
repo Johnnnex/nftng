@@ -1,6 +1,6 @@
 import { Poppins } from "next/font/google";
 import "./globals.css";
-import { Header, Footer } from "@/components";
+import { Header, Footer, CustomCursor, MotionProvider } from "@/components";
 import localFont from "next/font/local";
 
 const poppins = Poppins({
@@ -103,9 +103,12 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${poppins.variable} h-full antialiased`}>
       <body className="bg-white">
-        <Header />
-        <main>{children}</main>
-        <Footer />
+        <MotionProvider>
+          <CustomCursor />
+          <Header />
+          <main>{children}</main>
+          <Footer />
+        </MotionProvider>
       </body>
     </html>
   );
