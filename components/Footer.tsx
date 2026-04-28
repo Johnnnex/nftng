@@ -98,7 +98,7 @@ const Footer = () => {
                 title: "Legal",
                 children: [
                   { name: "Terms of service", url: "/tos" },
-                  { name: "Private Policies", url: "/policy" },
+                  { name: "Privacy Policies", url: "/policy" },
                 ],
               },
             ]?.map((item, index) => (
