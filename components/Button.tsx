@@ -17,11 +17,10 @@ const Button = ({
   return (
     <button
       className={cn(
-        "p-[.5625rem_.8125rem] sm:p-[.625rem_2.125rem] rounded-[.625rem] text-[.875rem] cursor-pointer",
-        variant === "primary" ? "btn-glaze-primary" : "btn-glaze-secondary",
+        "p-[.5625rem_.8125rem] sm:p-[.625rem_2.125rem] transition-all duration-200 rounded-[.625rem] text-[.875rem] cursor-pointer",
         variant === "primary"
-          ? "bg-[#6EC93E] text-white"
-          : "text-black border border-[#6EC93E]",
+          ? "bg-[#6EC93E] focus:bg-[#589a35] btn-glaze-primary text-white"
+          : "text-black focus:bg-[#f8f8f8] btn-glaze-secondary border border-[#6EC93E]",
         className,
       )}
       {...props}

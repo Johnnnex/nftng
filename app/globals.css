@@ -14,6 +14,13 @@ button {
   cursor: pointer !important;
 }
 
+/* ── Form inputs ────────────────────────────────────────────── */
+input[type="text"]:focus,
+input[type="email"]:focus,
+textarea:focus {
+  border: 0.5px solid #6ec93e;
+}
+
 /* ── Brand marquee ─────────────────────────────────────────── */
 .marquee-anim[data-animated="true"] .inner {
   animation: marquee 18s linear infinite;
@@ -24,8 +31,14 @@ button {
 }
 
 .marquee-anim[data-animated="true"] {
-  -webkit-mask: linear-gradient(90deg, transparent, black 15%, black 85%, transparent);
-          mask: linear-gradient(90deg, transparent, black 15%, black 85%, transparent);
+  -webkit-mask: linear-gradient(
+    90deg,
+    transparent,
+    black 15%,
+    black 85%,
+    transparent
+  );
+  mask: linear-gradient(90deg, transparent, black 15%, black 85%, transparent);
 }
 
 .marquee-anim[data-animated="false"] {
@@ -108,12 +121,24 @@ button {
 }
 
 @keyframes glare-sweep {
-  0%   { transform: translateX(-1000px); }
-  20%  { transform: translateX(3000px); }
-  40%  { transform: translateX(3000px); }
-  60%  { transform: translateX(-1000px); }
-  80%  { transform: translateX(-1000px); }
-  100% { transform: translateX(-1000px); }
+  0% {
+    transform: translateX(-1000px);
+  }
+  20% {
+    transform: translateX(3000px);
+  }
+  40% {
+    transform: translateX(3000px);
+  }
+  60% {
+    transform: translateX(-1000px);
+  }
+  80% {
+    transform: translateX(-1000px);
+  }
+  100% {
+    transform: translateX(-1000px);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

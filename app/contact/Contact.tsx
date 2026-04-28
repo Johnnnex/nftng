@@ -6,23 +6,23 @@ import { Icon } from "@iconify/react";
 const Contact = () => {
   return (
     <>
-      <section className="pt-38.5 px-7.5 pb-9 max-w-450 mx-auto">
+      <section className="lg:pt-38.5 pt-33.5 lg:px-7.5 px-4 pb-9 max-w-450 mx-auto">
         <h1
           className={cn(
-            "text-black font-normal text-[3.125rem] mb-4",
+            "text-black font-normal text-[1.875rem] md:text-[3.125rem] mb-4",
             helveticaNeue.className,
           )}
         >
           Get in touch
         </h1>
-        <p className="text-[#000000B2] text-[1.125rem] font-normal w-157.75 mb-8">
+        <p className="text-[#000000B2] text-[1rem] md:text-[1.125rem] font-normal max-w-157.75 mb-12 sm:mb-8">
           Check out our FAQ section for information about the Unchain Summer
           events & exhibitions including participation opportunities,
           registration details, and more.
         </p>
-        <div className="flex mb-17.75 gap-5">
+        <div className="flex flex-col lg:flex-row mb-17.75 gap-5">
           <div className="flex-1 flex flex-col justify-between gap-5">
-            <div className="flex gap-5">
+            <div className="flex flex-col sm:flex-row gap-5">
               {[
                 {
                   icon: "mynaui:chat",
@@ -79,7 +79,7 @@ const Contact = () => {
                 </div>
               ))}
             </div>
-            <div className="flex gap-5">
+            <div className="flex flex-col sm:flex-row gap-5">
               {[
                 {
                   icon: "ep:service",
@@ -137,16 +137,16 @@ const Contact = () => {
               ))}
             </div>
           </div>
-          <div className="flex-1 bg-[#F1F1F1] rounded-2xl p-6.25">
+          <div className="flex-1 bg-[#F1F1F1] rounded-2xl p-3.75 md:p-6.25">
             <h3
               className={cn(
                 helveticaNeue.className,
-                "font-normal text-[1.5rem] text-black mb-5.25",
+                "font-normal text-[1.125rem] md:text-[1.5rem] text-black mb-4 md:mb-5.25",
               )}
             >
               Tell us something....
             </h3>
-            <div className="grid relative grid-cols-2 gap-y-3.25 gap-x-4">
+            <div className="grid relative sm:grid-cols-2 grid-cols-1 gap-y-3.25 gap-x-4">
               {[
                 { label: "Name", type: "text" },
                 { label: "Email", type: "email" },
@@ -156,7 +156,7 @@ const Contact = () => {
               ]?.map((item, index) => (
                 <div
                   key={`____item____${index}__`}
-                  className={cn(index === 4 ? "col-span-2" : "")}
+                  className={cn(index === 4 ? "sm:col-span-2" : "")}
                 >
                   <Input
                     label={item?.label}
@@ -173,25 +173,25 @@ const Contact = () => {
         </div>
       </section>
 
-      <section className="px-7.5 max-w-450 mx-auto">
+      <section className="px-4 lg:px-7.5 max-w-450 mx-auto">
         <div className="bg-[#6DC43E] overflow-hidden relative py-16 rounded-[1.875rem]">
-          <div className="flex z-1 relative p-[.5rem_1.0625rem] w-fit mx-auto gap-1.5 bg-white rounded-[3.125rem] items-center">
+          <div className="flex z-2 relative p-[.5rem_1.0625rem] w-fit mx-auto gap-1.5 bg-white rounded-[3.125rem] items-center">
             <Icon className="w-6 h-6 text-[#6EC93E]" icon={"bxl:telegram"} />
             <span className="text-black text-[.875rem] font-nomal">
               TELEGRAM
             </span>
           </div>
 
-          <h2 className="relative mt-8 z-1 text-white text-[4.25rem] font-semibold w-163.75 mb-4 mx-auto text-center leading-16.75">
+          <h2 className="relative mt-8 z-2 text-white text-[2.25rem] md:w-[90%] sm:w-[70%] w-full md:text-[4.25rem] font-semibold max-w-163.75 mb-4 mx-auto text-center md:leading-16.75 leading-8">
             Join the Unchain Community
           </h2>
 
-          <p className="text-white text-[1rem] font-normal w-123.75 mx-auto text-center relative z-1 mb-12.5">
+          <p className="text-white text-[1rem] font-normal max-w-70.25 sm:max-w-123.75 mx-auto text-center relative z-2 mb-8 md:mb-12.5">
             A growing space for builders, creators, and curious minds. Connect,
             learn, share ideas, and stay plugged into everything Unchain Summer.
           </p>
 
-          <button className="flex z-1 relative p-[.6875rem_1.875rem] w-fit mx-auto gap-1.5 bg-white rounded-[3.125rem] items-center">
+          <button className="flex z-2 relative sm:p-[.6875rem_1.875rem] p-[.6875rem_1.25rem] w-fit mx-auto gap-1.5 bg-white rounded-[3.125rem] items-center">
             <Icon
               className="w-7.5 h-7.5 text-[#6EC93E]"
               icon={"bxl:telegram"}
@@ -202,9 +202,18 @@ const Contact = () => {
           </button>
 
           <div className="h-[76%] flex bg-[#6EC93E00] justify-between w-full left-0 absolute bottom-0">
-            <div className="absolute bg-linear-to-b from-[#6EC93E00] to-[#6EC93E] inset-0 w-full h-full"></div>
-            <SVGClient src="/svg/ellipse-left.svg" />
-            <SVGClient src="/svg/ellipse-right.svg" />
+            <div className="absolute bg-linear-to-b from-[#6EC93E00] z-1 to-[#6EC93E] inset-0 w-full h-full" />
+            <SVGClient
+              className="hidden md:block"
+              src="/svg/ellipse-left.svg"
+            />
+            <SVGClient className="md:hidden" src="/svg/ellipse-left-sm.svg" />
+
+            <SVGClient
+              className="hidden md:block"
+              src="/svg/ellipse-right.svg"
+            />
+            <SVGClient className="md:hidden" src="/svg/ellipse-right-sm.svg" />
           </div>
         </div>
       </section>
