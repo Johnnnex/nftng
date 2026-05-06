@@ -1,29 +1,99 @@
 "use client";
 
+import { type ReactNode } from "react";
 import { Icon } from "@iconify/react";
 import { useState } from "react";
 import { SVGClient } from "@/components/common";
 
-const faqs = [
+type FAQ = {
+  question: string;
+  answer: string | ReactNode;
+};
+
+const faqs: FAQ[] = [
   {
-    question: "What is the NFTNG Unchain Summer Event?",
+    question: "What is Unchain Summer?",
     answer:
-      "The NFTNG Unchain Summer Event is Nigeria's premier Web3 gathering — a full-day experience blending keynotes, panel sessions, live demos, and networking designed to push the blockchain ecosystem forward in Africa.",
+      "Unchain Summer is a week-long immersive Web3 experience powered by NFTng, happening in Lagos. It is designed to bring together builders, creators, founders, Web3 enthusiasts, and complete beginners into one space to learn, connect, and grow.",
   },
   {
-    question: "What is EchoFi?",
+    question: "Who is Unchain Summer for?",
     answer:
-      "EchoFi is a decentralized finance protocol built on transparency and community governance. It enables users to earn, lend, and grow digital assets while participating in an open, permissionless financial ecosystem.",
+      "Unchain Summer is for complete beginners curious about Web3, creators, builders, developers, founders, and anyone looking to understand or grow within Web3.",
   },
   {
-    question: "When and where is the Unchain Summer Event happening?",
+    question: "Do I need prior Web3 experience?",
     answer:
-      "The Unchain Summer Event is scheduled for Summer 2026 in Lagos, Nigeria. Stay tuned to our socials and this page for the confirmed date, venue, and ticket details.",
+      "No. You can attend with zero knowledge and still follow along. There will be beginner-friendly sessions designed to help you understand the fundamentals.",
   },
   {
-    question: "When Next?",
+    question: "What will happen during the event?",
     answer:
-      "We run events year-round. Subscribe to our newsletter or follow @NFTNG on X to be the first to know about upcoming events, drops, and activations.",
+      "Throughout the week, attendees will experience keynotes, panel discussions, networking sessions, a 2-day football tournament, and a closing dinner night.",
+  },
+  {
+    question: "Is the event free?",
+    answer:
+      "Yes. Unchain Summer is completely free to attend, but registration is compulsory.",
+  },
+  {
+    question: "Do I need to register?",
+    answer:
+      "Yes. Registration is required to secure your spot. Access to the event will be based on confirmed registrations.",
+  },
+  {
+    question: "Where will the event take place?",
+    answer:
+      "The event will be held in Lagos. Specific venue details will be shared on our socials.",
+  },
+  {
+    question: "Can I join if I'm not based in Lagos?",
+    answer:
+      "Unchain Summer is a physical event, but you can still participate virtually through a live stream if you're unable to attend in person.",
+  },
+  {
+    question: "How can I partner with or support Unchain Summer?",
+    answer: (
+      <>
+        If you&apos;re interested in sponsoring or partnering with Unchain
+        Summer, please send an email to{" "}
+        <a
+          href="mailto:partnership@nftng.io"
+          className="underline font-medium text-black"
+        >
+          partnership@nftng.io
+        </a>
+        . The team will review your request and get back to you with the next
+        steps.
+      </>
+    ),
+  },
+  {
+    question: "How do I register for the event?",
+    answer:
+      "Registration is not open yet, but it will be available soon. Once it goes live, you'll be able to sign up through the official website and receive further details about the event.",
+  },
+  {
+    question: "How is Unchain Summer different from NFTNG?",
+    answer:
+      "Unchain Summer is a rebrand of NFTNG. While NFTNG started during the NFT era as a community focused on onboarding people into Web3 through events, the vision has expanded beyond NFTs into education, empowerment, and broader ecosystem growth. Unchain Summer reflects this change, serving as the current identity and experience, while still being powered by NFTNG.",
+  },
+  {
+    question: "How do I get updates?",
+    answer: (
+      <>
+        Follow NFTng on X (Twitter){" "}
+        <a
+          href="https://x.com/NFT__NG"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline font-medium text-black"
+        >
+          @NFT__NG
+        </a>{" "}
+        for announcements and updates.
+      </>
+    ),
   },
 ];
 
@@ -35,7 +105,7 @@ export const FAQs = () => {
   };
 
   return (
-    <section className="lg:px-7.5 px-4 w-fit lg:pb-2 pb-8 pt-22.5 md:pt-7.5 relative flex items-center mx-auto">
+    <section className="lg:px-7.5 px-4 w-fit lg:pb-12.5 pb-8 pt-22.5 md:pt-7.5 relative flex items-center mx-auto">
       <SVGClient className="hidden lg:block" src="/svg/faq-illustration.svg" />
       <SVGClient
         className="md:hidden absolute top-4"
@@ -45,8 +115,9 @@ export const FAQs = () => {
         <h2 className="font-normal text-[1.875rem] md:text-[2.25rem] text-center lg:mb-4 mb-2">
           FAQs
         </h2>
-        <p className="text-[#000000B2] text-[1rem] md:text-[1.125rem] font-normal max-w-96 text-center mx-auto mb-8">
-          Decoding the System: Clear Answers for Strategic Impact.
+        <p className="text-[#000000B2] text-[1rem] md:text-[1.125rem] font-normal max-w-121 text-center mx-auto mb-8">
+          This section answers the key questions you may have before attending
+          Unchain Summer
         </p>
         <div className="flex flex-col gap-2">
           {faqs.map((item, index) => {
@@ -74,9 +145,15 @@ export const FAQs = () => {
                 <div
                   className={`transition-all duration-300 ease-in-out ${isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"} overflow-hidden`}
                 >
-                  <p className="text-[#000000B2] text-[.875rem] font-normal px-5 pb-4 leading-relaxed">
-                    {item.answer}
-                  </p>
+                  {typeof item.answer === "string" ? (
+                    <p className="text-[#000000B2] text-[.875rem] font-normal px-5 pb-4 leading-relaxed">
+                      {item.answer}
+                    </p>
+                  ) : (
+                    <div className="text-[#000000B2] text-[.875rem] font-normal px-5 pb-4 leading-relaxed">
+                      {item.answer}
+                    </div>
+                  )}
                 </div>
               </div>
             );

@@ -11,6 +11,7 @@ import { useState } from "react";
 const navItems = [
   { name: "Home", href: "/" },
   { name: "About Us", href: "/about" },
+  { name: "Events", href: "/events" },
   {
     name: "Get Involved",
     isDropDown: true,
@@ -22,8 +23,7 @@ const navItems = [
       { name: "Attend Event", href: "/event" },
     ],
   },
-  { name: "Events", href: "/events" },
-  { name: "Contact Us", href: "/contact" },
+  { name: "Collections", href: "/collections" },
 ];
 
 const Header = () => {

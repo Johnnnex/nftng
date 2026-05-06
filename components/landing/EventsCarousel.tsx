@@ -26,7 +26,7 @@ const eventsData = [
   },
   {
     image: "events-img-3.png",
-    title: "Unchain Summer 2025",
+    title: "Sunset Soiree",
     subtopic: "Theme: Web3 for Everyone",
     content:
       "A week long Web3 experience in Lagos with over 1,000 participants. Activities included a main conference, DeFi competition, football tournament, and a closing event.",
@@ -91,7 +91,7 @@ const EventsCarousel = () => {
                       {item.content}
                     </p>
                     <Button className="flex gap-2 w-full border-2 border-[#6EC93E] py-3 justify-center items-center bg-transparent rounded-[.625rem]">
-                      View Gallery
+                      View Recap
                       <Icon
                         icon={"hugeicons:arrow-right-02"}
                         className="w-6 h-6"

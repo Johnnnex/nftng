@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { FAQs, SVGClient } from "@/components";
+import { Button, FAQs, SVGClient } from "@/components";
 import { helveticaNeue } from "../layout";
 import { cn } from "@/lib";
 import {
@@ -8,19 +8,18 @@ import {
   WordByWord,
   StaggerContainer,
   StaggerItem,
-  CountUp,
 } from "@/components/motion";
 
 const About = () => {
   return (
     <>
-      <section className="md:pt-38.5 pt-31.25 px-4 lg:px-7.5 pb-9 max-w-390 mx-auto">
+      <section className="md:pt-38.5 pt-31.25 px-4 lg:px-7.5 pb-6.5 md:pb-23 max-w-390 mx-auto">
         <FadeIn>
           <span className="border block mb-4.5 lg:mb-6.75 w-fit border-[#6EC93E] p-[.625rem_1.25rem] md:p-[.625rem_2.5rem] font-medium text-[.875rem] rounded-lg text-black">
             About Us
           </span>
         </FadeIn>
-        <div className="flex flex-col lg:flex-row gap-8 lg:gap-0 justify-between items-end">
+        <div className="flex flex-col lg:flex-row gap-8 lg:gap-0 justify-between items-start">
           <div>
             <WordByWord
               text="About Us"
@@ -29,21 +28,19 @@ const About = () => {
             />
             <FadeUp>
               <p className="lg:max-w-166.25 font-normal text-[1rem] text-black">
-                Unchain Summer is an annual Web3 and blockchain experience powered
-                by NFT NG. It brings together founders, developers, creators,
-                investors, andemerging talent to explore the future of blockchain
-                through education, culture, and community. <br />
+                In November 11, 2022, NFTng was founded on a simple but powerful
+                belief; that Africa deserved its own seat at the table in the
+                global Web3 conversation. Not as followers or users but as
+                builders, creators, and leaders. <br />
                 <br />
-                Designed to be accessible and engaging, Unchain Summer blends
-                technology, creativity, and real world interaction to make Web3
-                moreunderstandable and relevant to a broad audience. Since its
-                inception,the event has grown into a leading Web3 gathering in
-                Nigeria, hosting conferences, competitions, cultural experiences,
-                and community driven activities. <br /> <br /> Unchain Summer 2026
-                introduces The North Star, a theme centered on clarity, direction,
-                and discovery. This edition focuses on creating an open
-                environment where participants can learn, connect, and identify
-                opportunities within the evolving Web3 ecosystem.
+                What began as a bold idea grew into Africa&apos;s most trusted
+                Web3 community. Through education, grassroots organising, and
+                relentless commitment to ecosystem growth, NFTng became the
+                connective tissue of Africa&apos;s blockchain space bringing
+                together developers, founders, investors, creators, and everyday
+                users under one mission: make Web3 real for Africa. <br />
+                <br />
+                Unchain Summer is that mission in its fullest expression.
               </p>
             </FadeUp>
           </div>
@@ -57,49 +54,38 @@ const About = () => {
         </div>
       </section>
 
-      <StaggerContainer className="flex flex-wrap lg:flex-nowrap gap-4 md:gap-6 px-4 lg:px-7.5 mb-16 lg:items-center max-w-390 mx-auto">
-        <StaggerItem className="bg-[#003223] w-full sm:w-[calc(50%-0.75rem)] lg:w-[22.4%] order-1 lg:order-0 rounded-xl py-[1.5625rem_1.125rem] flex flex-col">
-          <CountUp
-            value={26}
-            suffix="+"
-            className="text-white text-center font-medium text-[2.25rem]"
-          />
-          <span className="font-medium mx-auto max-w-38.75 text-center text-[#FFFFFFB2] text-[1.25rem]">
-            Actively dedicated teams across web3 and web2 worlds
-          </span>
-        </StaggerItem>
-        <StaggerItem className="bg-[#FF6400] w-full sm:w-[calc(55%-0.75rem)] lg:w-[34.7%] order-3 lg:order-0 flex flex-col bg-blend-overlay rounded-xl bg-[url(/images/noise-bg-black.png)] p-[2.625rem_1.25rem_2.1875rem_1.25rem]">
-          <span className="text-white mb-1.25 text-[1rem] text-center sm:text-left font-medium">
-            Total attendees
-          </span>
-          <CountUp
-            value={238716}
-            suffix="+"
-            className="text-white font-medium text-center sm:text-left text-[2.375rem]"
-          />
-          <span className="text-[#FFFFFFB2] text-[1.125rem] text-center sm:text-left mx-auto sm:ml-0 font-medium w-76.25">
-            Grown through our trusted platform and community
-          </span>
-        </StaggerItem>
-        <StaggerItem className="py-[3.3125rem_2rem] w-full sm:w-[calc(45%-0.75rem)] lg:w-[18.8%] order-4 lg:order-0 flex flex-col bg-[#FFD60A] rounded-xl">
-          <span className="text-center text-black font-medium text-[1.75rem]">
-            4-10
-          </span>
-          <span className="w-38.5 mx-auto text-center text-[#000000B2] text-[1.25rem] font-normal">
-            Years of proven team experience
-          </span>
-        </StaggerItem>
-        <StaggerItem className="py-[4.875rem_.875rem] w-full sm:w-[calc(50%-0.75rem)] lg:w-[24%] order-2 lg:order-0 bg-[#74FF6B] bg-[url(/images/noise-bg-black.png)] text-center rounded-xl text-black text-[1.25rem] font-medium bg-blend-overlay relative">
-          <span className="w-65.25 block mx-auto">
-            Known as the No. 1 blockchain events host and engager in Nigeria and
-            across Africa, bringing together Web2 and Web3 minds
-          </span>
+      {/* New Component, maybe bgcolor transition/fade in from ltr?  */}
+      <hr className="border-none h-[.5px] bg-linear-to-r from-[#1D1D1D]/12 via-black to-black/0 mb-6.5 md:mb-8 w-[90%] sm:max-w-120 max-w-60.5 md:max-w-[90%] lg:max-w-195 mx-auto" />
+
+      {/* New Component  */}
+      <section className="px-4 lg:px-7.5 max-w-390 mx-auto">
+        <div className="lg:py-22 pt-24 pb-32 bg-[#000000] bg-[url(/images/star-bg-sm.png)] sm:bg-[url(/images/star-bg.png)] bg-cover bg-center rounded-[1.875rem] relative flex flex-col items-center justify-center">
+          <h2 className="text-white relative z-1 font-medium md:leading-16.25 mb-5.75 md:mb-7.25 text-[2rem] md:max-w-165 leading-8 text-center lg:max-w-full md:text-[3.125rem]">
+            What is Unchain Summer?
+          </h2>
+          <p className="text-white relative z-1 leading-[115%] md:leading-normal font-normal text-[1rem] sm:w-[75%] md:w-[80%] max-w-78 sm:max-w-199 text-center mb-5.75 md:mb-8">
+            Unchain Summer is Africa&apos;s Web3 convergence point. It is not a
+            single day conference but a week long experience that blends
+            community, culture, education, and onchain innovation into one
+            immersive experience. Guiding this experience is Axis, our mascot
+            and the heartbeat of Unchain Summer, here to make Web3 feel less
+            overwhelming and more like something you belong to.
+          </p>
+          <Button className="relative z-1">Be part of Unchain Summer</Button>
+
           <SVGClient
-            className="top-0 right-14.75 absolute"
-            src="/svg/ball.svg"
+            src="/svg/bridge.svg"
+            className="absolute hidden sm:block lg:bottom-0 bottom-[-10%] lg:left-0 left-[-8%]"
           />
-        </StaggerItem>
-      </StaggerContainer>
+          <div className="flex justify-between items-end w-full absolute bottom-0 left-0 sm:hidden">
+            <SVGClient src="/svg/bridge-l.svg" />
+            <SVGClient src="/svg/bridge-r.svg" />
+          </div>
+        </div>
+      </section>
+
+      {/* New Component, same as hr above  */}
+      <hr className="border-none h-[.5px] bg-linear-to-r from-[#1D1D1D]/12 via-black to-black/0 mt-6.5 md:mt-8 w-[90%] sm:max-w-120 max-w-60.5 md:max-w-[90%] lg:max-w-195 mb-6.5 md:mb-15 mx-auto" />
 
       <section className="max-w-390 px-4 lg:px-7.5 mx-auto">
         <FadeUp>
@@ -138,15 +124,18 @@ const About = () => {
                 className="hidden sm:block mr-30"
                 src="/svg/african-chart.svg"
               />
-              <SVGClient className="sm:hidden" src="/svg/african-chart-sm.svg" />
+              <SVGClient
+                className="sm:hidden"
+                src="/svg/african-chart-sm.svg"
+              />
             </div>
             <div className="lg:flex-1">
               <h3 className="text-black font-medium text-[1.5rem] mb-[.75] lg:mb-0 md:text-[2rem]">
                 Vision Statement
               </h3>
               <p className="text-black font-normal md:text-[1.0625rem] text-[.875rem] max-w-120.5">
-                To position Africa as an active and influential participant in the
-                global Web3 ecosystem.
+                To position Africa as an active and influential participant in
+                the global Web3 ecosystem.
               </p>
             </div>
           </div>
@@ -239,7 +228,10 @@ const About = () => {
             <StaggerItem
               fade
               key={`__item__${index}__`}
-              className={cn("aspect-[.73] relative rounded-2xl bg-center overflow-hidden bg-cover bg-no-repeat", item?.className)}
+              className={cn(
+                "aspect-[.73] relative rounded-2xl bg-center overflow-hidden bg-cover bg-no-repeat",
+                item?.className,
+              )}
               style={{ backgroundImage: `url(/images/${item?.image})` }}
             >
               <div className="absolute p-[1.0625rem_0.9375rem] inset-0 w-full h-full bg-linear-to-b from-black/0 to-black flex items-end">
@@ -261,6 +253,9 @@ const About = () => {
           ))}
         </StaggerContainer>
       </section>
+
+      {/* New Component, maybe bgcolor transition/fade in from ltr?  */}
+      <hr className="border-none h-[.5px] bg-linear-to-r from-[#1D1D1D]/12 via-black to-black/0 mb-2 md:mb-8 lg:mb-8 md:mt-5 w-[90%] sm:max-w-120 max-w-60.5 md:max-w-[90%] lg:max-w-195 mx-auto" />
 
       <FAQs />
     </>

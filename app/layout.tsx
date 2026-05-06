@@ -95,6 +95,22 @@ export const helveticaNeue = localFont({
   variable: "--font-helvetica-neue",
 });
 
+export const monumentExtended = localFont({
+  src: [
+    {
+      path: "../public/fonts/MonumentExtended-Regular.otf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/MonumentExtended-Ultrabold.otf",
+      weight: "800",
+      style: "normal",
+    },
+  ],
+  variable: "--font-monument-extended",
+});
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -102,7 +118,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${poppins.variable} h-full antialiased`}>
-      <body className="bg-white">
+      <body className="bg-white!">
         <MotionProvider>
           <CustomCursor />
           <Header />
