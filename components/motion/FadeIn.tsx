@@ -2,7 +2,7 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef, type PropsWithChildren } from "react";
-import { useReducedMotion } from "@/components/providers/MotionProvider";
+import { useReducedMotion } from "@/components";
 import { cn } from "@/lib";
 
 type FadeInProps = PropsWithChildren<{

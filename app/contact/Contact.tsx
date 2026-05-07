@@ -1,8 +1,17 @@
 import { cn } from "@/lib";
 import { helveticaNeue } from "../layout";
-import { Button, FAQs, Input, SVGClient } from "@/components";
+import {
+  Button,
+  FAQs,
+  Input,
+  SVGClient,
+  FadeUp,
+  FadeIn,
+  WordByWord,
+  StaggerContainer,
+  StaggerItem,
+} from "@/components";
 import { Icon } from "@iconify/react";
-import { FadeUp, FadeIn, WordByWord, StaggerContainer, StaggerItem } from "@/components/motion";
 
 const Contact = () => {
   return (
@@ -191,8 +200,9 @@ const Contact = () => {
             </h2>
 
             <p className="text-white text-[1rem] font-normal max-w-70.25 sm:max-w-123.75 mx-auto text-center relative z-2 mb-8 md:mb-12.5">
-              A growing space for builders, creators, and curious minds. Connect,
-              learn, share ideas, and stay plugged into everything Unchain Summer.
+              A growing space for builders, creators, and curious minds.
+              Connect, learn, share ideas, and stay plugged into everything
+              Unchain Summer.
             </p>
 
             <button className="flex z-2 relative sm:p-[.6875rem_1.875rem] p-[.6875rem_1.25rem] w-fit mx-auto gap-1.5 bg-white rounded-[3.125rem] items-center">
@@ -217,7 +227,10 @@ const Contact = () => {
                 className="hidden md:block"
                 src="/svg/ellipse-right.svg"
               />
-              <SVGClient className="md:hidden" src="/svg/ellipse-right-sm.svg" />
+              <SVGClient
+                className="md:hidden"
+                src="/svg/ellipse-right-sm.svg"
+              />
             </div>
           </div>
         </FadeIn>

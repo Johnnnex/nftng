@@ -2,15 +2,20 @@
 
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { cn } from "@/lib";
-import { useReducedMotion } from "@/components/providers/MotionProvider";
+import { useReducedMotion } from "@/components";
 
 const noopSubscribe = () => () => {};
-const getVisible = () => window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+const getVisible = () =>
+  window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 const getServerVisible = () => false;
 
 const CustomCursor = () => {
   const reduced = useReducedMotion();
-  const visible = useSyncExternalStore(noopSubscribe, getVisible, getServerVisible);
+  const visible = useSyncExternalStore(
+    noopSubscribe,
+    getVisible,
+    getServerVisible,
+  );
   const outerRef = useRef<HTMLDivElement>(null);
   const mouse = useRef({ x: -200, y: -200 });
   const pos = useRef({ x: -200, y: -200 });

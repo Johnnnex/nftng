@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { useReducedMotion } from "@/components/providers/MotionProvider";
+import { useReducedMotion } from "@/components";
 
 const CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%";
 

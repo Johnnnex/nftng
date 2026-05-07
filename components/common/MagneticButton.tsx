@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, type PropsWithChildren } from "react";
-import { useReducedMotion } from "@/components/providers/MotionProvider";
+import { useReducedMotion } from "@/components";
 
 const MagneticButton = ({
   children,

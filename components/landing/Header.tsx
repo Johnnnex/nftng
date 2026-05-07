@@ -1,8 +1,8 @@
 "use client";
 
 import { Icon } from "@iconify/react";
-import { Button, SVGClient, MagneticButton } from "@/components/common";
-import { HoverScramble } from "@/components/motion";
+import { Button, SVGClient, MagneticButton, HoverScramble } from "@/components";
+
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib";

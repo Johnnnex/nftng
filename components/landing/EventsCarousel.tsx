@@ -6,23 +6,15 @@ import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import { Icon } from "@iconify/react";
 import { cn } from "@/lib";
-import { Button } from "@/components/common";
+import { Button } from "@/components";
 
 const eventsData = [
   {
-    image: "events-img-1.png",
-    title: "NFT NG 2022",
-    subtopic:
-      "Theme: Bringing the African Web3 Community to the Global Spotlight",
+    image: "events-img-4.png",
+    title: "Unchain Summer 2025",
+    subtopic: "Theme: Web3 for Everyone",
     content:
-      "The first NFT NG event and the largest gathering of NFT and Web3 enthusiasts in Africa at the time. Held at Balmoral Convention Center, Lagos, it marked the foundation of the NFT NG community and its growth across the continent.",
-  },
-  {
-    image: "events-img-2.png",
-    title: "Defi Summer 2024",
-    subtopic: "Theme: Building the Future of Finance",
-    content:
-      "Held at Landmark Event Center, Lagos, DeFi Summer 2024 focused on education, innovation, and community engagement, alongside a football tournament.",
+      "A week long Web3 experience in Lagos with over 1,000 participants. Activities included a main conference, DeFi competition, football tournament, and a closing event.",
   },
   {
     image: "events-img-3.png",
@@ -32,11 +24,19 @@ const eventsData = [
       "A week long Web3 experience in Lagos with over 1,000 participants. Activities included a main conference, DeFi competition, football tournament, and a closing event.",
   },
   {
-    image: "events-img-4.png",
-    title: "Unchain Summer 2025",
-    subtopic: "Theme: Web3 for Everyone",
+    image: "events-img-2.png",
+    title: "Defi Summer 2024",
+    subtopic: "Theme: Building the Future of Finance",
     content:
-      "A week long Web3 experience in Lagos with over 1,000 participants. Activities included a main conference, DeFi competition, football tournament, and a closing event.",
+      "Held at Landmark Event Center, Lagos, DeFi Summer 2024 focused on education, innovation, and community engagement, alongside a football tournament.",
+  },
+  {
+    image: "events-img-1.png",
+    title: "NFT NG 2022",
+    subtopic:
+      "Theme: Bringing the African Web3 Community to the Global Spotlight",
+    content:
+      "The first NFT NG event and the largest gathering of NFT and Web3 enthusiasts in Africa at the time. Held at Balmoral Convention Center, Lagos, it marked the foundation of the NFT NG community and its growth across the continent.",
   },
 ];
 

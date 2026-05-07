@@ -1,7 +1,17 @@
 /* eslint-disable @next/next/no-img-element */
 import type { CSSProperties } from "react";
-import { Button, FAQs, SVGClient, BrandSlider, MagneticButton } from "@/components";
-import { FadeUp, FadeIn, WordByWord, StaggerContainer, StaggerItem } from "@/components/motion";
+import {
+  Button,
+  FAQs,
+  SVGClient,
+  BrandSlider,
+  MagneticButton,
+  FadeUp,
+  FadeIn,
+  WordByWord,
+  StaggerContainer,
+  StaggerItem,
+} from "@/components";
 import { cn } from "@/lib";
 import { helveticaNeue } from "./layout";
 import { Icon } from "@iconify/react";
@@ -282,8 +292,8 @@ export default function Home() {
           <p className="max-w-163.25 font-normal text-[#000000B2] mb-4.25 lg:mb-6.75 text-[1rem] md:text-[1.125rem]">
             We are dedicated to hosting impactful gatherings that foster
             innovation and growth within the digital landscape. Our events serve
-            as a hub for education, networking, and community building across the
-            continent.
+            as a hub for education, networking, and community building across
+            the continent.
           </p>
         </FadeUp>
         <FadeIn className="flex flex-col sm:flex-row sm:flex-wrap lg:flex-nowrap gap-4 mb-12.5">

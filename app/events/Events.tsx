@@ -1,7 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { Fragment, type CSSProperties } from "react";
-import { Button, EventsCarousel, FAQs } from "@/components";
-import { FadeUp } from "@/components/motion";
+import { Button, EventsCarousel, FAQs, FadeUp } from "@/components";
 import { cn } from "@/lib";
 import { monumentExtended } from "../layout";
 
@@ -86,7 +85,7 @@ const Events = () => {
         <h3 className="mb-7.25 text-black text-[2rem] md:text-[3.125rem] text-center font-medium leading-8.25 sm:w-full w-[90%] mx-auto md:leading-16.25">
           Unchain Summer 2026: The North Star
         </h3>
-        <p className="text-center text-black font-normal mb-4.75 md:mb-17 text-[1rem] max-w-199 mx-auto">
+        <p className="text-center text-black font-normal text-[1rem] max-w-199 mx-auto">
           The 2026 edition is not just another year. It marks five years of
           NFTNG&apos;s leadership in Africa&apos;s Web3 ecosystem and we are
           celebrating it the way it deserves.
@@ -100,21 +99,6 @@ const Events = () => {
           <br />
           This is our biggest chapter yet.
         </p>
-        <div className="grid sm:grid-cols-3 max-w-300 sm:gap-2.5">
-          {["Football tournament", "Conference", "Boxing"]?.map(
-            (item, index) => (
-              <span
-                key={`__span__item__${index}__`}
-                className={cn(
-                  "py-3.75 flex items-center text-black font-medium text-[1rem] justify-center",
-                  index === 1 ? "bg-[#FFAD33]" : "bg-[#EEEEEE]",
-                )}
-              >
-                {item}
-              </span>
-            ),
-          )}
-        </div>
       </section>
 
       {/* New Component */}
@@ -126,9 +110,60 @@ const Events = () => {
       </section>
 
       {/* New Component, maybe bgcolor transition/fade in from ltr?  */}
-      <hr className="border-none h-[.5px] bg-linear-to-r from-[#1D1D1D]/12 via-black to-black/0 w-[90%] sm:max-w-120 max-w-60.5 md:max-w-[90%] lg:max-w-195 mx-auto" />
+      <hr className="border-none h-[.5px] bg-linear-to-r from-[#1D1D1D]/12 via-black to-black/0 w-[90%] sm:max-w-120 max-w-60.5 md:max-w-[90%] lg:max-w-195 lg:mb-21.75 mx-auto" />
 
-      <section className="sm:pt-29 pt-20 px-4 lg:px-7.5 pb-9 max-w-450 mx-auto">
+      {/* New Section */}
+      <section className="pt-16.25 md:pt-20 grid grid-cols-1 sm:grid-cols-4 lg:grid-cols-3 gap-9.25 sm:gap-2.5 px-4 lg:px-7.5 pb-16.25 md:pb-9 max-w-450 mx-auto">
+        {[
+          { countdownDate: "" },
+          { countdownDate: "" },
+          { countdownDate: "" },
+        ]?.map((item, index) => (
+          <figure
+            key={`__item__${index}__`}
+            className={cn(
+              "rounded-[1.875rem] aspect-[.9064] relative overflow-hidden",
+              index === 2
+                ? "sm:col-start-2 lg:col-start-auto lg:col-span-1 sm:col-span-2"
+                : "sm:col-span-2 lg:col-span-1",
+            )}
+          >
+            <img
+              src={`/images/events-img-${index + 5}.png`}
+              alt={`Events Image ${index + 5}`}
+            />
+            <div className="py-6 absolute bottom-0 left-0 w-full flex items-center gap-1.75 md:gap-1.25 justify-center bg-black">
+              {[
+                { number: 10, granularity: "Days" },
+                { number: 10, granularity: "Hours" },
+                { number: 10, granularity: "Minutes" },
+                { number: 10, granularity: "Seconds" },
+              ].map((item, index) => (
+                <Fragment key={`__fragment__item__${index}__`}>
+                  <div className="flex bg-[#ffffff20] rounded-2xl md:w-20 w-16.75 md:h-20 h-16.75 justify-center flex-col gap-px items-center">
+                    <span className="text-white text-[1.125rem] md:text-[1.375rem] tracking-[-4%] font-semibold">
+                      {item.number}
+                    </span>
+                    <span className="text-white text-[.75rem] md:text-[.875rem] tracking-[-4%] font-normal">
+                      {item.granularity}
+                    </span>
+                  </div>
+                  {index !== 3 && (
+                    <span className="text-white text-[1.25rem] md:text-[1.4375rem] font-normal tracking-[-4%]">
+                      :
+                    </span>
+                  )}
+                </Fragment>
+              ))}
+            </div>
+          </figure>
+        ))}
+      </section>
+
+      {/* New Component, maybe bgcolor transition/fade in from ltr?  */}
+      <hr className="border-none h-[.5px] bg-linear-to-r from-[#1D1D1D]/12 via-black to-black/0 w-[90%] sm:max-w-120 max-w-60.5 md:max-w-[90%] lg:max-w-195 lg:mt-21.75 mx-auto" />
+
+      <section className="pt-20 px-4 lg:px-7.5 pb-9 max-w-450 mx-auto">
         <FadeUp>
           <h2 className="text-black font-medium text-[1.5rem] md:text-[2.5rem] mb-4 lg:mb-9.25">
             Past Events
@@ -140,45 +175,6 @@ const Events = () => {
 
       {/* New Component, maybe bgcolor transition/fade in from ltr?  */}
       <hr className="border-none h-[.5px] bg-linear-to-r from-[#1D1D1D]/12 via-black to-black/0 mb-6.5 md:mb-8 lg:mb-8 mt-12.5 w-[90%] sm:max-w-120 max-w-60.5 md:max-w-[90%] lg:max-w-195 mx-auto" />
-
-      {/* <section className="pt-17.75 px-4 lg:px-7.5 max-w-450 mx-auto">
-        <FadeUp>
-          <div className="flex gap-4 mb-2 md:mb-5 items-center">
-            <span className="w-5 h-10 bg-[#6EC93E] rounded-sm" />
-            <span className="font-semibold text-[1rem] text-[#6EC93E] leading-5">
-              Merch Product
-            </span>
-          </div>
-          <div className="flex items-center justify-between">
-            <h2 className="text-black text-[1.5rem] md:text-[2.25rem] leading-12 font-semibold">
-              Explore Our Products
-            </h2>
-            <Icon
-              className="w-7 h-7 md:w-10.75 md:h-10.75"
-              icon={"mdi:cart-outline"}
-            />
-          </div>
-        </FadeUp>
-        <StaggerContainer className="mt-4 md:mt-11.75 md:mb-11.75 mb-8 gap-7.5 grid sm:grid-cols-2 lg:grid-cols-4">
-          {Array.from({ length: 12 }, (_, index) => (
-            <StaggerItem key={`__item__${index}`}>
-              <ProductCard
-                image="/images/demoprod.png"
-                title="Unchain Summer (Men merch)"
-                price="$100"
-                rating={3}
-                reviewCount={35}
-                badge={index % 5 === 0 ? "NEW" : undefined}
-              />
-            </StaggerItem>
-          ))}
-        </StaggerContainer>
-        <FadeUp className="flex justify-center">
-          <Button className="w-fit sm:py-4! py-2 text-[1rem] rounded-sm font-medium">
-            View All Products
-          </Button>
-        </FadeUp>
-      </section> */}
 
       <FAQs />
     </>

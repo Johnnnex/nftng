@@ -1,14 +1,16 @@
 /* eslint-disable @next/next/no-img-element */
-import { Button, FAQs, SVGClient } from "@/components";
-import { helveticaNeue } from "../layout";
-import { cn } from "@/lib";
 import {
+  Button,
+  FAQs,
+  SVGClient,
   FadeUp,
   FadeIn,
   WordByWord,
   StaggerContainer,
   StaggerItem,
-} from "@/components/motion";
+} from "@/components";
+import { helveticaNeue } from "../layout";
+import { cn } from "@/lib";
 
 const About = () => {
   return (

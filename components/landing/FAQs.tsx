@@ -3,7 +3,7 @@
 import { type ReactNode } from "react";
 import { Icon } from "@iconify/react";
 import { useState } from "react";
-import { SVGClient } from "@/components/common";
+import { SVGClient } from "@/components";
 
 type FAQ = {
   question: string;

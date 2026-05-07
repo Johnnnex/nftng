@@ -2,7 +2,7 @@
 
 import { motion, useInView, type Variants } from "framer-motion";
 import { useRef, type PropsWithChildren, type CSSProperties } from "react";
-import { useReducedMotion } from "@/components/providers/MotionProvider";
+import { useReducedMotion } from "@/components";
 import { cn } from "@/lib";
 
 const containerVariants: Variants = {
