@@ -56,24 +56,28 @@ const About = () => {
         </div>
       </section>
 
-      {/* New Component, maybe bgcolor transition/fade in from ltr?  */}
       <hr className="border-none h-[.5px] bg-linear-to-r from-[#1D1D1D]/12 via-black to-black/0 mb-6.5 md:mb-8 w-[90%] sm:max-w-120 max-w-60.5 md:max-w-[90%] lg:max-w-195 mx-auto" />
 
-      {/* New Component  */}
       <section className="px-4 lg:px-7.5 max-w-390 mx-auto">
         <div className="lg:py-22 pt-24 pb-32 bg-[#000000] bg-[url(/images/star-bg-sm.png)] sm:bg-[url(/images/star-bg.png)] bg-cover bg-center rounded-[1.875rem] relative flex flex-col items-center justify-center">
-          <h2 className="text-white relative z-1 font-medium md:leading-16.25 mb-5.75 md:mb-7.25 text-[2rem] md:max-w-165 leading-8 text-center lg:max-w-full md:text-[3.125rem]">
-            What is Unchain Summer?
-          </h2>
-          <p className="text-white relative z-1 leading-[115%] md:leading-normal font-normal text-[1rem] sm:w-[75%] md:w-[80%] max-w-78 sm:max-w-199 text-center mb-5.75 md:mb-8">
-            Unchain Summer is Africa&apos;s Web3 convergence point. It is not a
-            single day conference but a week long experience that blends
-            community, culture, education, and onchain innovation into one
-            immersive experience. Guiding this experience is Axis, our mascot
-            and the heartbeat of Unchain Summer, here to make Web3 feel less
-            overwhelming and more like something you belong to.
-          </p>
-          <Button className="relative z-1">Be part of Unchain Summer</Button>
+          <FadeUp>
+            <h2 className="text-white relative z-1 font-medium md:leading-16.25 mb-5.75 md:mb-7.25 text-[2rem] md:max-w-165 leading-8 text-center lg:max-w-full md:text-[3.125rem]">
+              What is Unchain Summer?
+            </h2>
+          </FadeUp>
+          <FadeUp delay={0.15}>
+            <p className="text-white relative z-1 leading-[115%] md:leading-normal font-normal text-[1rem] sm:w-[75%] md:w-[80%] max-w-78 sm:max-w-199 text-center mb-5.75 md:mb-8">
+              Unchain Summer is Africa&apos;s Web3 convergence point. It is not a
+              single day conference but a week long experience that blends
+              community, culture, education, and onchain innovation into one
+              immersive experience. Guiding this experience is Axis, our mascot
+              and the heartbeat of Unchain Summer, here to make Web3 feel less
+              overwhelming and more like something you belong to.
+            </p>
+          </FadeUp>
+          <FadeUp delay={0.25}>
+            <Button className="relative z-1">Be part of Unchain Summer</Button>
+          </FadeUp>
 
           <SVGClient
             src="/svg/bridge.svg"
@@ -86,7 +90,6 @@ const About = () => {
         </div>
       </section>
 
-      {/* New Component, same as hr above  */}
       <hr className="border-none h-[.5px] bg-linear-to-r from-[#1D1D1D]/12 via-black to-black/0 mt-6.5 md:mt-8 w-[90%] sm:max-w-120 max-w-60.5 md:max-w-[90%] lg:max-w-195 mb-6.5 md:mb-15 mx-auto" />
 
       <section className="max-w-390 px-4 lg:px-7.5 mx-auto">
@@ -256,7 +259,6 @@ const About = () => {
         </StaggerContainer>
       </section>
 
-      {/* New Component, maybe bgcolor transition/fade in from ltr?  */}
       <hr className="border-none h-[.5px] bg-linear-to-r from-[#1D1D1D]/12 via-black to-black/0 mb-2 md:mb-8 lg:mb-8 md:mt-5 w-[90%] sm:max-w-120 max-w-60.5 md:max-w-[90%] lg:max-w-195 mx-auto" />
 
       <FAQs />

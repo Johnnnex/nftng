@@ -47,7 +47,7 @@ const ProductCard = ({
           onClick={() => setCartOpen((prev) => !prev)}
           aria-label={cartOpen ? "Hide add to cart" : "Show add to cart"}
           className={cn(
-            "md:hidden absolute right-3 bottom-10 z-1 w-8 h-8 rounded-full bg-black/70 text-white flex items-center justify-center transition-transform duration-300",
+            "lg:hidden absolute right-3 bottom-10 z-1 w-8 h-8 rounded-full bg-black/70 text-white flex items-center justify-center transition-transform duration-300",
             cartOpen ? "rotate-180" : "",
           )}
         >
@@ -60,7 +60,7 @@ const ProductCard = ({
             "absolute bottom-0 left-0 w-full py-2 bg-black text-white text-[1rem] leading-6 font-medium transition-transform duration-300",
             cartOpen
               ? "translate-y-0"
-              : "translate-y-full md:group-hover:translate-y-0",
+              : "translate-y-full lg:group-hover:translate-y-0",
           )}
         >
           Add To Cart

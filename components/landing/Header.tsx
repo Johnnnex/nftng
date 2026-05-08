@@ -32,7 +32,7 @@ const Header = () => {
   const [getInvolvedOpen, setGetInvolvedOpen] = useState(false);
 
   return (
-    <header className="fixed z-3 w-full left-0 top-4">
+    <header className="fixed z-5 w-full left-0 top-4">
       <div className="max-w-400 w-[95%] mx-auto">
         {/* Main bar */}
         <div

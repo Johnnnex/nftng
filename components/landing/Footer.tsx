@@ -6,7 +6,7 @@ import Link from "next/link";
 const Footer = () => {
   return (
     <section className="relative">
-      <section className="px-4 lg:px-7.5 relative z-2 pb-6.5 max-w-450 mx-auto">
+      <section className="px-4 lg:px-7.5 relative z-1 pb-6.5 max-w-450 mx-auto">
         <div className="bg-[url(/images/noise-bg.png)] mb-15.25 bg-blend-overlay min-h-70 md:h-100 lg:h-fit! bg-[#6EC93E] rounded-[1.875rem] overflow-hidden relative flex items-center lg:justify-center">
           <div className="flex lg:-mr-10 flex-col pl-5 w-[70%] md:w-[60%] gap-6">
             <h2
