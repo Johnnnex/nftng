@@ -7,6 +7,75 @@ import {
 } from "@/components";
 import { CollectionsComingSoon } from "./CollectionsComingSoon";
 
+const PRODUCTS = [
+  {
+    title: "Unchain Summer (Men Merch)",
+    image: "/images/demoprod-1.jpg",
+    price: 100,
+    rating: 2.5,
+    reviewCount: 35,
+    isNew: false,
+  },
+  {
+    title: "Unchain Summer (Women Merch)",
+    image: "/images/demoprod-2.png",
+    price: 360,
+    rating: 4.5,
+    reviewCount: 95,
+    isNew: false,
+  },
+  {
+    title: "Unchain Summer (Keyboard)",
+    image: "/images/demoprod-3.png",
+    price: 700,
+    rating: 5,
+    reviewCount: 325,
+    isNew: false,
+  },
+  {
+    title: "Unchain Summer (Sticker)",
+    image: "/images/demoprod-4.png",
+    price: 500,
+    rating: 4.5,
+    reviewCount: 145,
+    isNew: false,
+  },
+  {
+    title: "Unchain Summer (Women Merch)",
+    image: "/images/demoprod-5.jpg",
+    price: 960,
+    rating: 5,
+    reviewCount: 65,
+    isNew: true,
+  },
+  {
+    title: "Unchain Summer (Men Merch)",
+    image: "/images/demoprod-6.jpg",
+    price: 1160,
+    rating: 4.5,
+    reviewCount: 35,
+    isNew: false,
+  },
+  {
+    title: "US Sticker",
+    image: "/images/demoprod-7.png",
+    price: 660,
+    rating: 4.5,
+    reviewCount: 55,
+    isNew: true,
+  },
+  {
+    title: "Unchain Summer (Men Merch)",
+    image: "/images/demoprod-1.jpg",
+    price: 660,
+    rating: 4.5,
+    reviewCount: 55,
+    isNew: false,
+  },
+];
+
+const DISPLAY_PRODUCTS = [...PRODUCTS, ...PRODUCTS];
+
 const Collections = () => {
   return (
     <>
@@ -15,15 +84,15 @@ const Collections = () => {
 
         <section className="px-4 lg:px-7.5 max-w-375 mx-auto">
           <StaggerContainer className="mt-4 md:mt-11.75 md:mb-11.75 mb-8 gap-7.5 grid sm:grid-cols-2 lg:grid-cols-4">
-            {Array.from({ length: 12 }, (_, index) => (
+            {DISPLAY_PRODUCTS.map((p, index) => (
               <StaggerItem key={`__item__${index}`}>
                 <ProductCard
-                  image="/images/demoprod.png"
-                  title="Unchain Summer (Men merch)"
-                  price="$100"
-                  rating={3}
-                  reviewCount={35}
-                  badge={index % 5 === 0 ? "NEW" : undefined}
+                  image={p.image}
+                  title={p.title}
+                  price={`$${p.price}`}
+                  rating={p.rating}
+                  reviewCount={p.reviewCount}
+                  badge={p.isNew ? "NEW" : undefined}
                 />
               </StaggerItem>
             ))}
