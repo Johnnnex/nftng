@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { type CSSProperties, useRef } from "react";
 import {
   motion,
   useScroll,
@@ -9,7 +9,7 @@ import {
 } from "framer-motion";
 import { cn } from "@/lib";
 import { SVGClient, useReducedMotion } from "@/components";
-import { monumentExtended } from "../layout";
+import { monumentExtended } from "../../app/layout";
 
 const CollectionsComingSoon = ({ children }: { children: React.ReactNode }) => {
   const ref = useRef<HTMLElement>(null);
@@ -57,15 +57,33 @@ const CollectionsComingSoon = ({ children }: { children: React.ReactNode }) => {
 
       {/* Overlay */}
       <div className="absolute flex items-center inset-0 z-3">
-        <motion.span
+        <motion.div
           style={motionStyle}
-          className={cn(
-            "bg-[#6EC93E] relative lg:block font-normal hidden z-1 w-full text-[2.25rem] py-[1.8125rem_1.4375rem] text-white leading-16.25 text-center",
-            monumentExtended.className,
-          )}
+          className="bg-[#6EC93E] relative lg:block hidden z-1 w-full overflow-hidden"
         >
-          PRODUCTS WILL BE LIVE SOON. STAY TUNED!
-        </motion.span>
+          <div
+            data-animated="true"
+            className="marquee-anim overflow-hidden"
+            style={{ "--marquee-gap": "6rem" } as CSSProperties}
+          >
+            <div
+              className="inner flex items-center w-max"
+              style={{ animationDuration: "35s" }}
+            >
+              {Array.from({ length: 6 }, (_, i) => (
+                <span
+                  key={i}
+                  className={cn(
+                    "text-[2.25rem] text-white font-normal leading-none py-7.25 px-24 uppercase whitespace-nowrap shrink-0",
+                    monumentExtended.className,
+                  )}
+                >
+                  PRODUCTS WILL BE LIVE SOON. STAY TUNED!
+                </span>
+              ))}
+            </div>
+          </div>
+        </motion.div>
         <span className="lg:w-[80%] inset-0 absolute mx-auto h-full bg-[#ffffff90] bg-[url(/images/collections-page-mask-sm-bg.png)] md:bg-[url(/images/collections-page-mask-bg.png)] bg-center bg-cover block" />
       </div>
     </section>

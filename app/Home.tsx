@@ -1,5 +1,4 @@
 /* eslint-disable @next/next/no-img-element */
-import type { CSSProperties } from "react";
 import {
   Button,
   FAQs,
@@ -11,6 +10,8 @@ import {
   WordByWord,
   StaggerContainer,
   StaggerItem,
+  UpcomingEvent,
+  SponsorsSlider,
 } from "@/components";
 import { cn } from "@/lib";
 import { helveticaNeue } from "./layout";
@@ -19,7 +20,7 @@ import { Icon } from "@iconify/react";
 export default function Home() {
   return (
     <>
-      <section className="md:pt-47.25 pt-29.25 pb-15 relative">
+      <section className="md:pt-47.25 pt-29.25 pb-14.25 md:pb-18.25 relative">
         <figure className="absolute inset-0 z-[-1] h-full w-full bg-[url(/images/main-hero-bg.png)] bg-cover bg-center" />
 
         <FadeIn>
@@ -60,7 +61,7 @@ export default function Home() {
             </MagneticButton>
           </div>
         </FadeUp>
-        <figure className="lg:w-fit w-[95%] mx-auto mt-6.75 md:mt-3 mb-8">
+        <figure className="lg:w-fit w-[95%] mx-auto mt-6.75 md:mt-16.75 md:mb-14.5 mb-13">
           <img
             className="hidden w-full md:block"
             src="/svg/main-hero-illustration.svg"
@@ -72,23 +73,11 @@ export default function Home() {
             alt="Main Hero Illustration"
           />
         </figure>
-        <div className="overflow-hidden">
-          <div
-            className="marquee-anim"
-            data-animated="true"
-            style={{ "--marquee-gap": "0.5rem" } as CSSProperties}
-          >
-            <div className="inner flex md:gap-4 gap-1.25 w-max">
-              {Array.from({ length: 20 }, (_, index) => (
-                <span
-                  className="glare bg-[#F1F1F1] shrink-0 rounded-xl aspect-[.947] w-30 md:w-56.5 md:h-58"
-                  key={`__card__${index}`}
-                />
-              ))}
-            </div>
-          </div>
-        </div>
+
+        <UpcomingEvent title="Upcoming Event" />
       </section>
+
+      <SponsorsSlider />
 
       <BrandSlider />
 

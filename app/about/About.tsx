@@ -66,9 +66,9 @@ const About = () => {
             </h2>
           </FadeUp>
           <FadeUp delay={0.15}>
-            <p className="text-white relative z-1 leading-[115%] md:leading-normal font-normal text-[1rem] sm:w-[75%] md:w-[80%] max-w-78 sm:max-w-199 text-center mb-5.75 md:mb-8">
-              Unchain Summer is Africa&apos;s Web3 convergence point. It is not a
-              single day conference but a week long experience that blends
+            <p className="text-white mx-auto relative z-1 leading-[115%] md:leading-normal font-normal text-[1rem] sm:w-[75%] md:w-[80%] max-w-78 sm:max-w-199 text-center mb-5.75 md:mb-8">
+              Unchain Summer is Africa&apos;s Web3 convergence point. It is not
+              a single day conference but a week long experience that blends
               community, culture, education, and onchain innovation into one
               immersive experience. Guiding this experience is Axis, our mascot
               and the heartbeat of Unchain Summer, here to make Web3 feel less

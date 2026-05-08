@@ -3,7 +3,7 @@
 import { type ReactNode } from "react";
 import { Icon } from "@iconify/react";
 import { useState } from "react";
-import { SVGClient } from "@/components";
+import { SVGClient, FadeUp, StaggerContainer, StaggerItem } from "@/components";
 
 type FAQ = {
   question: string;
@@ -112,18 +112,22 @@ export const FAQs = () => {
         src="/svg/faq-illustration-sm.svg"
       />
       <div>
-        <h2 className="font-normal text-[1.875rem] md:text-[2.25rem] text-center lg:mb-4 mb-2">
-          FAQs
-        </h2>
-        <p className="text-[#000000B2] text-[1rem] md:text-[1.125rem] font-normal max-w-121 text-center mx-auto mb-8">
-          This section answers the key questions you may have before attending
-          Unchain Summer
-        </p>
-        <div className="flex flex-col gap-2">
+        <FadeUp>
+          <h2 className="font-normal text-[1.875rem] md:text-[2.25rem] text-center lg:mb-4 mb-2">
+            FAQs
+          </h2>
+        </FadeUp>
+        <FadeUp delay={0.1}>
+          <p className="text-[#000000B2] text-[1rem] md:text-[1.125rem] font-normal max-w-121 text-center mx-auto mb-8">
+            This section answers the key questions you may have before attending
+            Unchain Summer
+          </p>
+        </FadeUp>
+        <StaggerContainer className="flex flex-col gap-2">
           {faqs.map((item, index) => {
             const isOpen = openIndex === index;
             return (
-              <div
+              <StaggerItem
                 key={`__item__${index}`}
                 className="bg-[#F1F1F1] border border-[#0000000D] rounded-[.625rem] max-w-154 overflow-hidden"
               >
@@ -155,10 +159,10 @@ export const FAQs = () => {
                     </div>
                   )}
                 </div>
-              </div>
+              </StaggerItem>
             );
           })}
-        </div>
+        </StaggerContainer>
       </div>
     </section>
   );

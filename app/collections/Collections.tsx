@@ -4,8 +4,8 @@ import {
   ProductCard,
   StaggerContainer,
   StaggerItem,
+  CollectionsComingSoon,
 } from "@/components";
-import { CollectionsComingSoon } from "./CollectionsComingSoon";
 
 const PRODUCTS = [
   {
