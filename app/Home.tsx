@@ -12,6 +12,7 @@ import {
   StaggerItem,
   UpcomingEvent,
   SponsorsSlider,
+  Panorama,
 } from "@/components";
 import { cn } from "@/lib";
 import { helveticaNeue } from "./layout";
@@ -83,42 +84,22 @@ export default function Home() {
 
       <section className="max-w-450 lg:px-7.5 px-4 pt-12.25 lg:pt-24 pb-12.25 lg:pb-5.5 mx-auto">
         <WordByWord
-          text="Get A Grasp Of Our System"
+          text="Get A Grasp Of Our Ecosystem"
           as="h2"
           className={cn(
             "text-black text-[1.5rem] md:text-[2.25rem] mb-2.5 md:mb-2 font-normal",
             helveticaNeue.className,
           )}
         />
-        <FadeUp className="max-w-191.5 font-normal text-[#000000B2] lg:mb-12 mb-7 text-[1rem] md:text-[1.125rem]">
+        <FadeUp delay={0.5} className="max-w-191.5 font-normal text-[#000000B2] lg:mb-12 mb-7 text-[1rem] md:text-[1.125rem]">
           Explore the comprehensive framework of our ecosystem, showcasing our
           proven track record in the Web3 space and the strategic impact of our
           global events.
         </FadeUp>
-        <StaggerContainer className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 mb-6.5 lg:mb-12 gap-x-3.5 gap-y-3 lg:gap-4">
-          {Array.from({ length: 7 }, (_, index) => (
-            <StaggerItem
-              key={`__item___${index}`}
-              fade
-              className={cn(
-                "overflow-hidden",
-                index === 3
-                  ? "order-last lg:order-0 aspect-[.92] sm:aspect-auto rounded-[0_1.875rem_0_1.875rem]"
-                  : index === 6
-                    ? "order-last lg:order-0 aspect-[.92] sm:aspect-auto rounded-[1.875rem_0_1.875rem_0]"
-                    : "col-span-2 lg:col-span-2 rounded-xl aspect-[1.778]",
-              )}
-            >
-              <img
-                src={`/images/home-img-${index + 1}.jpg`}
-                alt={`Home Image ${index + 1}`}
-                className="w-full h-full object-cover"
-              />
-            </StaggerItem>
-          ))}
-        </StaggerContainer>
+        <Panorama />
+
         <FadeUp className="w-fit mx-auto">
-          <Button>View Pitch Deck</Button>
+          <Button>Become a Sponsor</Button>
         </FadeUp>
       </section>
 
