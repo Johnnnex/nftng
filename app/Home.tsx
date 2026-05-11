@@ -13,6 +13,7 @@ import {
   UpcomingEvent,
   SponsorsSlider,
   Panorama,
+  SpeakerMarquee,
 } from "@/components";
 import { cn } from "@/lib";
 import { helveticaNeue } from "./layout";
@@ -53,11 +54,11 @@ export default function Home() {
         <FadeUp delay={0.2} className="flex justify-center">
           <div className="flex gap-4 items-center">
             <MagneticButton>
-              <Button className="md:min-w-36.75">Get Tickets</Button>
+              <Button className="md:min-w-36.75">Register</Button>
             </MagneticButton>
             <MagneticButton>
               <Button className="md:min-w-36.75" variant="secondary">
-                View Pitch Deck
+                Sponsor
               </Button>
             </MagneticButton>
           </div>
@@ -91,7 +92,10 @@ export default function Home() {
             helveticaNeue.className,
           )}
         />
-        <FadeUp delay={0.5} className="max-w-191.5 font-normal text-[#000000B2] lg:mb-12 mb-7 text-[1rem] md:text-[1.125rem]">
+        <FadeUp
+          delay={0.5}
+          className="max-w-191.5 font-normal text-[#000000B2] lg:mb-12 mb-7 text-[1rem] md:text-[1.125rem]"
+        >
           Explore the comprehensive framework of our ecosystem, showcasing our
           proven track record in the Web3 space and the strategic impact of our
           global events.
@@ -105,7 +109,7 @@ export default function Home() {
 
       <section className="max-w-450 px-4 lg:px-7.5 mx-auto pt-10 pb-6.75">
         <WordByWord
-          text="We've Got Mission!"
+          text="Why attend?"
           as="h2"
           className={cn(
             "text-black text-[1.5rem] md:text-[2.25rem] mb-2.25 md:mb-2 font-normal",
@@ -114,288 +118,78 @@ export default function Home() {
         />
         <FadeUp>
           <p className="max-w-142 font-normal text-[#000000B2] mb-5.75 lg:mb-10 text-[1rem] md:text-[1.125rem]">
-            To create inclusive, well-structured experiences that advance Web3
-            education, collaboration, and adoption across Africa
+            Find direction, build the right connections, and grow within
+            Africa&apos;s Web3 ecosystem.
           </p>
         </FadeUp>
         <StaggerContainer className="grid grid-cols-1 sm:grid-cols-4 lg:grid-cols-3 gap-3.5 md:gap-4">
-          <StaggerItem className="p-4 border lg:col-span-1 sm:col-span-2 border-[#0000000D] bg-[#F1F1F1] rounded-[1.25rem]">
-            <div className="pt-1 mb-6 flex flex-col gap-2">
-              <div className="bg-white w-[70%] lg:w-[59%] items-center shadow-[0_4px_10px_0_rgba(0,0,0,0.25)] p-2 rounded-[.625rem] flex gap-2.5">
-                <span className="w-7.5 flex items-center justify-center aspect-square bg-[#F1F1F1] rounded-[50%]">
-                  <Icon
-                    height={"1.25rem"}
-                    width={"1.25rem"}
-                    icon={"logos:bitcoin"}
-                  />
-                </span>
-                <div className="flex flex-1 gap-2 pr-4 flex-col">
-                  <span className="bg-[#F1F1F1] h-2 animate-pulse [animation-duration:1.5s] [animation-delay:300ms] rounded-[999999px] w-[75%]" />
-                  <span className="bg-[#F1F1F1] animate-pulse self-end h-2 [animation-duration:1.5s] rounded-[999999px] w-[75%]" />
-                </div>
-              </div>
-              <div className="bg-white self-end items-center shadow-[0_4px_10px_0_rgba(0,0,0,0.25)] p-2 w-[70%] lg:w-[59%] rounded-[.625rem] flex gap-2.5">
-                <span className="w-7.5 flex items-center justify-center aspect-square bg-[#6EC93E] rounded-[50%]">
-                  <Icon
-                    height={"1.25rem"}
-                    width={"1.25rem"}
-                    icon={"qlementine-icons:education-16"}
-                  />
-                </span>
-                <div className="flex flex-1 gap-2 pr-4 flex-col">
-                  <span className="bg-[#F1F1F1] h-2 animate-pulse [animation-duration:1.5s] [animation-delay:300ms] rounded-[999999px] w-[75%]" />
-                  <span className="bg-[#F1F1F1] animate-pulse self-end h-2 [animation-duration:1.5s] rounded-[999999px] w-[75%]" />
-                </div>
-              </div>
-            </div>
-            <h4 className="text-black font-medium text-[1.125rem] max-w-85 mb-2 leading-6.75">
-              Empowering african creatives through web3 education
-            </h4>
-            <p className="text-[#000000A6] font-normal text-[.9375rem] max-w-104.5">
-              We provide accessible Web3 education to bridge knowledge gaps and
-              empower African creatives with the resources they need to thrive.
-            </p>
-          </StaggerItem>
-          <StaggerItem className="flex gap-3.5 md:gap-1.25 lg:col-span-1 sm:col-span-2 flex-col justify-between">
-            <div className="p-4 border border-[#0000000D] bg-[#F1F1F1] rounded-[1.25rem]">
-              <div className="pt-1 mb-5">
-                <div className="bg-white w-[65%] md:w-[60%] lg:w-[50%] shadow-[0_4px_10px_0_rgba(0,0,0,0.25)] p-2.5 rounded-[.625rem] flex flex-col gap-1.5">
-                  <div className="gap-px flex items-center">
-                    {Array.from({ length: 5 }, (_, index) => (
-                      <Icon
-                        key={`__item___${index}`}
-                        height={".75rem"}
-                        width={".75rem"}
-                        color="#6EC93E"
-                        icon={"ic:baseline-star"}
-                      />
-                    ))}
-                  </div>
-                  <div className="flex flex-1 gap-1 w-45 flex-col">
-                    <span className="bg-[#F1F1F1] h-1.25 animate-pulse [animation-duration:1.5s] [animation-delay:300ms] rounded-[999999px] w-40" />
-                    <span className="bg-[#F1F1F1] animate-pulse self-end h-1.25 [animation-duration:1.5s] rounded-[999999px] w-40" />
-                  </div>
-                </div>
-              </div>
-              <h4 className="text-black font-medium text-[1.125rem] max-w-85 mb-2 leading-6.75">
-                Global africa&apos;s platform
-              </h4>
-              <p className="text-[#000000A6] font-normal text-[.9375rem] max-w-104.5">
-                We offer a platform for African creatives to shine on the global
-                stage through events, partnerships, and online channels.
-              </p>
-            </div>
-            <div className="p-4 border border-[#0000000D] bg-[#F1F1F1] rounded-[1.25rem]">
-              <h4 className="text-black mt-2.5 font-medium text-[1.125rem] max-w-85 mb-2 leading-6.75">
-                Bringing events to communities
-              </h4>
-              <div className="flex items-center">
-                <div className="flex">
-                  {Array.from({ length: 3 }, (_, index) => (
-                    <img
-                      key={`__image__${index}`}
-                      className={cn(
-                        "w-7.5 aspect-square object-cover rounded-[50%] border border-black",
-                        index === 1
-                          ? "-translate-x-1/2"
-                          : index === 2
-                            ? "-translate-x-full"
-                            : "",
-                      )}
-                      src="/images/home-img-8.jpg"
-                      alt="PFP IMG"
-                    />
-                  ))}
-                </div>
-                <span className="font-normal block -ml-4.5 text-[#000000A6] text-[.9375rem]">
-                  200k+ people gathered.
-                </span>
-              </div>
-            </div>
-          </StaggerItem>
-          <StaggerItem className="p-4 border border-[#0000000D] lg:col-span-1 lg:col-start-3 sm:col-start-2 sm:col-span-2 bg-[#F1F1F1] rounded-[1.25rem]">
-            <div className="pt-1 mb-7">
-              <div className="bg-white items-center shadow-[0_4px_10px_0_rgba(0,0,0,0.25)] px-4 py-2.5 rounded-2xl flex gap-3.25">
-                <span className="w-10 flex items-center justify-center aspect-square bg-[#6EC93E] rounded-[50%]">
-                  <Icon
-                    height={"1.25rem"}
-                    width={"1.25rem"}
-                    icon={"pepicons-pop:internet"}
-                  />
-                </span>
-                <span className="h-[1.4px] flex-1 bg-linear-to-r from-[#A2D187]/0 to-[#A2D187]" />
+          {[
+            {
+              title: "Navigate",
+              subTitle: `Helping participants and brands find direction in
+                  Africa's Web3 ecosystem.`,
+              jpeg: "sinusoid",
+              alt: "Sinusoid",
+            },
+            {
+              title: "Network",
+              subTitle: `Connect with high-intent builders, founders, users, and partners.`,
+              jpeg: "network-mesh",
+              alt: "Network Mesh",
+            },
+            {
+              title: "Nurture",
+              subTitle: `Grow within the ecosystem. Access the support, insights, and  environment needed growth, adoption, and long-term ecosystem  impact.`,
+              jpeg: "mesh",
+              alt: "Mesh",
+            },
+          ]?.map((item, index) => (
+            <StaggerItem
+              key={`__item__${index}__`}
+              className={cn(
+                "border lg:col-span-1 sm:col-span-2 border-[#0000000D] bg-[#F1F1F1] rounded-[1.25rem]",
+                index === 2 ? "lg:col-start-3 sm:col-start-2" : "",
+              )}
+            >
+              <figure className="h-52.5 md:h-62.5">
                 <img
-                  src="/images/home-img-9.png"
-                  className="object-cover h-10 aspect-square rounded-[50%]"
-                  alt="NFTNG IMG"
+                  className="h-full w-full object-cover"
+                  src={`/images/${item?.jpeg}.png`}
+                  alt={item?.alt}
                 />
-                <span className="h-[1.4px] flex-1 bg-linear-to-l from-[#A2D187]/0 to-[#A2D187]" />
-                <span className="w-10 flex items-center justify-center aspect-square bg-[#6EC93E] rounded-[50%]">
-                  <Icon height={"1.5rem"} width={"1.5rem"} icon={"bx:world"} />
-                </span>
+              </figure>
+              <div className="px-6.75 pb-6.75">
+                <h4 className="text-black font-medium text-[1.125rem] max-w-85 mb-2 leading-6.75">
+                  {item?.title}
+                </h4>
+                <p className="text-[#000000A6] font-normal text-[.9375rem] max-w-104.5">
+                  {item?.subTitle}
+                </p>
               </div>
-            </div>
-            <h4 className="text-black font-medium text-[1.125rem] max-w-85 mb-2 leading-6.75">
-              Building a Connected Blockchain Community
-            </h4>
-            <p className="text-[#000000A6] font-normal text-[.9375rem] max-w-104.5">
-              At Unchain Summer, we believe in the power of connection. Our
-              community initiatives foster collaboration and support, creating a
-              network of like-minded individuals passionate about
-              Blockchain&apos;s.
-            </p>
-          </StaggerItem>
+            </StaggerItem>
+          ))}
         </StaggerContainer>
       </section>
 
-      <section className="max-w-450 px-4 lg:px-7.5 pt-8.75 mx-auto">
-        <FadeUp>
-          <h2
-            className={cn(
-              "text-black text-[1.5rem] md:text-[2.25rem] mb-4.25 lg:mb-0 font-medium",
-            )}
-          >
-            Creating Successful events
-          </h2>
-        </FadeUp>
-        <FadeUp>
-          <p className="max-w-163.25 font-normal text-[#000000B2] mb-4.25 lg:mb-6.75 text-[1rem] md:text-[1.125rem]">
-            We are dedicated to hosting impactful gatherings that foster
-            innovation and growth within the digital landscape. Our events serve
-            as a hub for education, networking, and community building across
-            the continent.
-          </p>
-        </FadeUp>
-        <FadeIn className="flex flex-col sm:flex-row sm:flex-wrap lg:flex-nowrap gap-4 mb-12.5">
-          <figure className="aspect-[1.622] sm:w-[calc(50%-0.5rem)] lg:w-[39%] overflow-hidden rounded-2xl">
-            <img
-              src="/images/home-img-10.png"
-              className="w-full h-full object-cover"
-              alt="NFTNG EVENT"
-            />
-          </figure>
-          <div className="bg-[#F1F1F1] pb-11 sm:w-[calc(50%-0.5rem)] lg:w-[26%] rounded-2xl">
-            <div className="flex pt-4.75 items-start pr-4.75 mb-5 justify-between">
-              <Icon
-                icon={"bi:quote"}
-                color="#6EC93E"
-                width={"8.125rem"}
-                height={"8.125rem"}
-              />
-              <span className="text-black font-medium text-[.8125rem] mt-3.5">
-                It all started somewhere
-              </span>
-            </div>
-            <p className="max-w-94.25 text-[1rem] md:text-[1.25rem] font-normal text-[#000000CC] mx-4">
-              we provide accessible web3 eductaion to bridge knowledege gaps and
-              empower African creatives with the resources they need to thrive
-            </p>
-          </div>
-          <div className="sm:w-[65%] sm:mx-auto lg:w-[35%] lg:mx-0 flex flex-col gap-4 sm:gap-3 justify-between">
-            <div className="flex gap-4">
-              {["/images/home-img-11.png", "/images/home-img-12.png"]?.map(
-                (item, index) => (
-                  <figure
-                    key={`___item__${index}__`}
-                    className="aspect-[1.06] flex-1 overflow-hidden rounded-2xl"
-                  >
-                    <img
-                      src={item}
-                      className="w-full h-full object-cover"
-                      alt={`Home Image ${index + 10}`}
-                    />
-                  </figure>
-                ),
+      <section className="md:pb-42.75 pb-12.5">
+        <div className="max-w-450 px-4 lg:px-7.5 pt-8.75 mx-auto">
+          <FadeUp>
+            <h2
+              className={cn(
+                "text-black text-[1.5rem] md:text-[2.25rem] mb-4.25 lg:mb-0 font-medium",
               )}
-            </div>
-            <h4 className="font-medium text-black text-[1.875rem]">
-              Unchain Summer 2025
-            </h4>
-            <Button className="p-1.25! pl-5! text-[.875rem] rounded-md items-center font-medium justify-between text-black flex">
-              View Gallery
-              <span className="h-7.5 w-7.5 rounded-[.1875rem] bg-white flex items-center justify-center">
-                <Icon
-                  className="text-black rotate-45 w-4.5 h-4.5"
-                  icon={"ant-design:arrow-up-outlined"}
-                />
-              </span>
-            </Button>
-          </div>
-        </FadeIn>
-        <FadeIn className="flex flex-col sm:flex-row sm:flex-wrap lg:flex-nowrap gap-4 lg:w-[88%] mx-auto">
-          <div className="sm:w-[calc(50%-0.5rem)] lg:w-[39%] flex flex-col">
-            <h4 className="font-medium text-black text-[2rem] md:text-[2.5rem]">
-              Sunset Soirée
-            </h4>
-
-            <div className="flex flex-col flex-1 gap-2.75">
-              <figure className="flex-1 overflow-hidden rounded-2xl">
-                <img
-                  src={"/images/home-img-13.png"}
-                  className="w-full h-full object-cover"
-                  alt={`Home Image 13`}
-                />
-              </figure>
-
-              <Button className="pr-1.25! hidden sm:flex py-3.25! pl-5! text-[.875rem] rounded-md items-center font-medium justify-between text-white">
-                View Gallery
-                <span className="h-7.5 w-7.5 rounded-[.1875rem] bg-white flex items-center justify-center">
-                  <Icon
-                    className="text-black rotate-45 w-4.5 h-4.5"
-                    icon={"ant-design:arrow-up-outlined"}
-                  />
-                </span>
-              </Button>
-            </div>
-          </div>
-          <figure className="sm:w-[calc(50%-0.5rem)] lg:w-[29%] rounded-2xl overflow-hidden">
-            <img
-              src="/images/home-img-14.png"
-              className="w-full h-full object-cover"
-              alt="Home Image 14"
-            />
-          </figure>
-          <figure className="aspect-[.98] rounded-2xl overflow-hidden sm:w-[50%] sm:mx-auto lg:w-[31%] lg:mx-0">
-            <img
-              src="/images/home-img-15.png"
-              className="w-full h-full object-cover"
-              alt="Home Image 15"
-            />
-          </figure>
-
-          <Button className="pr-1.25! flex sm:hidden py-3.25! pl-5! text-[.875rem] rounded-md items-center font-medium justify-between text-white">
-            View Gallery
-            <span className="h-7.5 w-7.5 rounded-[.1875rem] bg-white flex items-center justify-center">
-              <Icon
-                className="text-black rotate-45 w-4.5 h-4.5"
-                icon={"ant-design:arrow-up-outlined"}
-              />
-            </span>
-          </Button>
-        </FadeIn>
-      </section>
-
-      <section className="max-w-450 px-4 lg:px-7.5 pt-12.5 pb-2.5 mx-auto">
-        <FadeUp>
-          <h2
-            className={cn(
-              "text-black text-[1.75rem] md:text-[2.25rem] mb-5 lg:mb-6.75 font-medium",
-            )}
-          >
-            Upcoming Event
-          </h2>
-        </FadeUp>
-        <figure
-          style={{ backgroundImage: "url('/images/home-img-16.png')" }}
-          className="aspect-[.98] sm:aspect-[2] lg:aspect-[3.34] flex items-center justify-center bg-center bg-cover rounded-2xl"
-        >
-          <div className="w-fit h-fit relative">
-            <SVGClient src="/svg/logo-ue-lg.svg" />
-            <span className="absolute bottom-4.75 bg-linear-to-b from-white to-[#74FF6B] bg-clip-text text-transparent text-[2.5rem] right-18.75 font-semibold">
-              2026
-            </span>
-          </div>
-        </figure>
+            >
+              Past Speakers
+            </h2>
+          </FadeUp>
+          <FadeUp>
+            <p className="font-normal text-[#000000B2] mb-4.25 lg:mb-6.75 text-[1rem] md:text-[1.125rem]">
+              The voices of builders, founders, and leaders defining Web3 at
+              Unchain Summer
+            </p>
+          </FadeUp>
+        </div>
+        <SpeakerMarquee />
       </section>
 
       <FAQs />

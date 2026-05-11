@@ -4,3 +4,4 @@ export * from "./SVGClient";
 export * from "./CustomCursor";
 export * from "./MagneticButton";
 export * from "./CountDown";
+export * from "./TeamCard";

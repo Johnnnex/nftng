@@ -8,9 +8,11 @@ import {
   WordByWord,
   StaggerContainer,
   StaggerItem,
+  TeamCard,
 } from "@/components";
 import { helveticaNeue } from "../layout";
 import { cn } from "@/lib";
+import { TEAM_MEMBERS } from "@/data";
 
 const About = () => {
   return (
@@ -164,96 +166,25 @@ const About = () => {
           </p>
         </FadeUp>
         <StaggerContainer className="grid mb-3.75 md:grid-cols-6 sm:grid-cols-4 gap-3.75 lg:grid-cols-10">
-          {[
-            {
-              name: "Teddi / King.sol",
-              linkedinUrl: "",
-              image: "teddi.jpg",
-              title: "Founder",
-              className: "col-span-2",
-            },
-            {
-              name: "Amarachi Nwachukwu",
-              linkedinUrl: "",
-              image: "ama.jpg",
-              title: "Program Lead",
-              className: "col-span-2",
-            },
-            {
-              name: "Ike Desmond Anthony",
-              linkedinUrl: "",
-              image: "ike.png",
-              title: "Event Coordinator",
-              className: "col-span-2",
-            },
-            {
-              name: "Abiola Baloye",
-              linkedinUrl: "",
-              image: "abiola.png",
-              title: "Marketing Lead",
-              className: "col-span-2",
-            },
-            {
-              name: "Ifedolapo Gina",
-              linkedinUrl: "",
-              image: "gina.png",
-              title: "Operation Lead",
-              className: "col-span-2",
-            },
-            {
-              name: "Toria Dickson",
-              linkedinUrl: "",
-              image: "toria.jpg",
-              title: "Social Media Lead",
-              className: "lg:col-start-2 col-span-2",
-            },
-            {
-              name: "Harrison Joseph",
-              linkedinUrl: "",
-              image: "harrison.png",
-              title: "Technical Director",
-              className: "lg:col-start-4 col-span-2",
-            },
-            {
-              name: "Giwa Oluwasheedah",
-              linkedinUrl: "",
-              image: "giwa.png",
-              title: "Creative Director",
-              className: "lg:col-start-6 col-span-2",
-            },
-            {
-              name: "Praise Okafor",
-              linkedinUrl: "",
-              image: "praise.png",
-              title: "Welfare & Logistics Lead",
-              className:
-                "lg:col-start-8 col-span-2 sm:col-start-2 md:col-start-auto",
-            },
-          ]?.map((item, index) => (
+          {TEAM_MEMBERS.map((member, index) => (
             <StaggerItem
               fade
-              key={`__item__${index}__`}
-              className={cn(
-                "aspect-[.73] relative rounded-2xl bg-center overflow-hidden bg-cover bg-no-repeat",
-                item?.className,
-              )}
-              style={{ backgroundImage: `url(/images/${item?.image})` }}
+              key={index}
+              className={
+                [
+                  "col-span-2",
+                  "col-span-2",
+                  "col-span-2",
+                  "col-span-2",
+                  "col-span-2",
+                  "lg:col-start-2 col-span-2",
+                  "lg:col-start-4 col-span-2",
+                  "lg:col-start-6 col-span-2",
+                  "lg:col-start-8 col-span-2 sm:col-start-2 md:col-start-auto",
+                ][index]
+              }
             >
-              <div className="absolute p-[1.0625rem_0.9375rem] inset-0 w-full h-full bg-linear-to-b from-black/0 to-black flex items-end">
-                <div className="flex justify-between items-end w-full">
-                  <div className="flex flex-col gap-2">
-                    <span className="text-white text-[1rem] font-normal">
-                      {item?.name}
-                    </span>
-                    <span className="text-[#FFFFFFB2] font-normal text-[.8125rem]">
-                      {item?.title}
-                    </span>
-                  </div>
-                  <a target="_blank">
-                    <SVGClient src="/svg/devicon_linkedin.svg" />
-                  </a>
-                </div>
-              </div>
+              <TeamCard {...member} />
             </StaggerItem>
           ))}
         </StaggerContainer>
