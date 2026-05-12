@@ -17,7 +17,6 @@ import {
 } from "@/components";
 import { cn } from "@/lib";
 import { helveticaNeue } from "./layout";
-import { Icon } from "@iconify/react";
 
 export default function Home() {
   return (
