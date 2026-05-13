@@ -37,8 +37,8 @@ const Footer = () => {
               {[
                 {
                   label: "Phone",
-                  content: "+234-818-706-2034",
-                  href: "tel:+2348187062034",
+                  content: "+234-703-631-9762",
+                  href: "tel:+2347036319762",
                 },
                 {
                   label: "Email",

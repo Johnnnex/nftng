@@ -50,7 +50,7 @@ const CONTACT_CARDS = [
     bgColor: "#FFD60A",
     color: "#000",
     content: "Speak to someone smart",
-    cta: { link: "tel:+15845430000", text: "+1 584 543 0000" },
+    cta: { link: "tel:+2347036319762", text: "+234-703-631-9762" },
   },
 ];
 
