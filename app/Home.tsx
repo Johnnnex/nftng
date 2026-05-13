@@ -53,10 +53,17 @@ export default function Home() {
         <FadeUp delay={0.2} className="flex justify-center">
           <div className="flex gap-4 items-center">
             <MagneticButton>
-              <Button className="md:min-w-36.75">Register</Button>
+              <Button url="/register" className="md:min-w-36.75">
+                Register
+              </Button>
             </MagneticButton>
             <MagneticButton>
-              <Button className="md:min-w-36.75" variant="secondary">
+              <Button
+                url="https://forms.gle/RsgRqTvWptGUCSqr9"
+                className="md:min-w-36.75"
+                target="_blank"
+                variant="secondary"
+              >
                 Sponsor
               </Button>
             </MagneticButton>
@@ -102,7 +109,9 @@ export default function Home() {
         <Panorama />
 
         <FadeUp className="w-fit mx-auto">
-          <Button>Become a Sponsor</Button>
+          <Button url="https://forms.gle/RsgRqTvWptGUCSqr9" target="_blank">
+            Become a Sponsor
+          </Button>
         </FadeUp>
       </section>
 

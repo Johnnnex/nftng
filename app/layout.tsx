@@ -2,6 +2,7 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import { Header, Footer, CustomCursor, MotionProvider } from "@/components";
 import localFont from "next/font/local";
+import { Toaster } from "sonner";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -124,6 +125,16 @@ export default function RootLayout({
           <Header />
           <main>{children}</main>
           <Footer />
+          <Toaster
+            position="bottom-right"
+            toastOptions={{
+              style: { fontFamily: "var(--font-poppins)" },
+              classNames: {
+                success: "!border-[#6EC93E]/30 !bg-white",
+                error: "!border-red-200 !bg-white",
+              },
+            }}
+          />
         </MotionProvider>
       </body>
     </html>

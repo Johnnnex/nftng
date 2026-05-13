@@ -1,5 +1,6 @@
 import { helveticaNeue } from "@/app/layout";
-import { Input, Button, SVGClient } from "@/components";
+import { SVGClient } from "@/components";
+import { NewsletterForm } from "./NewsletterForm";
 import { cn } from "@/lib";
 import Link from "next/link";
 
@@ -17,12 +18,7 @@ const Footer = () => {
             >
               Stay Connected, Let&apos;s Do Something Great Together.
             </h2>
-            <div className="flex relative z-1 md:flex-row flex-col gap-1 md:gap-2.25">
-              <Input className="lg:w-90 w-full!" placeholder="Input Email..." />
-              <Button className="bg-black font-medium text-[.875rem] rounded-lg min-w-21.75">
-                Subscribe
-              </Button>
-            </div>
+            <NewsletterForm />
           </div>
           <SVGClient
             className="lg:-ml-10 absolute lg:relative hidden bottom-0 translate-x-[29%] right-0 lg:translate-x-0 md:block"
@@ -46,8 +42,8 @@ const Footer = () => {
                 },
                 {
                   label: "Email",
-                  content: "richierammy1016@gmail.com",
-                  href: "mail:richierammy1016@gmail.com",
+                  content: "support@nftng.io",
+                  href: "mail:support@nftng.io",
                 },
               ]?.map((item, index) => (
                 <div
@@ -86,10 +82,26 @@ const Footer = () => {
               {
                 title: "Socials",
                 children: [
-                  { name: "X (Twitter)", url: "/twitter" },
-                  { name: "Telegram", url: "/telegram" },
-                  { name: "LinkedIn", url: "/linkedin" },
-                  { name: "Instagram", url: "/instagram" },
+                  {
+                    name: "X (Twitter)",
+                    url: "https://x.com/NFT__NG",
+                    target: "_blank",
+                  },
+                  {
+                    name: "Telegram",
+                    url: "https://t.me/nftng24",
+                    target: "_blank",
+                  },
+                  {
+                    name: "LinkedIn",
+                    url: "https://www.linkedin.com/company/nft-ng/",
+                    target: "_blank",
+                  },
+                  {
+                    name: "Instagram",
+                    url: "https://www.instagram.com/nft__ng",
+                    target: "_blank",
+                  },
                 ],
               },
               {
@@ -114,6 +126,9 @@ const Footer = () => {
                     <Link
                       key={`__item__${index}__${childIndex}`}
                       href={childItem?.url}
+                      target={
+                        (childItem as { target: string })?.target || "_self"
+                      }
                       className="text-[#000000B2] text-nowrap text-[.875rem] font-medium"
                     >
                       {childItem?.name}

@@ -1,5 +1,6 @@
 export * from "./Header";
 export * from "./Footer";
+export * from "./NewsletterForm";
 export * from "./BrandSlider";
 export * from "./FAQs";
 export * from "./EventsCarousel";
@@ -7,3 +8,5 @@ export * from "./UpcomingEvent";
 export * from "./SponsorsSlider";
 export * from "./Panorama";
 export * from "./SpeakerMarquee";
+export * from "./TeamCard";
+export * from "./RegistrationSuccessModal";

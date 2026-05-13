@@ -1,6 +1,6 @@
 "use client";
 
-import { SVGClient } from "./SVGClient";
+import { SVGClient } from "../common";
 import { cn } from "@/lib";
 import type { TeamMember } from "@/data";
 

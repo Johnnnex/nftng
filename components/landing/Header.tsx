@@ -16,11 +16,27 @@ const navItems = [
     name: "Get Involved",
     isDropDown: true,
     dropDownItems: [
-      { name: "Apply to Speaker", href: "/speak" },
-      { name: "Apply to Sponsor", href: "/sponsor" },
-      { name: "Become a Volunteer", href: "/volunteer" },
-      { name: "Partner With Us", href: "/partner" },
-      { name: "Attend Event", href: "/event" },
+      {
+        name: "Apply to Speak",
+        href: "https://forms.gle/RsgRqTvWptGUCSqr9",
+        target: "_blank",
+      },
+      {
+        name: "Apply to Sponsor",
+        href: "https://forms.gle/RsgRqTvWptGUCSqr9",
+        target: "_blank",
+      },
+      {
+        name: "Become a Volunteer",
+        href: "https://forms.gle/8GCzeWMvXuBWJgUU9",
+        target: "_blank",
+      },
+      {
+        name: "Partner With Us",
+        href: "https://forms.gle/RsgRqTvWptGUCSqr9",
+        target: "_blank",
+      },
+      { name: "Attend Event", href: "/register" },
     ],
   },
   { name: "Collections", href: "/collections" },
@@ -73,6 +89,7 @@ const Header = () => {
                                 (childItem, childIndex) => (
                                   <Link
                                     href={childItem?.href}
+                                    target={childItem?.target || "_self"}
                                     className={cn(
                                       "group/item flex items-center justify-between gap-6 px-3 py-2.5 rounded-md text-[.8125rem] font-medium transition-all duration-200",
                                       childItem?.href === pathname
@@ -181,6 +198,7 @@ const Header = () => {
                               <li key={`__mob_child__${ci}`}>
                                 <Link
                                   href={child.href}
+                                  target={child?.target || "_self"}
                                   onClick={() => {
                                     setIsOpen(false);
                                     setGetInvolvedOpen(false);
