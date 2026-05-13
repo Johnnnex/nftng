@@ -88,10 +88,10 @@ const Events = () => {
       <section className="pt-16.25 md:pt-20 px-4 lg:px-7.5 pb-16.25 md:pb-9 max-w-450 mx-auto">
         <StaggerContainer className="grid grid-cols-1 sm:grid-cols-4 lg:grid-cols-3 gap-9.25 sm:gap-2.5">
           {[
-            { countdownDate: "" },
-            { countdownDate: "" },
-            { countdownDate: "" },
-          ].map((_, index) => (
+            { date: "2026-07-26T00:00:00" },
+            { date: "2026-07-30T00:00:00" },
+            { date: "2026-07-31T20:00:00" },
+          ].map(({ date }, index) => (
             <StaggerItem
               key={`__item__${index}__`}
               className={cn(
@@ -107,6 +107,7 @@ const Events = () => {
               />
               <div className="py-6 absolute bottom-0 left-0 w-full flex justify-center bg-black">
                 <CountDown
+                  targetDate={date}
                   className="gap-1.25"
                   boxClassName="rounded-2xl md:w-20 w-16.75 md:h-20 h-16.75"
                   numberClassName="text-[1.125rem] md:text-[1.375rem]"

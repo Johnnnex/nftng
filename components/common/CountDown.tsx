@@ -1,86 +1,60 @@
 "use client";
 
-import { Fragment } from "react";
+import { Fragment, useState, useEffect } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { cn } from "@/lib";
 import { useReducedMotion } from "@/components";
 
-// ─────────────────────────────────────────────────────────────────────────────
-// PLACEHOLDER — delete this block when the event date is set
-// ─────────────────────────────────────────────────────────────────────────────
-const GlowPulse = ({ className }: { className?: string }) => {
-  const reduced = useReducedMotion();
-  return (
-    <span
-      className={cn(className, !reduced && "animate-pulse")}
-      style={
-        !reduced
-          ? { textShadow: "0 0 10px rgba(110, 201, 62, 0.45)" }
-          : undefined
-      }
-    >
-      --
-    </span>
-  );
-};
-// ─────────────────────────────────────────────────────────────────────────────
-// END PLACEHOLDER
-// ─────────────────────────────────────────────────────────────────────────────
-
-// ─────────────────────────────────────────────────────────────────────────────
-// REAL COUNTDOWN — when event date is confirmed, do this:
-//
-//  1. Uncomment the import line below
-//  2. Uncomment useCountdown + FlipDigit
-//  3. Uncomment `const time = useCountdown(targetDate!)` inside CountDown
-//  4. Uncomment `targetDate?: Date` in CountDownProps
-//  5. In the JSX, uncomment <FlipDigit /> and delete <GlowPulse />
-//  6. In Events.tsx add targetDate={new Date("YYYY-MM-DD")} to both <CountDown />
-//  7. Delete the PLACEHOLDER block above
-// ─────────────────────────────────────────────────────────────────────────────
-// import { AnimatePresence, motion } from "framer-motion";
-//
-// function useCountdown(targetDate: Date) {
-//   const calc = () => {
-//     const diff = Math.max(0, targetDate.getTime() - Date.now());
-//     return {
-//       days:    Math.floor(diff / 86400000),
-//       hours:   Math.floor((diff % 86400000) / 3600000),
-//       minutes: Math.floor((diff % 3600000) / 60000),
-//       seconds: Math.floor((diff % 60000) / 1000),
-//     };
-//   };
-//   const [time, setTime] = useState(calc);
-//   useEffect(() => {
-//     const id = setInterval(() => setTime(calc()), 1000);
-//     return () => clearInterval(id);
-//   }, []);
-//   return time;
-// }
-//
-// const FlipDigit = ({ value }: { value: number }) => (
-//   <span className="relative overflow-hidden inline-block h-[1.2em] w-[0.6em]">
-//     <AnimatePresence mode="popLayout" initial={false}>
-//       <motion.span
-//         key={value}
-//         className="absolute inset-0 flex items-center justify-center"
-//         initial={{ y: "-60%", opacity: 0 }}
-//         animate={{ y: 0, opacity: 1 }}
-//         exit={{ y: "60%", opacity: 0 }}
-//         transition={{ duration: 0.3, ease: "easeInOut" }}
-//       >
-//         {value}
-//       </motion.span>
-//     </AnimatePresence>
-//   </span>
-// );
-// ─────────────────────────────────────────────────────────────────────────────
-// END REAL COUNTDOWN
-// ─────────────────────────────────────────────────────────────────────────────
-
 const UNITS = ["Days", "Hours", "Minutes", "Seconds"] as const;
 
+const ZERO = { days: 0, hours: 0, minutes: 0, seconds: 0 };
+
+function useCountdown(targetDate: Date | string) {
+  const [time, setTime] = useState(ZERO);
+
+  useEffect(() => {
+    const target = typeof targetDate === "string" ? new Date(targetDate) : targetDate;
+    const calc = () => {
+      const diff = Math.max(0, target.getTime() - Date.now());
+      return {
+        days: Math.floor(diff / 86400000),
+        hours: Math.floor((diff % 86400000) / 3600000),
+        minutes: Math.floor((diff % 3600000) / 60000),
+        seconds: Math.floor((diff % 60000) / 1000),
+      };
+    };
+    setTime(calc());
+    const id = setInterval(() => setTime(calc()), 1000);
+    return () => clearInterval(id);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return time;
+}
+
+const FlipDigit = ({ value, reduced }: { value: number; reduced: boolean }) => (
+  <span className="relative overflow-hidden inline-block h-[1.2em] w-[0.6em]">
+    {reduced ? (
+      <span className="absolute inset-0 flex items-center justify-center">{value}</span>
+    ) : (
+      <AnimatePresence mode="popLayout" initial={false}>
+        <motion.span
+          key={value}
+          className="absolute inset-0 flex items-center justify-center"
+          initial={{ y: "-60%", opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: "60%", opacity: 0 }}
+          transition={{ duration: 0.3, ease: "easeInOut" }}
+        >
+          {value}
+        </motion.span>
+      </AnimatePresence>
+    )}
+  </span>
+);
+
 type CountDownProps = {
-  // targetDate?: Date;  // ← uncomment when date is confirmed (step 4 above)
+  targetDate: Date | string;
   className?: string;
   boxClassName?: string;
   numberClassName?: string;
@@ -89,13 +63,16 @@ type CountDownProps = {
 };
 
 const CountDown = ({
+  targetDate,
   className,
   boxClassName,
   numberClassName,
   labelClassName,
   separatorClassName,
 }: CountDownProps) => {
-  // const time = useCountdown(targetDate!); // ← uncomment when date is set (step 3)
+  const reduced = !!useReducedMotion();
+  const time = useCountdown(targetDate);
+  const values = [time.days, time.hours, time.minutes, time.seconds];
 
   return (
     <div className={cn("flex items-center gap-1.75", className)}>
@@ -107,33 +84,10 @@ const CountDown = ({
               boxClassName,
             )}
           >
-            {/* ── PLACEHOLDER: delete this line, replace with FlipDigit below ── */}
-            <GlowPulse
-              className={cn(
-                "text-white font-semibold tracking-[-4%]",
-                numberClassName,
-              )}
-            />
-
-            {/* ── REAL COUNTDOWN: uncomment when date is set (step 5) ──────────
-            <span className={cn("flex", numberClassName)}>
-              <FlipDigit
-                value={Math.floor(
-                  (index === 0 ? time.days :
-                   index === 1 ? time.hours :
-                   index === 2 ? time.minutes : time.seconds) / 10
-                )}
-              />
-              <FlipDigit
-                value={
-                  (index === 0 ? time.days :
-                   index === 1 ? time.hours :
-                   index === 2 ? time.minutes : time.seconds) % 10
-                }
-              />
+            <span className={cn("flex text-white font-semibold tracking-[-4%]", numberClassName)}>
+              <FlipDigit value={Math.floor(values[index] / 10)} reduced={reduced} />
+              <FlipDigit value={values[index] % 10} reduced={reduced} />
             </span>
-            ── END REAL COUNTDOWN ─────────────────────────────────────────── */}
-
             <span
               className={cn(
                 "text-white tracking-[-4%] font-normal",
