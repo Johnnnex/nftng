@@ -28,11 +28,7 @@ export async function POST(req: NextRequest) {
   await sendEmail({
     to: [{ email: recipient }],
     subject: `[Contact] ${subject}`,
-    htmlContent: contactReceiptEmail(
-      `${name}${x_handle ? ` (@${x_handle})` : ""} <${email}>`,
-      subject,
-      message,
-    ),
+    htmlContent: contactReceiptEmail(name, email, subject, message, x_handle ?? undefined),
   });
 
   return NextResponse.json({ success: true });
