@@ -69,11 +69,6 @@ const faqs: FAQ[] = [
     ),
   },
   {
-    question: "How do I register for the event?",
-    answer:
-      "Registration is not open yet, but it will be available soon. Once it goes live, you'll be able to sign up through the official website and receive further details about the event.",
-  },
-  {
     question: "How is Unchain Summer different from NFTNG?",
     answer:
       "Unchain Summer is a rebrand of NFTNG. While NFTNG started during the NFT era as a community focused on onboarding people into Web3 through events, the vision has expanded beyond NFTs into education, empowerment, and broader ecosystem growth. Unchain Summer reflects this change, serving as the current identity and experience, while still being powered by NFTNG.",

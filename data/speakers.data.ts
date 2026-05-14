@@ -6,7 +6,7 @@ export const SPEAKERS_A = [
     linkedinUrl: "https://www.linkedin.com/in/xeusthegreat",
   },
   {
-    name: "Chisom Felix, (Someh)",
+    name: "Chisom Felix (Someh)",
     title: "Marketing Lead, Blockchain.com Nigeria & Founder, Felbeth",
     image: "someh.png",
     linkedinUrl: "https://www.linkedin.com/in/chisom-felix-23516926b",
@@ -46,7 +46,7 @@ export const SPEAKERS_A = [
 export const SPEAKERS_B = [
   {
     name: "DeFi Princess",
-    title: "Founder, Seasoned Trader",
+    title: "Seasoned Trader",
     image: "defiprincess.png",
     linkedinUrl: "https://x.com/defiprincess",
   },

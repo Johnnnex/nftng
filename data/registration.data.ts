@@ -88,25 +88,25 @@ export const REGISTRATION_EVENTS: RegistrationEvent[] = [
 export const FORM_FIELDS: FieldConfig[] = [
   {
     kind: "text",
-    name: "first_name",
-    label: "First Name *",
-    placeholder: "John",
+    name: "alias",
+    label: "Web3 Alias *",
+    placeholder: "e.g. 0xSatoshi",
   },
-  { kind: "text", name: "last_name", label: "Last Name *", placeholder: "Doe" },
   {
     kind: "text",
     name: "email",
     label: "Email Address *",
-    placeholder: "john@example.com",
+    placeholder: "you@example.com",
     type: "email",
   },
-  {
-    kind: "text",
-    name: "phone",
-    label: "Phone Number *",
-    placeholder: "+234 800 000 0000",
-    type: "tel",
-  },
+  // Phone — commented out pending WhatsApp Business approval
+  // {
+  //   kind: "text",
+  //   name: "phone",
+  //   label: "Phone Number",
+  //   placeholder: "+234 800 000 0000",
+  //   type: "tel",
+  // },
   {
     kind: "select",
     name: "gender",
@@ -122,12 +122,13 @@ export const FORM_FIELDS: FieldConfig[] = [
     options: COUNTRIES,
   },
   { kind: "text", name: "city", label: "City *", placeholder: "e.g. Lagos" },
-  {
-    kind: "text",
-    name: "twitter_handle",
-    label: "X (Twitter) Handle",
-    placeholder: "@handle",
-  },
+  // X Handle — commented out, uncomment to re-enable
+  // {
+  //   kind: "text",
+  //   name: "twitter_handle",
+  //   label: "X (Twitter) Handle",
+  //   placeholder: "@handle",
+  // },
   {
     kind: "select",
     name: "what_describes_you",

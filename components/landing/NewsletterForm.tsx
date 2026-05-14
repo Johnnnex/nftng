@@ -40,9 +40,12 @@ const NewsletterForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit, onInvalid)} className="flex relative z-1 md:flex-row flex-col gap-1 md:gap-2.25">
+    <form
+      onSubmit={handleSubmit(onSubmit, onInvalid)}
+      className="flex relative z-1 md:flex-row flex-col gap-1 md:gap-2.25"
+    >
       <Input
-        className="lg:w-90 w-full!"
+        className="lg:w-90! w-full!"
         placeholder="Input Email..."
         type="email"
         {...register("email")}

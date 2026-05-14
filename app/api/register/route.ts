@@ -26,6 +26,19 @@ export async function POST(req: NextRequest) {
 
   const data = parsed.data;
 
+  const { data: existing } = await supabase
+    .from("registration")
+    .select("id")
+    .eq("email", data.email)
+    .maybeSingle();
+
+  if (existing) {
+    return NextResponse.json(
+      { error: "This email is already registered." },
+      { status: 400 },
+    );
+  }
+
   const { error: dbError } = await supabase.from("registration").insert([data]);
   if (dbError) {
     console.error("[register] Supabase insert error:", dbError);
@@ -38,8 +51,8 @@ export async function POST(req: NextRequest) {
   // Confirmation email — don't fail request if this errors
   try {
     await sendEmail({
-      to: [{ email: data.email, name: `${data.first_name} ${data.last_name}` }],
-      subject: "Welcome to Unchain Summer 🌍",
+      to: [{ email: data.email, name: data.alias }],
+      subject: "Welcome to Unchain Summer",
       htmlContent: registrationConfirmationEmail(data),
     });
   } catch (err) {
@@ -48,7 +61,7 @@ export async function POST(req: NextRequest) {
 
   // WhatsApp — disabled until Twilio WhatsApp Business approval is live.
   // To enable: set ENABLE_WHATSAPP=true in .env
-  if (process.env.ENABLE_WHATSAPP === "true") {
+  if (process.env.ENABLE_WHATSAPP === "true" && data.phone) {
     try {
       await sendWhatsAppMessage(data.phone, REGISTRATION_WA_MESSAGE);
     } catch (err) {

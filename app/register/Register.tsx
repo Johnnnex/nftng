@@ -116,9 +116,9 @@ const Register = () => {
       )}
 
       <section className="md:py-34 overflow-x-hidden py-22.25 sm:px-8 px-4">
-        <div className="max-w-300 h-fit mx-auto relative">
-          <div className="relative bg-[#F9F9F9] shadow-[0px_4px_40.1px_0px_rgba(0,0,0,0.1)] lg:overflow-hidden flex flex-col lg:flex-row lg:aspect-[1.404]">
-            <figure className="lg:w-[38%] aspect-[1.1538] lg:aspect-auto relative z-1 shadow-[0px_4px_40.1px_0px_rgba(0,0,0,0.1)] bg-center bg-cover bg-linear-to-b from-[#FFFFFF] to-[#56C8F2] bg-blend-overlay bg-[url(/images/reg-cover-sm.png)] lg:bg-[url(/images/reg-cover.png)] flex items-center justify-center">
+        <div className="max-w-300 mx-auto relative">
+          <div className="relative bg-[#F9F9F9] shadow-[0px_4px_40.1px_0px_rgba(0,0,0,0.1)] lg:overflow-hidden flex flex-col lg:flex-row lg:aspect-[1.43]">
+            <figure className="lg:w-[38%] lg:rounded-none rounded-t-sm aspect-[1.404] lg:aspect-auto relative z-1 shadow-[0px_4px_40.1px_0px_rgba(0,0,0,0.1)] bg-center bg-cover bg-linear-to-b from-[#FFFFFF] to-[#56C8F2] bg-blend-overlay bg-[url(/images/reg-cover-sm.png)] lg:bg-[url(/images/reg-cover.png)] flex items-center justify-center">
               <SVGClient
                 className="sm:block hidden"
                 src="/svg/u-summer-logo-reg.svg"

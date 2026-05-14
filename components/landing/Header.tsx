@@ -23,8 +23,7 @@ const navItems = [
       },
       {
         name: "Apply to Sponsor",
-        href: "https://forms.gle/RsgRqTvWptGUCSqr9",
-        target: "_blank",
+        href: "mailto:partnerships@nftng.io",
       },
       {
         name: "Become a Volunteer",
@@ -33,8 +32,7 @@ const navItems = [
       },
       {
         name: "Partner With Us",
-        href: "https://forms.gle/RsgRqTvWptGUCSqr9",
-        target: "_blank",
+        href: "mailto:partnerships@nftng.io",
       },
       { name: "Attend Event", href: "/register" },
     ],

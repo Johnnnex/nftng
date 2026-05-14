@@ -59,9 +59,8 @@ export default function Home() {
             </MagneticButton>
             <MagneticButton>
               <Button
-                url="https://forms.gle/RsgRqTvWptGUCSqr9"
+                url="mailto:partnerships@nftng.io"
                 className="md:min-w-36.75"
-                target="_blank"
                 variant="secondary"
               >
                 Sponsor
@@ -109,7 +108,7 @@ export default function Home() {
         <Panorama />
 
         <FadeUp className="w-fit mx-auto">
-          <Button url="https://forms.gle/RsgRqTvWptGUCSqr9" target="_blank">
+          <Button url="mailto:partnerships@nftng.io">
             Become a Sponsor
           </Button>
         </FadeUp>

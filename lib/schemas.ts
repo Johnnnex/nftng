@@ -1,10 +1,9 @@
 import { z } from "zod";
 
 export const registerSchema = z.object({
-  first_name: z.string().min(1, "First name is required"),
-  last_name: z.string().min(1, "Last name is required"),
+  alias: z.string().min(1, "Web3 alias is required"),
   email: z.string().email("Enter a valid email address"),
-  phone: z.string().min(7, "Enter a valid phone number"),
+  phone: z.string().optional(),
   gender: z.string().min(1, "Please select your gender"),
   country: z.string().min(1, "Please select your country"),
   city: z.string().min(1, "City is required"),

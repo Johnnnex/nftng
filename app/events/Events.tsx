@@ -111,8 +111,8 @@ const Events = () => {
       </section>
 
       <FadeUp className="flex flex-col sm:flex-row mt-12.75 mb-6.5 md:mb-8 w-fit mx-auto gap-2 sm:gap-4">
-        <Button className="w-65 sm:w-full">Register</Button>
-        <Button className="w-65 sm:w-full" variant="secondary">
+        <Button className="w-65 sm:w-full" url="/register">Register</Button>
+        <Button className="w-65 sm:w-full" variant="secondary" url="mailto:partnerships@nftng.io">
           Sponsor
         </Button>
       </FadeUp>
@@ -122,9 +122,9 @@ const Events = () => {
       <section className="pt-16.25 md:pt-20 px-4 lg:px-7.5 pb-16.25 md:pb-9 max-w-450 mx-auto">
         <StaggerContainer className="grid grid-cols-1 sm:grid-cols-4 lg:grid-cols-3 gap-9.25 sm:gap-2.5">
           {[
-            { date: "2026-07-26T00:00:00" },
-            { date: "2026-07-30T00:00:00" },
-            { date: "2026-07-31T20:00:00" },
+            { date: "2026-07-31T20:00:00" }, // Boxing — card 1
+            { date: "2026-07-26T00:00:00" }, // Football — card 2
+            { date: "2026-07-30T00:00:00" }, // Conference — card 3
           ].map(({ date }, index) => (
             <StaggerItem
               key={`__item__${index}__`}
