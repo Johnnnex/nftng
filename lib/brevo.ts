@@ -3,8 +3,8 @@ import "server-only";
 const BREVO_API = "https://api.brevo.com/v3";
 const API_KEY = process.env.BREVO_API_KEY!;
 const SENDER = {
-  email: process.env.BREVO_SENDER_EMAIL ?? "noreply@nftng.io",
-  name: process.env.BREVO_SENDER_NAME ?? "Unchain Summer",
+  email: process.env.BREVO_SENDER_EMAIL!,
+  name: process.env.BREVO_SENDER_NAME!,
 };
 
 type SendEmailParams = {

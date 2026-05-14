@@ -112,6 +112,31 @@ export const monumentExtended = localFont({
   variable: "--font-monument-extended",
 });
 
+
+const ORG_SCHEMA = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://unchainsummer.nftng.io/#organization",
+      name: "NFTNG",
+      url: "https://unchainsummer.nftng.io",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://unchainsummer.nftng.io/seo/open-graph.png",
+      },
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://unchainsummer.nftng.io/#website",
+      url: "https://unchainsummer.nftng.io",
+      name: "Unchain Summer 2026",
+      description: "Africa's Most Immersive Web3 Experience, Powered by NFTNG",
+      publisher: { "@id": "https://unchainsummer.nftng.io/#organization" },
+    },
+  ],
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -120,6 +145,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${poppins.variable} h-full antialiased`}>
       <body className="bg-white!">
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(ORG_SCHEMA) }} />
         <MotionProvider>
           <CustomCursor />
           <Header />

@@ -1,4 +1,14 @@
+import type { Metadata } from "next";
+import { BASE_URL } from "@/lib";
 import { Button, SVGClient, FadeUp, FadeIn, WordByWord } from "@/components";
+
+export const metadata: Metadata = {
+  metadataBase: new URL(BASE_URL),
+  title: "Unchain Summer | Page Not Found",
+  description:
+    "The page you're looking for doesn't exist. Head back to Unchain Summer – Africa's most immersive Web3 experience, powered by NFTNG.",
+  robots: { index: false, follow: true },
+};
 
 export default function NotFound() {
   return (

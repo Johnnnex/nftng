@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Dark mode: prevent Apple Mail from auto-inverting your design -->
+  <meta name="color-scheme" content="light dark" />
+  <meta name="supported-color-schemes" content="light dark" />
+  <title>Registration Confirmed — Unchain Summer 2026</title>
+
+  <!--
+    STYLE BLOCK: only for responsive breakpoints + hover states.
+    Gmail strips this entirely — that's fine, these are enhancements only.
+    ALL layout/color styles must be inlined below.
+  -->
+  <style>
+    @media only screen and (max-width: 600px) {
+      .outer-table   { padding: 0 !important; }
+      .card          { width: 100% !important; border-radius: 0 !important; }
+      .hero-text     { font-size: 32px !important; }
+      .body-pad      { padding: 32px 24px !important; }
+      .two-col td    { display: block !important; width: 100% !important; }
+    }
+    a.cta-btn:hover { opacity: 0.88; }
+  </style>
+</head>
+
+<!--
+  body: sets the page canvas color.
+  Use #F4F4F4 (light mode) — Brevo renders body bg behind the email.
+  Set font-family with full sans-serif fallback chain.
+-->
+<body style="margin:0; padding:0; background-color:#F4F4F4;
+             font-family:'Helvetica Neue', Arial, 'Segoe UI', sans-serif;
+             -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%;">
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       BREVO TRACKING PIXEL BUFFER
+       Brevo injects a 1×1 pixel at the very top of transactional sends.
+       This invisible row absorbs the ~20px gap it creates.
+  ════════════════════════════════════════════════════════════════ -->
+  <table width="100%" cellpadding="0" cellspacing="0" role="presentation"
+         style="background-color:#F4F4F4;">
+    <tr><td height="1" style="font-size:0; line-height:0;">&nbsp;</td></tr>
+  </table>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       OUTER WRAPPER — keeps everything centered at 600px
+  ════════════════════════════════════════════════════════════════ -->
+  <table class="outer-table" width="100%" cellpadding="0" cellspacing="0"
+         role="presentation"
+         style="background-color:#F4F4F4; padding:40px 16px;">
+    <tr>
+      <td align="center" valign="top">
+
+        <!-- 600px card container -->
+        <table class="card" width="600" cellpadding="0" cellspacing="0"
+               role="presentation"
+               style="max-width:600px; width:100%;">
+
+
+          <!-- ══════════════════════════════════════════════════════
+               SECTION 1 — DARK HEADER (logo bar)
+               Background: #1D1D1D  |  Text: #FFFFFF
+               Replace the img src with your absolute CDN logo URL.
+               Export logo PNG at 2× (e.g. 240×60px file for a 120×30 display).
+          ═══════════════════════════════════════════════════════ -->
+          <tr>
+            <td style="background-color:#1D1D1D;
+                        border-radius:16px 16px 0 0;
+                        padding:28px 48px;
+                        text-align:center;">
+
+              <!-- LOGO — replace src, width, height with real values -->
+              <img src="https://unchainsummer.nftng.io/images/email/logo@2x.png"
+                   width="140" height="40" alt="Unchain Summer"
+                   style="width:140px; max-width:100%; height:auto; display:block; margin:0 auto;" />
+
+            </td>
+          </tr>
+
+
+          <!-- ══════════════════════════════════════════════════════
+               SECTION 2 — HERO (dark with banner image)
+               Option A: full-width banner PNG (swap the img)
+               Option B: delete img and use the green gradient div below
+               Background: #1D1D1D continues from header
+          ═══════════════════════════════════════════════════════ -->
+          <tr>
+            <td style="background-color:#1D1D1D; padding:0;">
+
+              <!--
+                BANNER IMAGE
+                Export at 1200×630px (2× of 600×315), display at 600px wide.
+                Replace src with absolute CDN URL.
+                Delete this img tag entirely if using text-only hero below.
+              -->
+              <img src="https://unchainsummer.nftng.io/images/email/hero-banner@2x.png"
+                   width="600" height="315" alt="Unchain Summer 2026 – The North Star"
+                   style="width:100%; max-width:600px; height:auto; display:block;" />
+
+            </td>
+          </tr>
+
+
+          <!-- ══════════════════════════════════════════════════════
+               SECTION 3 — HERO TEXT (dark background continues)
+               Background: #1D1D1D  |  Text: #FFFFFF / #6EC93E
+               This sits below the banner image.
+          ═══════════════════════════════════════════════════════ -->
+          <tr>
+            <td style="background-color:#1D1D1D;
+                        padding:48px 48px 52px;
+                        text-align:center;">
+
+              <!-- Eyebrow label -->
+              <p style="margin:0 0 16px; font-size:11px; font-weight:700;
+                         color:#6EC93E; text-transform:uppercase;
+                         letter-spacing:2.5px;">
+                Registration Confirmed
+              </p>
+
+              <!-- Main headline — uses template variable -->
+              <h1 class="hero-text"
+                  style="margin:0 0 16px; font-size:40px; font-weight:800;
+                          color:#FFFFFF; letter-spacing:-1px; line-height:1.15;">
+                Welcome,<br />{{first_name}}.
+              </h1>
+
+              <!-- Subline -->
+              <p style="margin:0; font-size:16px; font-weight:400;
+                         color:rgba(255,255,255,0.7); line-height:1.65;">
+                You're officially part of the experience.
+              </p>
+
+            </td>
+          </tr>
+
+
+          <!-- ══════════════════════════════════════════════════════
+               SECTION 4 — WHITE BODY (light section)
+               Background: #FFFFFF  |  Text: #1A1A1A / #555555
+               This is where the main message content lives.
+          ═══════════════════════════════════════════════════════ -->
+          <tr>
+            <td class="body-pad"
+                style="background-color:#FFFFFF; padding:48px;">
+
+              <!-- Opening paragraph -->
+              <p style="margin:0 0 20px; font-size:16px; font-weight:400;
+                         color:#1A1A1A; line-height:1.75;">
+                We're glad you're here. Unchain Summer is where Africa's builders,
+                creators, and Web3 pioneers come together — and you just made the list.
+              </p>
+
+              <p style="margin:0 0 36px; font-size:15px; font-weight:400;
+                         color:#555555; line-height:1.75;">
+                We'll reach out as we get closer to the event with everything you
+                need — agenda, venue, and all the good stuff. Until then, you're
+                locked in.
+              </p>
+
+              <!-- ── Event list card (light green tint) ── -->
+              <table width="100%" cellpadding="0" cellspacing="0" role="presentation"
+                     style="background-color:#F9FFF5;
+                             border-left:4px solid #6EC93E;
+                             border-radius:0 8px 8px 0;
+                             margin-bottom:36px;">
+                <tr>
+                  <td style="padding:20px 24px;">
+
+                    <p style="margin:0 0 12px; font-size:11px; font-weight:700;
+                               color:#6EC93E; text-transform:uppercase;
+                               letter-spacing:1.5px;">
+                      You're registered for
+                    </p>
+
+                    <!--
+                      EVENT LIST — inject <li> items here in code.
+                      Each <li> style must be inlined:
+                      <li style="margin-bottom:8px; font-size:15px; color:#1A1A1A;">Event Name</li>
+                    -->
+                    <ul style="margin:0; padding-left:18px;">
+                      <li style="margin-bottom:8px; font-size:15px; color:#1A1A1A;">
+                        Football Tournament — 26 July 2026
+                      </li>
+                      <li style="margin-bottom:0; font-size:15px; color:#1A1A1A;">
+                        Unchain Summer Conference — 30 July 2026
+                      </li>
+                    </ul>
+
+                  </td>
+                </tr>
+              </table>
+
+
+              <!-- ── Event details (two-column) ── -->
+              <!--
+                TWO COLUMNS: Date + Location side by side.
+                On mobile the @media rule above stacks them.
+                Each cell must have its own background-color + color set.
+              -->
+              <table class="two-col" width="100%" cellpadding="0" cellspacing="0"
+                     role="presentation" style="margin-bottom:40px;">
+                <tr>
+                  <!-- Date pill -->
+                  <td width="48%" valign="top"
+                      style="background-color:#F4F4F4;
+                              border-radius:10px;
+                              padding:20px 24px;">
+                    <p style="margin:0 0 6px; font-size:11px; font-weight:700;
+                               color:#888888; text-transform:uppercase;
+                               letter-spacing:1.5px;">
+                      Dates
+                    </p>
+                    <p style="margin:0; font-size:15px; font-weight:600;
+                               color:#1A1A1A; line-height:1.5;">
+                      July 26 – August 1, 2026
+                    </p>
+                  </td>
+
+                  <!-- Spacer -->
+                  <td width="4%"></td>
+
+                  <!-- Location pill -->
+                  <td width="48%" valign="top"
+                      style="background-color:#F4F4F4;
+                              border-radius:10px;
+                              padding:20px 24px;">
+                    <p style="margin:0 0 6px; font-size:11px; font-weight:700;
+                               color:#888888; text-transform:uppercase;
+                               letter-spacing:1.5px;">
+                      Location
+                    </p>
+                    <p style="margin:0; font-size:15px; font-weight:600;
+                               color:#1A1A1A; line-height:1.5;">
+                      Lagos, Nigeria
+                    </p>
+                  </td>
+                </tr>
+              </table>
+
+
+              <!-- ── CTA Button ── -->
+              <!--
+                Bulletproof button: table-based so it renders in Outlook.
+                Do NOT use <a> or <div> alone — Outlook ignores padding on those.
+              -->
+              <table cellpadding="0" cellspacing="0" role="presentation"
+                     style="margin:0 auto 40px;">
+                <tr>
+                  <td style="background-color:#6EC93E;
+                              border-radius:10px;
+                              text-align:center;">
+                    <a class="cta-btn"
+                       href="https://unchainsummer.nftng.io"
+                       style="display:inline-block;
+                               padding:16px 40px;
+                               font-size:15px; font-weight:700;
+                               color:#FFFFFF; text-decoration:none;
+                               letter-spacing:0.3px;">
+                      Visit Unchain Summer
+                    </a>
+                  </td>
+                </tr>
+              </table>
+
+
+              <!-- ── Support line ── -->
+              <p style="margin:0 0 8px; font-size:15px; font-weight:600;
+                         color:#1A1A1A;">
+                Got questions?
+              </p>
+              <p style="margin:0 0 40px; font-size:15px; color:#555555;
+                         line-height:1.75;">
+                Hit us at
+                <a href="mailto:support@nftng.io"
+                   style="color:#6EC93E; text-decoration:none; font-weight:600;">
+                  support@nftng.io
+                </a>
+                — we're real people and we actually respond.
+              </p>
+
+              <!-- ── Sign-off ── -->
+              <p style="margin:0; font-size:15px; color:#1A1A1A; line-height:1.75;">
+                See you there 🌍<br />
+                <strong style="color:#6EC93E;">— The Unchain Summer Team</strong>
+              </p>
+
+            </td>
+          </tr>
+
+
+          <!-- ══════════════════════════════════════════════════════
+               SECTION 5 — DARK FOOTER
+               Background: #1D1D1D  |  Text: rgba(255,255,255,0.4)
+               Social icons: PNG only (no SVG), 24×24 display, 48×48 file
+          ═══════════════════════════════════════════════════════ -->
+          <tr>
+            <td style="background-color:#1D1D1D;
+                        border-radius:0 0 16px 16px;
+                        padding:36px 48px;
+                        text-align:center;">
+
+              <!--
+                SOCIAL ICONS ROW — replace src URLs, keep width/height.
+                Use 48×48px PNG files displayed at 24px.
+                Delete this table if you have no social icons yet.
+              -->
+              <table cellpadding="0" cellspacing="0" role="presentation"
+                     style="margin:0 auto 24px;">
+                <tr>
+                  <td style="padding:0 8px;">
+                    <a href="https://x.com/nftng_" style="text-decoration:none;">
+                      <img src="https://unchainsummer.nftng.io/images/email/icon-x@2x.png"
+                           width="24" height="24" alt="X / Twitter"
+                           style="width:24px; height:24px; display:block;" />
+                    </a>
+                  </td>
+                  <td style="padding:0 8px;">
+                    <a href="https://instagram.com/nftng_" style="text-decoration:none;">
+                      <img src="https://unchainsummer.nftng.io/images/email/icon-ig@2x.png"
+                           width="24" height="24" alt="Instagram"
+                           style="width:24px; height:24px; display:block;" />
+                    </a>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Divider -->
+              <table width="100%" cellpadding="0" cellspacing="0" role="presentation"
+                     style="margin-bottom:24px;">
+                <tr>
+                  <td style="border-top:1px solid rgba(255,255,255,0.1);
+                              font-size:0; line-height:0;">&nbsp;</td>
+                </tr>
+              </table>
+
+              <!-- Footer text -->
+              <p style="margin:0 0 8px; font-size:12px; font-weight:400;
+                         color:rgba(255,255,255,0.4); line-height:1.8;">
+                © {{year}} NFTNG · Unchain Summer 2026 · Lagos, Nigeria
+              </p>
+              <p style="margin:0; font-size:12px; color:rgba(255,255,255,0.3);
+                         line-height:1.8;">
+                Powered by NFTNG &nbsp;·&nbsp;
+                <a href="mailto:support@nftng.io"
+                   style="color:rgba(255,255,255,0.3); text-decoration:none;">
+                  support@nftng.io
+                </a>
+              </p>
+
+            </td>
+          </tr>
+
+
+        </table>
+        <!-- / 600px card -->
+
+      </td>
+    </tr>
+  </table>
+  <!-- / outer wrapper -->
+
+</body>
+</html>

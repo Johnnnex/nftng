@@ -14,9 +14,43 @@ import {
 import { cn } from "@/lib";
 import { monumentExtended } from "../layout";
 
+const EVENT_SCHEMA = {
+  "@context": "https://schema.org",
+  "@type": "Event",
+  name: "Unchain Summer 2026",
+  startDate: "2026-07-26",
+  endDate: "2026-08-01",
+  description:
+    "Africa's Most Immersive Web3 Experience. A week-long journey of culture, sport, education, and Web3 connection, powered by NFTNG. Theme: The North Star.",
+  eventStatus: "https://schema.org/EventScheduled",
+  eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+  image: "https://unchainsummer.nftng.io/seo/open-graph.png",
+  url: "https://unchainsummer.nftng.io/events",
+  organizer: {
+    "@type": "Organization",
+    name: "NFTNG",
+    url: "https://unchainsummer.nftng.io",
+  },
+  location: {
+    "@type": "Place",
+    name: "Lagos, Nigeria",
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Lagos",
+      addressCountry: "NG",
+    },
+  },
+  subEvent: [
+    { "@type": "Event", name: "Unchain Summer Football", startDate: "2026-07-26" },
+    { "@type": "Event", name: "Unchain Summer Conference", startDate: "2026-07-30" },
+    { "@type": "Event", name: "Unchain Summer Boxing Night", startDate: "2026-07-31" },
+  ],
+};
+
 const Events = () => {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(EVENT_SCHEMA) }} />
       <section className="md:pt-38.5 pt-33.75 lg:px-7.5 px-4 pb-9.5 md:pb-16.5 max-w-450 mx-auto">
         <WordByWord
           text="Africa's Most Immersive Web3 Experience"
