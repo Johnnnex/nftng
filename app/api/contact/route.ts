@@ -14,13 +14,16 @@ export async function POST(req: NextRequest) {
   const parsed = contactSchema.safeParse(body);
   if (!parsed.success) {
     return NextResponse.json(
-      { error: "Validation failed", issues: parsed.error.flatten().fieldErrors },
+      {
+        error: "Validation failed",
+        issues: parsed.error.flatten().fieldErrors,
+      },
       { status: 422 },
     );
   }
 
   const { name, email, subject, x_handle, message } = parsed.data;
-  const recipient = process.env.CONTACT_RECIPIENT_EMAIL ?? "support@nftng.io";
+  const recipient = process.env.CONTACT_RECIPIENT_EMAIL!;
 
   await sendEmail({
     to: [{ email: recipient }],
