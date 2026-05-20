@@ -58,13 +58,13 @@ export const DESCRIBES_YOU: Option[] = [
 ];
 
 export const TOPICS: Option[] = [
-  { value: "defi", label: "DeFi" },
-  { value: "cefi", label: "CeFi" },
-  { value: "nfts", label: "NFTs & Culture" },
-  { value: "trading", label: "Trading" },
-  { value: "airdrops", label: "Airdrops" },
-  { value: "community", label: "Community Building" },
+  { value: "ai_tech", label: "AI & Tech" },
   { value: "regulations", label: "Regulations & Compliance" },
+  { value: "trading", label: "Trading (Crypto & Forex)" },
+  { value: "nfts_gaming", label: "NFTs & Gaming" },
+  { value: "creator_economy", label: "Creator Economy" },
+  { value: "cefi", label: "CeFi" },
+  { value: "defi", label: "DeFi (staking, airdrops e.t.c)" },
 ];
 
 export const FIRST_TIME: Option[] = [
