@@ -17,68 +17,7 @@ import {
 import { Icon } from "@iconify/react";
 import { cn } from "@/lib";
 import { WordByWord, useReducedMotion } from "@/components";
-
-// ─── Mock data — replace with real API ───────────────────────────────────────
-const MOCK_PRODUCTS = [
-  {
-    id: 1,
-    name: "Unchain Summer (Men Merch)",
-    price: "$100",
-    rating: 2.5,
-    image: "/images/demoprod-1.jpg",
-  },
-  {
-    id: 2,
-    name: "Unchain Summer (Women Merch)",
-    price: "$360",
-    rating: 4.5,
-    image: "/images/demoprod-2.png",
-  },
-  {
-    id: 3,
-    name: "Unchain Summer (Keyboard)",
-    price: "$700",
-    rating: 5,
-    image: "/images/demoprod-3.png",
-  },
-  {
-    id: 4,
-    name: "Unchain Summer (Sticker)",
-    price: "$500",
-    rating: 4.5,
-    image: "/images/demoprod-4.png",
-  },
-  {
-    id: 5,
-    name: "Unchain Summer (Women Merch)",
-    price: "$960",
-    rating: 5,
-    image: "/images/demoprod-5.jpg",
-  },
-  {
-    id: 6,
-    name: "Unchain Summer (Men Merch)",
-    price: "$1160",
-    rating: 4.5,
-    image: "/images/demoprod-6.jpg",
-  },
-  {
-    id: 7,
-    name: "US Sticker",
-    price: "$660",
-    rating: 4.5,
-    image: "/images/demoprod-7.png",
-  },
-  {
-    id: 8,
-    name: "Unchain Summer (Men Merch)",
-    price: "$660",
-    rating: 4.5,
-    image: "/images/demoprod-1.jpg",
-  },
-];
-
-type Product = (typeof MOCK_PRODUCTS)[0];
+import { SEARCH_PRODUCTS as MOCK_PRODUCTS, type SearchProduct as Product } from "@/app/collections/collections.data";
 
 // ─── Sub-components ───────────────────────────────────────────────────────────
 
@@ -326,7 +265,7 @@ const CollectionsHeader = () => {
         Adjust if your nav renders taller at any breakpoint.
         z-[2] keeps it below the nav (z-3); dropdown uses z-[200].
       */}
-      {/* <motion.header
+      <motion.header
         style={{
           opacity: reduced ? (scrolled ? 1 : 0) : compactOpacity,
           pointerEvents: scrolled ? "auto" : "none",
@@ -334,15 +273,15 @@ const CollectionsHeader = () => {
         className="fixed top-0 left-0 right-0 z-2 bg-white border-b border-[#0000001A]"
         aria-hidden={!scrolled}
       >
-        <div className="max-w-375 mx-auto px-4 lg:px-7.5 pt-23 md:pt-26 pb-4"> */}
-      {/* Title + actions row */}
-      {/* <div className="flex items-center gap-4">
+        <div className="max-w-375 mx-auto px-4 lg:px-7.5 pt-23 md:pt-26 pb-4">
+          {/* Title + actions row */}
+          <div className="flex items-center gap-4">
             <h2 className="font-semibold text-black text-[1.25rem] lg:text-[1.625rem] mr-auto leading-none">
               Our Products
-            </h2> */}
+            </h2>
 
-      {/* Desktop: inline search bar */}
-      {/* <div className="hidden lg:block relative flex-1 max-w-xs">
+            {/* Desktop: inline search bar */}
+            <div className="hidden lg:block relative flex-1 max-w-xs">
               <input
                 type="text"
                 className={compactInputCls}
@@ -367,10 +306,10 @@ const CollectionsHeader = () => {
                   />
                 )}
               </AnimatePresence>
-            </div> */}
+            </div>
 
-      {/* Mobile / tablet: search icon toggles a row below */}
-      {/* <button
+            {/* Mobile / tablet: search icon toggles a row below */}
+            <button
               className="lg:hidden p-2 rounded-full hover:bg-[#F0F0F0] transition-colors active:scale-95"
               onClick={() => setMobileSearchOpen((p) => !p)}
               aria-label={mobileSearchOpen ? "Close search" : "Search products"}
@@ -390,10 +329,10 @@ const CollectionsHeader = () => {
                   />
                 </motion.span>
               </AnimatePresence>
-            </button> */}
+            </button>
 
-      {/* Cart */}
-      {/* <button
+            {/* Cart */}
+            <button
               aria-label={`Cart${cartCount > 0 ? `, ${cartCount} items` : ""}`}
               className="relative p-2 rounded-full hover:bg-[#F0F0F0] transition-colors active:scale-95"
             >
@@ -413,10 +352,10 @@ const CollectionsHeader = () => {
                 )}
               </AnimatePresence>
             </button>
-          </div> */}
+          </div>
 
-      {/* Mobile: collapsible search row */}
-      {/* <div className="lg:hidden">
+          {/* Mobile: collapsible search row */}
+          <div className="lg:hidden">
             <AnimatePresence>
               {mobileSearchOpen && (
                 <motion.div
@@ -463,7 +402,7 @@ const CollectionsHeader = () => {
             </AnimatePresence>
           </div>
         </div>
-      </motion.header> */}
+      </motion.header>
     </>
   );
 };

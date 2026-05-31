@@ -16,7 +16,7 @@ import {
 import { Icon } from "@iconify/react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { contactSchema, type ContactFormData } from "@/lib";
+import { contactSchema, type ContactFormData } from "@/data";
 import { toast } from "sonner";
 
 const CONTACT_CARDS = [

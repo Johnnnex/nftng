@@ -8,14 +8,16 @@ import {
   CheckBox,
   RegistrationSuccessModal,
 } from "@/components";
-import { registerSchema, type RegisterFormData } from "@/lib";
+import { registerSchema, type RegisterFormData } from "@/data";
 import { FORM_FIELDS, REGISTRATION_EVENTS, type FieldConfig } from "@/data";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, Controller, type FieldErrors } from "react-hook-form";
 import { useState } from "react";
 import { toast } from "sonner";
+import { useRegisterStore } from "@/store";
 
 const Register = () => {
+  const { submit } = useRegisterStore();
   const [showModal, setShowModal] = useState<boolean>(false);
 
   const {
@@ -50,20 +52,11 @@ const Register = () => {
 
   const onSubmit = async (data: RegisterFormData) => {
     try {
-      const res = await fetch("/api/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-      if (!res.ok) {
-        const body = await res.json().catch(() => ({}));
-        throw new Error(
-          body?.error ?? "Registration failed. Please try again.",
-        );
-      }
+      await submit(data);
       setShowModal(true);
-    } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Something went wrong.");
+    } catch (err: unknown) {
+      const axiosErr = err as { response?: { data?: { error?: string } } };
+      toast.error(axiosErr?.response?.data?.error ?? "Registration failed. Please try again.");
     }
   };
 
@@ -99,6 +92,7 @@ const Register = () => {
         type={field.type ?? "text"}
         placeholder={field.placeholder}
         error={getError(field.name)}
+        className={getError(field.name) ? undefined : "border-[#D0D5DD]"}
         {...register(field.name as keyof RegisterFormData)}
       />
     );

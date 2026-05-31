@@ -2,7 +2,7 @@
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { newsletterSchema, type NewsletterFormData } from "@/lib";
+import { newsletterSchema, type NewsletterFormData } from "@/data";
 import { toast } from "sonner";
 import { Input } from "../common/Input";
 import { Button } from "../common/Button";

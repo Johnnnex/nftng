@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { newsletterSchema } from "@/lib/schemas";
+import { newsletterSchema } from "@/data";
 import { addContactToList } from "@/lib/brevo";
 
 export async function POST(req: NextRequest) {

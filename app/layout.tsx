@@ -1,10 +1,10 @@
 import { Poppins } from "next/font/google";
 import "./globals.css";
-import { Header, Footer, CustomCursor, MotionProvider } from "@/components";
+import { MotionProvider, PublicShell } from "@/components";
 import localFont from "next/font/local";
 import { Toaster } from "sonner";
 
-const poppins = Poppins({
+export const poppins = Poppins({
   variable: "--font-poppins",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
@@ -96,6 +96,62 @@ export const helveticaNeue = localFont({
   variable: "--font-helvetica-neue",
 });
 
+export const satoshi = localFont({
+  src: [
+    {
+      path: "../public/fonts/Satoshi-Light.otf",
+      weight: "300",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/Satoshi-LightItalic.otf",
+      weight: "300",
+      style: "italic",
+    },
+    {
+      path: "../public/fonts/Satoshi-Regular.otf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/Satoshi-Italic.otf",
+      weight: "400",
+      style: "italic",
+    },
+    {
+      path: "../public/fonts/Satoshi-Medium.otf",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/Satoshi-MediumItalic.otf",
+      weight: "500",
+      style: "italic",
+    },
+    {
+      path: "../public/fonts/Satoshi-Bold.otf",
+      weight: "700",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/Satoshi-BoldItalic.otf",
+      weight: "700",
+      style: "italic",
+    },
+    {
+      path: "../public/fonts/Satoshi-Black.otf",
+      weight: "900",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/Satoshi-BlackItalic.otf",
+      weight: "900",
+      style: "italic",
+    },
+  ],
+  variable: "--font-satoshi",
+});
+
 export const monumentExtended = localFont({
   src: [
     {
@@ -111,7 +167,6 @@ export const monumentExtended = localFont({
   ],
   variable: "--font-monument-extended",
 });
-
 
 const ORG_SCHEMA = {
   "@context": "https://schema.org",
@@ -145,12 +200,12 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${poppins.variable} h-full antialiased`}>
       <body className="bg-white!">
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(ORG_SCHEMA) }} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(ORG_SCHEMA) }}
+        />
         <MotionProvider>
-          <CustomCursor />
-          <Header />
-          <main>{children}</main>
-          <Footer />
+          <PublicShell>{children}</PublicShell>
           <Toaster
             position="bottom-right"
             toastOptions={{

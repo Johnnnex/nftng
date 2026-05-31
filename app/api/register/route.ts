@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { registerSchema } from "@/lib/schemas";
+import { registerSchema } from "@/data";
 import { supabase } from "@/lib/supabase";
 import { sendEmail } from "@/lib/brevo";
 import { registrationConfirmationEmail } from "@/lib/email-templates";

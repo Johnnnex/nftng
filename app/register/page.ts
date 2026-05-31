@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
   title: "Unchain Summer | Register",
   description:
-    "Register for Unchain Summer 2026 – Africa's premier week-long Web3 experience powered by NFTNG. Secure your spot for an unforgettable journey in Lagos, July 26 – August 1.",
+    "Register for Unchain Summer 2026 - Africa's premier week-long Web3 experience powered by NFTNG. Secure your spot for an unforgettable journey in Lagos, July 26 – August 1.",
   alternates: { canonical: `${BASE_URL}/register` },
   openGraph: {
     type: "website",

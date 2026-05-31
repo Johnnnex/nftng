@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { contactSchema } from "@/lib/schemas";
+import { contactSchema } from "@/data";
 import { sendEmail } from "@/lib/brevo";
 import { contactReceiptEmail } from "@/lib/email-templates";
 

@@ -1,4 +1,4 @@
-import type { RegisterFormData } from "@/lib";
+import type { RegisterFormData } from "./registration.schema";
 
 type Option = { value: string; label: string };
 

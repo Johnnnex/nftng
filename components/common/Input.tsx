@@ -6,12 +6,15 @@ import {
   type FC,
   type ComponentType,
   type Ref,
+  type FocusEvent,
   forwardRef,
   useRef,
   useState,
   useEffect,
   useSyncExternalStore,
 } from "react";
+import { TipTap } from "./TipTap";
+import { CustomDateTimePicker } from "./CustomDateTimePicker";
 import Select, {
   type ControlProps,
   type DropdownIndicatorProps,
@@ -55,7 +58,24 @@ type TextInputProps = BaseInputProps &
     type?: Exclude<NativeInputType, "textarea">;
   };
 
-export type InputProps = TextInputProps | TextareaProps | SelectInputProps;
+// Rich-text via TipTap — images always disabled for admin forms
+type RichTextInputProps = BaseInputProps & {
+  type: "rich-text";
+  value?: string;
+  onChange?: (event: { target: { name?: string; value: string } }) => void;
+  onBlur?: (event: FocusEvent<HTMLDivElement>) => void;
+};
+
+// Date / datetime — renders CustomDateTimePicker
+type DateInputProps = BaseInputProps & {
+  type: "date" | "datetime-local";
+  value?: string | null;
+  onChange?: (event: { target: { name?: string; value: string } }) => void;
+  placeholder?: string;
+  disabled?: boolean;
+};
+
+export type InputProps = TextInputProps | TextareaProps | SelectInputProps | RichTextInputProps | DateInputProps;
 
 // ── react-select custom components ───────────────────────────────────────────
 
@@ -162,6 +182,43 @@ const Input = forwardRef<HTMLInputElement | HTMLTextAreaElement, InputProps>((pr
   const hydrated = useSyncExternalStore(emptySubscribe, getTrue, getFalse);
 
   let field: ReactElement;
+
+  if (props.type === "date" || props.type === "datetime-local") {
+    const { name: dtName, value, onChange, onBlur, error: dtErr, placeholder, disabled } = props as DateInputProps;
+    return (
+      <div className="flex flex-col gap-2">
+        {label && <label className="font-normal text-[.875rem] text-black">{label}</label>}
+        <CustomDateTimePicker
+          name={dtName ?? name}
+          value={value ?? undefined}
+          onChange={onChange}
+          onBlur={onBlur as React.FocusEventHandler<HTMLInputElement>}
+          error={dtErr}
+          placeholder={placeholder}
+          disabled={disabled}
+        />
+        {dtErr && <p className="text-[.8125rem] font-normal text-[#F04438]">{dtErr}</p>}
+      </div>
+    );
+  }
+
+  if (props.type === "rich-text") {
+    const { name: rtName, value, onChange, onBlur, error: rtErr } = props as RichTextInputProps;
+    return (
+      <div className="flex flex-col gap-2">
+        {label && <label className="font-normal text-[.875rem] text-black">{label}</label>}
+        <TipTap
+          name={rtName ?? name}
+          value={value}
+          onChange={onChange as (e: { target: { name: string; value: string } }) => void}
+          onBlur={onBlur}
+          error={rtErr}
+          richTextProps={{ image: { allowed: false, folder: "" } }}
+        />
+        {rtErr && <p className="text-[.8125rem] font-normal text-[#F04438]">{rtErr}</p>}
+      </div>
+    );
+  }
 
   if (props.type === "select" || props.type === "multi-select") {
     const { type, selectOptions = [], value, onChange, placeholder, disabled } = props as SelectInputProps;
