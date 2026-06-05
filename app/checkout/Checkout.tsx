@@ -2,6 +2,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import { useRouter } from "next/navigation";
 import { useForm, Controller, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Icon } from "@iconify/react";
@@ -110,6 +111,7 @@ function PromoInput({
 // ─── Main ─────────────────────────────────────────────────────────────────────
 
 const Checkout = () => {
+  const router = useRouter();
   const { items, clearCart } = useCartStore();
   // Promo is session-only local state — cleared automatically when user leaves checkout
   const [appliedPromo, setAppliedPromo] = useState<AppliedPromo | null>(null);
@@ -244,7 +246,7 @@ const Checkout = () => {
         })),
       });
       clearCart();
-      window.location.href = res.data.data.paymentUrl;
+      window.location.assign(res.data.data.paymentUrl);
     } catch (e: unknown) {
       const msg = (e as { response?: { data?: { error?: string } } })?.response
         ?.data?.error;
