@@ -252,14 +252,18 @@ const AdminDashboard = () => {
             </Link>
           )}
         </div>
-        {orderRows.length > 0 ? (
-          <Table columns={ORDER_COLUMNS} data={orderRows} shouldNotHaveBorder nonScrollable numberColName="#" />
-        ) : (
-          <div className="flex flex-col items-center justify-center py-12 gap-2">
-            <Icon icon="solar:box-minimalistic-bold-duotone" className="w-8 h-8 text-[#D1D5DB]" />
-            <p className={cn(satoshi.className, "text-[0.875rem] text-[#9CA3AF]")}>No orders yet</p>
-          </div>
-        )}
+        <Table
+          columns={ORDER_COLUMNS}
+          data={orderRows}
+          shouldNotHaveBorder
+          nonScrollable
+          numberColName="#"
+          emptyStateProps={{
+            svg: "solar:box-bold-duotone",
+            title: "No orders yet",
+            text: "Orders will appear here once customers start purchasing.",
+          }}
+        />
       </div>
     </div>
   );
