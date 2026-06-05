@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import TripDetailPage from "./TripDetailPage";
 
 export const metadata: Metadata = {
-  title: "Trip Detail | NFTNG Admin",
+  title: "Unchain Summer | Trip Detail",
   robots: { index: false, follow: false },
 };
 

@@ -31,5 +31,13 @@ export async function POST(req: NextRequest, { params }: Params) {
     .eq("status", "packaged");
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+
+  // Step 3: advance order paid → in_progress now that at least one item is packaged (idempotent)
+  await supabase
+    .from("orders")
+    .update({ status: "in_progress", updated_at: now })
+    .eq("id", orderId)
+    .eq("status", "paid");
+
   return NextResponse.json({ data: { ok: true } });
 }

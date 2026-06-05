@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, forwardRef, memo, useRef } from "react";
+import { createPortal } from "react-dom";
 import { Icon } from "@iconify/react";
 import { TimePicker } from "./TimePicker";
 import type { ITimeUpdatePayload } from "./TimePicker";
@@ -43,8 +44,10 @@ const CustomDateTimePicker = memo(
       const maxYear = initialYear + 10;
 
       const containerRef = useRef<HTMLDivElement>(null);
+      const popupRef = useRef<HTMLDivElement>(null);
       const yearDropdownRef = useRef<HTMLDivElement>(null);
       const monthDropdownRef = useRef<HTMLDivElement>(null);
+      const [popupStyle, setPopupStyle] = useState<React.CSSProperties>({});
 
       const daysInMonth = generateDaysInMonth(pendingDate.getFullYear(), pendingDate.getMonth());
 
@@ -79,7 +82,7 @@ const CustomDateTimePicker = memo(
         }
       }, [value]);
 
-      // Initialise pending state from committed date when opening
+      // Initialise pending state from committed date when opening + calculate portal position
       useEffect(() => {
         if (isOpen) {
           const base = finalDate ?? new Date();
@@ -89,15 +92,57 @@ const CustomDateTimePicker = memo(
           if (hours === 0) hours = 12;
           if (hours > 12) hours -= 12;
           setPendingSelectedTime({ hour: hours, minute: base.getMinutes(), second: base.getSeconds(), isAM });
+
+          if (containerRef.current) {
+            const rect = containerRef.current.getBoundingClientRect();
+            const W = 656;   // min-w-[41rem]
+            const H = 480;   // approximate popup height
+            const GAP = 6;
+
+            const spaceBelow = window.innerHeight - rect.bottom - GAP;
+            const spaceAbove = rect.top - GAP;
+            const spaceRight = window.innerWidth - rect.right - GAP;
+            const spaceLeft = rect.left - GAP;
+
+            // Pick direction with most room; prefer below first if it fits
+            let dir: "below" | "above" | "right" | "left";
+            if (spaceBelow >= H) dir = "below";
+            else if (spaceAbove >= H) dir = "above";
+            else if (spaceRight >= W) dir = "right";
+            else if (spaceLeft >= W) dir = "left";
+            else {
+              const max = Math.max(spaceBelow, spaceAbove, spaceRight, spaceLeft);
+              dir = max === spaceAbove ? "above" : max === spaceRight ? "right" : max === spaceLeft ? "left" : "below";
+            }
+
+            const clampH = (raw: number) => Math.max(8, Math.min(raw, window.innerHeight - H - 8));
+            const clampW = (raw: number) => Math.max(8, Math.min(raw, window.innerWidth - W - 8));
+
+            let style: React.CSSProperties;
+            if (dir === "below") {
+              style = { top: rect.bottom + GAP, left: clampW(rect.left + rect.width / 2 - W / 2) };
+            } else if (dir === "above") {
+              style = { bottom: window.innerHeight - rect.top + GAP, left: clampW(rect.left + rect.width / 2 - W / 2) };
+            } else if (dir === "right") {
+              style = { left: rect.right + GAP, top: clampH(rect.top + rect.height / 2 - H / 2) };
+            } else {
+              style = { right: window.innerWidth - rect.left + GAP, top: clampH(rect.top + rect.height / 2 - H / 2) };
+            }
+
+            setPopupStyle(style);
+          }
         }
       }, [isOpen]);
 
-      // Close picker on outside click
+      // Close picker on outside click — check both trigger container and portal popup
       useEffect(() => {
         const handler = (e: MouseEvent) => {
-          if (isOpen && containerRef.current && !containerRef.current.contains(e.target as Node)) setIsOpen(false);
-          if (isYearDropdownOpen && yearDropdownRef.current && !yearDropdownRef.current.contains(e.target as Node)) setIsYearDropdownOpen(false);
-          if (isMonthDropdownOpen && monthDropdownRef.current && !monthDropdownRef.current.contains(e.target as Node)) setIsMonthDropdownOpen(false);
+          const target = e.target as Node;
+          const inContainer = containerRef.current?.contains(target);
+          const inPopup = popupRef.current?.contains(target);
+          if (isOpen && !inContainer && !inPopup) setIsOpen(false);
+          if (isYearDropdownOpen && yearDropdownRef.current && !yearDropdownRef.current.contains(target)) setIsYearDropdownOpen(false);
+          if (isMonthDropdownOpen && monthDropdownRef.current && !monthDropdownRef.current.contains(target)) setIsMonthDropdownOpen(false);
         };
         document.addEventListener("mousedown", handler);
         return () => document.removeEventListener("mousedown", handler);
@@ -150,11 +195,17 @@ const CustomDateTimePicker = memo(
             />
           </div>
 
-          {/* Picker dropdown */}
-          {isOpen && (
+          {/* Picker dropdown — portalled to body to escape overflow:hidden ancestors */}
+          {isOpen && typeof document !== "undefined" && createPortal(
             <div
-              className="absolute left-1/2 -translate-x-1/2 z-50 mt-1 min-w-[41rem] rounded-xl border border-[#EAECF0] bg-white shadow-xl"
-              style={{ boxShadow: "0px 20px 24px -4px rgba(16,24,40,0.08), 0px 8px 8px -4px rgba(16,24,40,0.03)" }}
+              ref={popupRef}
+              className="min-w-[41rem] rounded-xl border border-[#EAECF0] bg-white shadow-xl"
+              style={{
+                position: "fixed",
+                zIndex: 9999,
+                boxShadow: "0px 20px 24px -4px rgba(16,24,40,0.08), 0px 8px 8px -4px rgba(16,24,40,0.03)",
+                ...popupStyle,
+              }}
             >
               <div className="flex">
                 {/* Calendar side */}
@@ -312,7 +363,8 @@ const CustomDateTimePicker = memo(
                   </button>
                 </div>
               </div>
-            </div>
+            </div>,
+            document.body,
           )}
         </div>
       );

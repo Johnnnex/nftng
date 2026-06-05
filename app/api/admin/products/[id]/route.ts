@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
 import { getAdminFromRequest } from "@/lib/server-utils";
 import { hasPermission } from "@/lib/permissions";
-import { productUpdateSchema } from "@/data";
+import { productUpdateSchema, productToggleSchema } from "@/data";
 import { fetchProductDetail } from "../route";
 
 type Params = { params: Promise<{ id: string }> };
@@ -27,8 +27,25 @@ export async function PATCH(req: NextRequest, { params }: Params) {
 
   const { id } = await params;
   const body = await req.json();
+
+  // isActive-only patch (toggle) — use the lighter schema to avoid Zod partial() edge cases
+  const isToggleOnly = Object.keys(body).length === 1 && "isActive" in body;
+  if (isToggleOnly) {
+    const toggled = productToggleSchema.safeParse(body);
+    if (!toggled.success)
+      return NextResponse.json({ error: "isActive must be a boolean" }, { status: 400 });
+    const { error } = await supabase
+      .from("products")
+      .update({ is_active: toggled.data.isActive, updated_at: new Date().toISOString() })
+      .eq("id", id);
+    if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+    const detail = await fetchProductDetail(id);
+    return NextResponse.json({ data: detail }, { status: 200 });
+  }
+
   const parsed = productUpdateSchema.safeParse(body);
-  if (!parsed.success) return NextResponse.json({ error: parsed.error.errors[0]?.message ?? "Invalid input" }, { status: 400 });
+  if (!parsed.success)
+    return NextResponse.json({ error: parsed.error.issues?.[0]?.message ?? "Invalid input" }, { status: 400 });
 
   const { variantGroups, stocks, faqs, ...topLevel } = parsed.data;
 
@@ -36,6 +53,7 @@ export async function PATCH(req: NextRequest, { params }: Params) {
   if (Object.keys(topLevel).length) {
     const update: Record<string, unknown> = {};
     if (topLevel.title !== undefined) update.title = topLevel.title;
+    if (topLevel.about !== undefined) update.about = topLevel.about;
     if (topLevel.description !== undefined) update.description = topLevel.description;
     if (topLevel.basePrice !== undefined) update.base_price = topLevel.basePrice;
     if (topLevel.baseImage !== undefined) update.base_image = topLevel.baseImage;

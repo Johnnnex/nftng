@@ -1,34 +1,49 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { useMemo, useState, useCallback } from "react";
+import { useMemo, useState, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Icon } from "@iconify/react";
 import { toast } from "sonner";
 import { cn } from "@/lib";
 import { poppins, satoshi } from "@/app/layout";
 import { useAuthStore, useLogisticsStore } from "@/store";
-import { Table, StatusChip, Button } from "@/components";
+import { Table, Button } from "@/components";
 import { hasPermission } from "@/lib/permissions";
 import type { OutsideNigeriaOrder, OutsideNigeriaItem } from "@/data";
 
 const LIMIT = 50;
 const fmt = (d: string) => new Date(d).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" });
 
-// ─── Skeleton ──────────────────────────────────────────────────────────────────
-
-const Skeleton = () => (
-  <div className="rounded-2xl border border-[#E5E7EB] overflow-hidden animate-pulse">
-    <div className="h-14 bg-[#F3F4F6] border-b border-[#E5E7EB]" />
-    <div className="p-4 flex flex-col gap-2">
-      {Array.from({ length: 5 }).map((_, i) => (
-        <div key={i} className={`h-14 rounded-xl ${i % 2 === 0 ? "bg-[#F3F4F6]" : "bg-[#F9FAFB]"}`} />
-      ))}
-    </div>
-  </div>
-);
 
 // ─── Detail drawer ─────────────────────────────────────────────────────────────
+
+const STATUS_COLORS = {
+  pending:  { bg: "bg-amber-50",       text: "text-amber-700"  },
+  resolved: { bg: "bg-[#6EC93E]/10",   text: "text-[#3a7a1e]" },
+  reverted: { bg: "bg-red-50",         text: "text-red-600"    },
+};
+
+const CONFIRM_COPY = {
+  resolved: {
+    title: "Mark as Resolved?",
+    body: "This confirms you've contacted the customer and arranged delivery. Once resolved, this order cannot be changed again.",
+    confirmLabel: "Yes, Mark Resolved",
+    icon: "solar:check-circle-bold-duotone",
+    iconColor: "text-[#6EC93E]",
+    iconBg: "bg-[#6EC93E]/10",
+    confirmClass: "bg-[#6EC93E]! hover:bg-[#5cb535]! text-white!",
+  },
+  reverted: {
+    title: "Revert & Restore Stock?",
+    body: "This will restore inventory for all items in this order and cannot be undone. The order will be permanently marked as reverted.",
+    confirmLabel: "Yes, Revert Order",
+    icon: "solar:close-circle-bold-duotone",
+    iconColor: "text-red-500",
+    iconBg: "bg-red-50",
+    confirmClass: "bg-red-500! hover:bg-red-600! text-white!",
+  },
+} as const;
 
 const DetailDrawer = ({
   order,
@@ -40,16 +55,18 @@ const DetailDrawer = ({
   canWrite: boolean;
 }) => {
   const { resolveInternational } = useLogisticsStore();
-  const [resolving, setResolving] = useState(false);
+  const [acting, setActing] = useState(false);
+  const [pendingAction, setPendingAction] = useState<"resolved" | "reverted" | null>(null);
   const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "";
 
-  const handleResolve = useCallback(async () => {
-    setResolving(true);
+  const handleAction = useCallback(async (action: "resolved" | "reverted") => {
+    setPendingAction(null);
+    setActing(true);
     try {
-      await resolveInternational(order.id);
-      toast.success("Order marked as resolved");
-    } catch { toast.error("Failed to resolve order"); }
-    finally { setResolving(false); }
+      await resolveInternational(order.id, action);
+      toast.success(action === "resolved" ? "Order marked resolved" : "Order reverted — stock restored");
+    } catch { toast.error("Action failed"); }
+    finally { setActing(false); }
   }, [order.id, resolveInternational]);
 
   return (
@@ -69,8 +86,8 @@ const DetailDrawer = ({
             <p className={cn(poppins.className, "text-[0.9375rem] font-semibold text-[#111827]")}>International Order</p>
             <p className={cn(satoshi.className, "text-[0.75rem] text-[#9CA3AF]")}>{order.userName} · {order.userCountryName ?? "Unknown country"}</p>
           </div>
-          <span className={cn(satoshi.className, "px-2.5 py-1 rounded-full text-[0.8125rem] font-medium", order.status === "resolved" ? "bg-[#6EC93E]/10 text-[#3a7a1e]" : "bg-amber-50 text-amber-700")}>
-            {order.status === "resolved" ? "Resolved" : "Pending"}
+          <span className={cn(satoshi.className, "px-2.5 py-1 rounded-full text-[0.8125rem] font-medium capitalize", STATUS_COLORS[order.status as keyof typeof STATUS_COLORS]?.bg, STATUS_COLORS[order.status as keyof typeof STATUS_COLORS]?.text)}>
+            {order.status}
           </span>
         </div>
 
@@ -138,30 +155,85 @@ const DetailDrawer = ({
             </div>
           </div>
 
-          {/* Resolve action */}
+          {/* Actions */}
           {canWrite && order.status === "pending" && (
-            <div className="rounded-xl border border-[#E5E7EB] p-4 flex items-start gap-3">
-              <Icon icon="solar:check-circle-bold-duotone" className="w-5 h-5 text-[#6EC93E] mt-0.5 shrink-0" />
-              <div className="flex-1">
-                <p className={cn(satoshi.className, "text-[0.875rem] font-semibold text-[#374151]")}>Mark as Resolved</p>
-                <p className={cn(satoshi.className, "text-[0.8125rem] text-[#9CA3AF] mt-0.5")}>Confirm you have contacted this customer and settled delivery details.</p>
-                <Button
-                  loading={resolving}
-                  onClick={handleResolve}
-                  className={cn(satoshi.className, "mt-3 px-4 py-2 rounded-lg bg-[#6EC93E] hover:bg-[#5cb535] text-white font-semibold text-[0.875rem]")}
-                >
+            <div className="rounded-xl border border-[#E5E7EB] p-4 flex flex-col gap-3">
+              <p className={cn(satoshi.className, "text-[0.875rem] font-semibold text-[#374151]")}>Actions</p>
+              <div className="flex flex-wrap gap-2">
+                <Button loading={acting} onClick={() => setPendingAction("resolved")}
+                  className={cn(satoshi.className, "px-4 py-2! rounded-lg! bg-[#6EC93E]! hover:bg-[#5cb535]! text-white! font-semibold text-[0.875rem]")}>
+                  <Icon icon="solar:check-circle-bold-duotone" className="w-4 h-4 mr-1.5" />
                   Mark Resolved
+                </Button>
+                <Button loading={acting} onClick={() => setPendingAction("reverted")} variant="secondary"
+                  className={cn(satoshi.className, "px-4 py-2! rounded-lg! text-red-600! border-red-200! text-[0.875rem]")}>
+                  <Icon icon="solar:close-circle-bold-duotone" className="w-4 h-4 mr-1.5" />
+                  Revert &amp; Restore Stock
                 </Button>
               </div>
             </div>
           )}
-          {order.status === "resolved" && order.resolvedAt && (
-            <div className="flex items-center gap-2 px-4 py-3 bg-[#6EC93E]/10 rounded-xl">
-              <Icon icon="solar:check-circle-bold" className="w-4 h-4 text-[#6EC93E]" />
-              <span className={cn(satoshi.className, "text-[0.875rem] text-[#3a7a1e]")}>Resolved {fmt(order.resolvedAt)}</span>
+          {canWrite && order.status !== "pending" && (
+            <div className={cn("rounded-xl border p-4 flex items-center gap-3", order.status === "resolved" ? "border-[#6EC93E]/30 bg-[#6EC93E]/5" : "border-red-200 bg-red-50")}>
+              <Icon icon={order.status === "resolved" ? "solar:check-circle-bold-duotone" : "solar:close-circle-bold-duotone"} className={cn("w-5 h-5 shrink-0", order.status === "resolved" ? "text-[#6EC93E]" : "text-red-500")} />
+              <div>
+                <p className={cn(satoshi.className, "text-[0.875rem] font-semibold text-[#374151] capitalize")}>{order.status}</p>
+                <p className={cn(satoshi.className, "text-[0.75rem] text-[#9CA3AF]")}>
+                  {order.status === "resolved" ? "Order marked resolved — no further changes allowed." : "Order reverted and stock restored — no further changes allowed."}
+                  {order.resolvedAt && ` (${fmt(order.resolvedAt)})`}
+                </p>
+              </div>
             </div>
           )}
         </div>
+        {/* Confirmation modal */}
+        <AnimatePresence>
+          {pendingAction && (() => {
+            const copy = CONFIRM_COPY[pendingAction];
+            return (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="absolute inset-0 z-10 flex items-center justify-center p-6 bg-black/30"
+              >
+                <motion.div
+                  initial={{ scale: 0.95, y: 8 }}
+                  animate={{ scale: 1, y: 0 }}
+                  exit={{ scale: 0.95, y: 8 }}
+                  transition={{ duration: 0.16 }}
+                  className="w-full max-w-sm bg-white rounded-2xl shadow-2xl p-6 flex flex-col gap-4"
+                >
+                  <div className="flex items-start gap-3">
+                    <div className={cn("w-10 h-10 rounded-xl flex items-center justify-center shrink-0", copy.iconBg)}>
+                      <Icon icon={copy.icon} className={cn("w-5 h-5", copy.iconColor)} />
+                    </div>
+                    <div>
+                      <p className={cn(poppins.className, "text-[0.9375rem] font-semibold text-[#111827]")}>{copy.title}</p>
+                      <p className={cn(satoshi.className, "text-[0.8125rem] text-[#6B7280] mt-1 leading-relaxed")}>{copy.body}</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-2 justify-end">
+                    <Button
+                      variant="secondary"
+                      onClick={() => setPendingAction(null)}
+                      className={cn(satoshi.className, "px-4 py-2! rounded-lg! text-[0.875rem]")}
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      loading={acting}
+                      onClick={() => handleAction(pendingAction)}
+                      className={cn(satoshi.className, "px-4 py-2! rounded-lg! font-semibold text-[0.875rem]", copy.confirmClass)}
+                    >
+                      {copy.confirmLabel}
+                    </Button>
+                  </div>
+                </motion.div>
+              </motion.div>
+            );
+          })()}
+        </AnimatePresence>
       </motion.div>
     </motion.div>
   );
@@ -173,6 +245,12 @@ const International = () => {
   const { admin } = useAuthStore();
   const { international, internationalLoading, meta, fetchInternational, activeInternational, setActiveInternational, fetchInternationalDetail } = useLogisticsStore();
   const canWrite = hasPermission(admin?.permissions ?? {}, admin?.isSuper ?? false, "logistics", "write");
+  const searchRef = useRef("");
+
+  const handleSearch = useCallback((value: string | number) => {
+    searchRef.current = String(value);
+    fetchInternational(1, String(value) || undefined);
+  }, [fetchInternational]);
 
   const handleView = useCallback(async (order: OutsideNigeriaOrder) => {
     await fetchInternationalDetail(order.id);
@@ -213,17 +291,20 @@ const International = () => {
     {
       title: "Status",
       width: 110,
-      customTableBody: (r: OutsideNigeriaOrder) => (
-        <span className={cn(satoshi.className, "px-2.5 py-1 rounded-full text-[0.8125rem] font-medium", r.status === "resolved" ? "bg-[#6EC93E]/10 text-[#3a7a1e]" : "bg-amber-50 text-amber-700")}>
-          {r.status === "resolved" ? "Resolved" : "Pending"}
-        </span>
-      ),
+      customTableBody: (r: OutsideNigeriaOrder) => {
+        const s = STATUS_COLORS[r.status as keyof typeof STATUS_COLORS] ?? STATUS_COLORS.pending;
+        return (
+          <span className={cn(satoshi.className, "px-2.5 py-1 rounded-full text-[0.8125rem] font-medium whitespace-nowrap capitalize", s.bg, s.text)}>
+            {r.status}
+          </span>
+        );
+      },
     },
     {
       title: "Date",
       width: 110,
       customTableBody: (r: OutsideNigeriaOrder) => (
-        <span className={cn(satoshi.className, "text-[0.8125rem] text-[#9CA3AF]")}>{fmt(r.createdAt)}</span>
+        <span className={cn(satoshi.className, "text-[0.8125rem] text-[#9CA3AF] whitespace-nowrap")}>{fmt(r.createdAt)}</span>
       ),
     },
     {
@@ -259,12 +340,14 @@ const International = () => {
           columns={columns as any}
           data={data as any}
           loading={internationalLoading}
+          head
           pagination
+          search={{ show: true, placeholder: "Search by name or email…", onResolve: handleSearch }}
           metaData={{
             currentPage: (meta.international.page - 1) * LIMIT + 1,
             endPage: Math.min(meta.international.page * LIMIT, meta.international.total),
             totalRecords: meta.international.total,
-            onPageChange: (offset) => fetchInternational(Math.floor(offset / LIMIT) + 1),
+            onPageChange: (offset) => fetchInternational(Math.floor(offset / LIMIT) + 1, searchRef.current || undefined),
           }}
           emptyStateProps={{
             svg: "solar:global-bold-duotone",

@@ -13,8 +13,3 @@ export const SUMMARY_ITEMS = [
   { name: "Unchain Summer (Women Merch)", size: "Medium", color: "Red", price: 180, image: "/images/demoprod-5.jpg" },
   { name: "Key Holder", size: "One Size", color: "Green", price: 240, image: "/images/demoprod-4.png" },
 ];
-
-export const PAYMENT_METHODS = [
-  { id: "flutterwave", label: "Flutterwave" },
-  { id: "paystack", label: "Paystack" },
-];

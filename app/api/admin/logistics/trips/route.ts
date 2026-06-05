@@ -16,12 +16,39 @@ export async function GET(req: NextRequest) {
 
   const page = Math.max(1, parseInt(req.nextUrl.searchParams.get("page") ?? "1"));
   const offset = (page - 1) * LIMIT;
+  const search = req.nextUrl.searchParams.get("search") ?? "";
+  const stateId = req.nextUrl.searchParams.get("stateId") ?? "";
+  const cityId = req.nextUrl.searchParams.get("cityId") ?? "";
 
-  const { data, count, error } = await supabase
+  // When geo filter active: find trip IDs that have at least one item in that state/city
+  let geoFilterIds: string[] | null = null;
+  if (stateId || cityId) {
+    const geoQuery = supabase
+      .from("trip_items")
+      .select("trip_id, order_items!inner(orders!inner(user_state_id, user_city_id))");
+    const { data: geoRows } = cityId
+      ? await (geoQuery as any).eq("order_items.orders.user_city_id", cityId)
+      : await (geoQuery as any).eq("order_items.orders.user_state_id", stateId);
+    geoFilterIds = [...new Set(((geoRows ?? []) as any[]).map((r) => r.trip_id))];
+  }
+
+  // Return empty if geo filter yielded no trips
+  if (geoFilterIds !== null && geoFilterIds.length === 0) {
+    return NextResponse.json({ data: [], meta: { total: 0, page, limit: LIMIT } });
+  }
+
+  let query = supabase
     .from("trips")
     .select("*, trip_items(count)", { count: "exact" })
     .range(offset, offset + LIMIT - 1)
     .order("created_at", { ascending: false });
+
+  if (geoFilterIds) query = query.in("id", geoFilterIds);
+  if (search) {
+    query = query.or(`code.ilike.%${search}%,rider_name.ilike.%${search}%,rider_phone.ilike.%${search}%,rider_email.ilike.%${search}%,rider_company.ilike.%${search}%`);
+  }
+
+  const { data, count, error } = await query;
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
 
@@ -50,7 +77,7 @@ export async function POST(req: NextRequest) {
 
   const body = await req.json();
   const parsed = createTripSchema.safeParse(body);
-  if (!parsed.success) return NextResponse.json({ error: parsed.error.errors[0]?.message ?? "Invalid body" }, { status: 400 });
+  if (!parsed.success) return NextResponse.json({ error: parsed.error.issues?.[0]?.message ?? "Invalid body" }, { status: 400 });
 
   const { riderName, riderPhone, riderEmail, riderCompany, itemIds } = parsed.data;
 

@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
-import { BASE_ROBOTS } from "@/lib";
 import EditProductPage from "./EditProductPage";
 
 export const metadata: Metadata = {
-  title: "Edit Product | NFTNG Admin",
+  title: "Unchain Summer | Edit Product",
   robots: { index: false, follow: false },
 };
 

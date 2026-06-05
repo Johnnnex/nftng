@@ -1,11 +1,5 @@
-export type SaleStatus =
-  | "open"
-  | "almost_out"
-  | "out_of_stock"
-  | "opening_soon"
-  | "closing_soon"
-  | "closed"
-  | "inactive";
+import type { SaleStatus } from "./storefront.data";
+export type { SaleStatus };
 
 export const SALE_STATUS_LABELS: Record<SaleStatus, string> = {
   open: "On Sale",
@@ -84,6 +78,7 @@ export type ProductRecord = {
 export type ProductDetail = {
   id: string;
   title: string;
+  about: string | null;
   description: string | null;
   basePrice: number;
   baseImage: string | null;
@@ -141,6 +136,7 @@ export type DraftFaq = {
 
 export type ProductFormState = {
   title: string;
+  about: string;
   description: string;
   basePrice: string;
   baseImage: string | null;
@@ -154,6 +150,7 @@ export type ProductFormState = {
 
 export const EMPTY_PRODUCT_FORM: ProductFormState = {
   title: "",
+  about: "",
   description: "",
   basePrice: "",
   baseImage: null,

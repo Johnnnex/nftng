@@ -8,6 +8,8 @@ import {
   useState,
   type KeyboardEvent,
 } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 import {
   AnimatePresence,
   motion,
@@ -17,7 +19,8 @@ import {
 import { Icon } from "@iconify/react";
 import { cn } from "@/lib";
 import { WordByWord, useReducedMotion } from "@/components";
-import { SEARCH_PRODUCTS as MOCK_PRODUCTS, type SearchProduct as Product } from "@/app/collections/collections.data";
+import { useCartStore } from "@/store";
+import type { PublicProduct } from "@/data";
 
 // ─── Sub-components ───────────────────────────────────────────────────────────
 
@@ -41,31 +44,40 @@ const ResultRow = ({
   active,
   onSelect,
 }: {
-  product: Product;
+  product: PublicProduct;
   active: boolean;
   onSelect: () => void;
 }) => (
   <button
-    onMouseDown={(e) => e.preventDefault()} // keep input focused so onBlur delay isn't needed
+    onMouseDown={(e) => e.preventDefault()}
     onClick={onSelect}
     className={cn(
       "w-full flex items-center gap-3 px-5 py-3 text-left",
       active ? "bg-[#F0F0F0]" : "hover:bg-[#F8F8F8]",
     )}
   >
-    <img
-      src={product.image}
-      alt={product.name}
-      className="w-11 h-11 rounded-sm object-cover shrink-0"
-    />
+    {product.baseImage ? (
+      <img
+        src={product.baseImage}
+        alt={product.title}
+        className="w-11 h-11 rounded-sm object-cover shrink-0"
+      />
+    ) : (
+      <div className="w-11 h-11 rounded-sm bg-[#F0F0F0] shrink-0 flex items-center justify-center">
+        <Icon
+          icon="solar:image-bold-duotone"
+          className="w-5 h-5 text-[#D0D0D0]"
+        />
+      </div>
+    )}
     <div className="flex-1 min-w-0">
       <p className="text-[.9375rem] font-medium text-black truncate leading-5.5">
-        {product.name}
+        {product.title}
       </p>
-      <Stars rating={product.rating} />
+      {product.avgRating !== null && <Stars rating={product.avgRating} />}
     </div>
     <span className="text-[.9375rem] font-semibold text-[#DB4444] shrink-0">
-      {product.price}
+      ₦{product.basePrice.toLocaleString()}
     </span>
   </button>
 );
@@ -74,21 +86,30 @@ const Dropdown = ({
   query,
   results,
   activeResult,
+  loading,
   onSelect,
 }: {
   query: string;
-  results: Product[];
+  results: PublicProduct[];
   activeResult: number;
-  onSelect: (name: string) => void;
+  loading: boolean;
+  onSelect: (id: string) => void;
 }) => (
   <motion.div
-    initial={{ opacity: 0, y: -6 }}
+    initial={{ opacity: 1, y: -6 }}
     animate={{ opacity: 1, y: 0 }}
     exit={{ opacity: 0, y: -6 }}
-    transition={{ duration: 0.15, ease: "easeOut" }}
-    className="absolute top-full left-0 right-0 mt-2 bg-white border border-[#0000001A] rounded-[1.25rem] overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.08)] z-3"
+    transition={{ duration: 0.12, ease: "easeOut" }}
+    className="absolute top-full left-0 right-0 mt-2 bg-white border border-[#0000001A] rounded-[1.25rem] overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.08)] z-200"
   >
-    {results.length > 0 ? (
+    {loading ? (
+      <div className="flex items-center justify-center py-9">
+        <Icon
+          icon="svg-spinners:ring-resize"
+          className="w-6 h-6 text-[#6EC93E]"
+        />
+      </div>
+    ) : results.length > 0 ? (
       <>
         <p className="text-[.6875rem] font-semibold uppercase tracking-wider text-[#00000055] px-5 pt-3.5 pb-1">
           {results.length} result{results.length !== 1 ? "s" : ""} for &ldquo;
@@ -100,7 +121,7 @@ const Dropdown = ({
               key={p.id}
               product={p}
               active={i === activeResult}
-              onSelect={() => onSelect(p.name)}
+              onSelect={() => onSelect(p.id)}
             />
           ))}
         </div>
@@ -126,10 +147,11 @@ const Dropdown = ({
 
 // ─── Main component ───────────────────────────────────────────────────────────
 const CollectionsHeader = () => {
+  const router = useRouter();
   const reduced = useReducedMotion();
+  const cartCount = useCartStore((s) => s.items.reduce((sum, i) => sum + i.qty, 0));
   const { scrollY } = useScroll();
 
-  // Coordinated scroll-driven opacity: hero fades out as compact fades in
   const heroOpacity = useTransform(scrollY, [80, 220], [1, 0]);
   const compactOpacity = useTransform(scrollY, [120, 220], [0, 1]);
 
@@ -144,8 +166,8 @@ const CollectionsHeader = () => {
       const next = v > 180;
       setScrolled(next);
       if (next !== prev) {
-        setHeroFocused(false);
-        setCompactFocused(false);
+        // Don't reset focus — pointer-events:none already prevents interaction
+        // when a section is visually hidden, so stale focus state is harmless.
         if (!next) setMobileSearchOpen(false);
         prev = next;
       }
@@ -153,28 +175,52 @@ const CollectionsHeader = () => {
   }, [scrollY]);
 
   const [query, setQuery] = useState("");
+  const [results, setResults] = useState<PublicProduct[]>([]);
+  const [searchLoading, setSearchLoading] = useState(false);
   const [activeResult, setActiveResult] = useState(-1);
-  const cartCount = 0; // wire to real cart state when ready
-
-  const results =
-    query.length >= 1
-      ? MOCK_PRODUCTS.filter((p) =>
-          p.name.toLowerCase().includes(query.toLowerCase()),
-        ).slice(0, 6)
-      : [];
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const searchIdRef = useRef(0); // only the latest search may clear loading
 
   const handleChange = useCallback((v: string) => {
     setQuery(v);
     setActiveResult(-1);
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    searchIdRef.current++; // invalidate any in-flight earlier search
+    if (!v.trim()) {
+      setResults([]);
+      setSearchLoading(false);
+      return;
+    }
+    setResults([]);
+    setSearchLoading(true);
+    const id = searchIdRef.current;
+    debounceRef.current = setTimeout(async () => {
+      if (searchIdRef.current !== id) return; // superseded — don't touch state
+      try {
+        const res = await fetch(
+          `/api/products?search=${encodeURIComponent(v.trim())}&limit=6`,
+        );
+        if (searchIdRef.current !== id) return;
+        const json = await res.json();
+        setResults(json.data ?? []);
+      } catch {
+        if (searchIdRef.current === id) setResults([]);
+      } finally {
+        if (searchIdRef.current === id) setSearchLoading(false);
+      }
+    }, 300);
   }, []);
 
-  const handleSelect = useCallback((name: string) => {
-    setQuery(name);
-    setActiveResult(-1);
-    setHeroFocused(false);
-    setCompactFocused(false);
-    setMobileSearchOpen(false);
-  }, []);
+  const handleSelect = useCallback(
+    (id: string) => {
+      setActiveResult(-1);
+      setHeroFocused(false);
+      setCompactFocused(false);
+      setMobileSearchOpen(false);
+      router.push(`/collections/${id}`);
+    },
+    [router],
+  );
 
   const makeKeyHandler =
     (focused: boolean, setFocused: (v: boolean) => void) =>
@@ -193,7 +239,7 @@ const CollectionsHeader = () => {
         activeResult >= 0 &&
         results[activeResult]
       ) {
-        handleSelect(results[activeResult].name);
+        handleSelect(results[activeResult].id);
       }
     };
 
@@ -252,6 +298,7 @@ const CollectionsHeader = () => {
                 query={query}
                 results={results}
                 activeResult={activeResult}
+                loading={searchLoading}
                 onSelect={handleSelect}
               />
             )}
@@ -302,6 +349,7 @@ const CollectionsHeader = () => {
                     query={query}
                     results={results}
                     activeResult={activeResult}
+                    loading={searchLoading}
                     onSelect={handleSelect}
                   />
                 )}
@@ -332,7 +380,8 @@ const CollectionsHeader = () => {
             </button>
 
             {/* Cart */}
-            <button
+            <Link
+              href="/cart"
               aria-label={`Cart${cartCount > 0 ? `, ${cartCount} items` : ""}`}
               className="relative p-2 rounded-full hover:bg-[#F0F0F0] transition-colors active:scale-95"
             >
@@ -351,7 +400,7 @@ const CollectionsHeader = () => {
                   </motion.span>
                 )}
               </AnimatePresence>
-            </button>
+            </Link>
           </div>
 
           {/* Mobile: collapsible search row */}
@@ -392,6 +441,7 @@ const CollectionsHeader = () => {
                           query={query}
                           results={results}
                           activeResult={activeResult}
+                          loading={searchLoading}
                           onSelect={handleSelect}
                         />
                       )}

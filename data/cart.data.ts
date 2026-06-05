@@ -1,10 +1,9 @@
-export const MOCK_CART_ITEMS = [
-  { id: 1, name: "Unchain Summer (Women Merch)", size: "Large", color: "White", price: 145, qty: 1, image: "/images/demoprod-2.png" },
-  { id: 2, name: "Unchain Summer (Women Merch)", size: "Medium", color: "Red", price: 180, qty: 1, image: "/images/demoprod-5.jpg" },
-  { id: 3, name: "Key Holder", size: "One Size", color: "Green", price: 240, qty: 1, image: "/images/demoprod-4.png" },
+// Real CartItem — replaces old mock. Type lives here, data lives in store/cart.store.ts.
+export type { CartItem, AppliedPromo } from "./storefront.data";
+
+export const PAYMENT_METHODS = [
+  { id: "paystack" as const, label: "Paystack" },
+  // { id: "flutterwave" as const, label: "Flutterwave" },
 ];
 
-export const DISCOUNT_PCT = 20;
-export const DELIVERY_FEE = 15;
-
-export type CartItem = (typeof MOCK_CART_ITEMS)[0];
+export type PaymentMethod = (typeof PAYMENT_METHODS)[number]["id"];

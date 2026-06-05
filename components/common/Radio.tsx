@@ -75,7 +75,7 @@ const Radio = forwardRef<HTMLLabelElement, RadioProps>(
         {customLabel ? (
           customLabel
         ) : label ? (
-          <span className="ml-2 text-[0.875rem] font-[400] text-black">
+          <span className="ml-2 text-[0.875rem] font-normal text-black">
             {label}
           </span>
         ) : null}

@@ -33,7 +33,7 @@ type ProductState = {
   originalDetail: ProductDetail | null;
 
   // list actions
-  fetchProducts: (page: number) => Promise<void>;
+  fetchProducts: (page: number, search?: string) => Promise<void>;
   // config actions
   fetchConfig: () => Promise<void>;
   updateConfig: (data: EcommerceConfigData) => Promise<void>;
@@ -53,7 +53,7 @@ type ProductState = {
 
 export const useProductStore = create<ProductState>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       products: [],
       meta: DEFAULT_META,
       loading: true,
@@ -62,9 +62,11 @@ export const useProductStore = create<ProductState>()(
       draftProductId: null,
       originalDetail: null,
 
-      fetchProducts: async (page) => {
+      fetchProducts: async (page, search) => {
         set({ loading: true });
-        const res = await authRequest({ url: `/api/admin/products?page=${page}&limit=${LIMIT}` });
+        const params = new URLSearchParams({ page: String(page), limit: String(LIMIT) });
+        if (search) params.set("search", search);
+        const res = await authRequest({ url: `/api/admin/products?${params}` });
         set((s) => ({
           products: res.data.data,
           meta: { ...s.meta, products: res.data.meta },

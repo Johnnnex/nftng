@@ -132,7 +132,7 @@ const TimePicker = ({
 
   return (
     <div className="min-w-[17.875rem] p-[1.25rem_1.5rem]">
-      <h4 className="py-[.625rem] text-[1.02rem] font-[600] text-[#344054]">Set Time</h4>
+      <h4 className="py-[.625rem] text-[1.02rem] font-semibold text-[#344054]">Set Time</h4>
       <div className="flex">
         {[
           { label: "HR", items: hours, value: selectedTime.hour, key: "hour" },
@@ -140,12 +140,12 @@ const TimePicker = ({
           { label: "SEC", items: seconds, value: selectedTime.second, key: "second" },
         ].map(({ label, items, value, key }) => (
           <div key={key}>
-            <h5 className="flex items-center justify-center p-[.625rem_.5rem] text-[1rem] font-[500] leading-[1.25rem] text-[#344054]">{label}</h5>
+            <h5 className="flex items-center justify-center p-[.625rem_.5rem] text-[1rem] font-medium leading-[1.25rem] text-[#344054]">{label}</h5>
             <ScrollPicker items={items} selected={value} onSelect={(v) => handleSelect(key, Number(v))} />
           </div>
         ))}
         <div>
-          <h5 className="flex items-center justify-center p-[.625rem_.5rem] text-[1rem] font-[500] leading-[1.25rem] text-[#344054]">MER</h5>
+          <h5 className="flex items-center justify-center p-[.625rem_.5rem] text-[1rem] font-medium leading-[1.25rem] text-[#344054]">MER</h5>
           <ScrollPicker items={meridiems} selected={selectedTime.isAM ? "AM" : "PM"} onSelect={(v) => handleSelect("isAM", v === "AM")} />
         </div>
       </div>

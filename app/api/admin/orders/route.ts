@@ -18,8 +18,12 @@ export async function GET(req: NextRequest) {
   let query = supabase
     .from("orders")
     .select(
-      `id, order_ref, transaction_id, user_email, user_name, user_phone, user_address, status, created_at, updated_at,
-       transactions ( amount )`,
+      `id, order_ref, transaction_id, user_email, user_name, user_phone,
+       user_address, user_address_line, user_city_id, user_state_id, delivery_method,
+       status, created_at, updated_at,
+       transactions ( amount, delivery_fee ),
+       cities ( name ),
+       states ( name )`,
       { count: "exact" },
     )
     .order("created_at", { ascending: false })
@@ -42,20 +46,30 @@ export async function GET(req: NextRequest) {
     countByOrder[row.order_id] = (countByOrder[row.order_id] ?? 0) + 1;
   }
 
-  const data = (orders ?? []).map((o) => ({
-    id: o.id,
-    orderRef: o.order_ref,
-    transactionId: o.transaction_id,
-    userEmail: o.user_email,
-    userName: o.user_name,
-    userPhone: o.user_phone,
-    userAddress: o.user_address,
-    status: o.status,
-    totalAmount: (o.transactions as { amount: number } | null)?.amount ?? null,
-    itemCount: countByOrder[o.id] ?? 0,
-    createdAt: o.created_at,
-    updatedAt: o.updated_at,
-  }));
+  const data = (orders ?? []).map((o) => {
+    const tx = o.transactions as unknown as { amount: number; delivery_fee: number | null } | null;
+    return {
+      id: o.id,
+      orderRef: o.order_ref,
+      transactionId: o.transaction_id,
+      userEmail: o.user_email,
+      userName: o.user_name,
+      userPhone: o.user_phone,
+      userAddress: o.user_address,
+      userAddressLine: o.user_address_line,
+      userCityId: o.user_city_id,
+      userCityName: (o.cities as unknown as { name: string } | null)?.name ?? null,
+      userStateId: o.user_state_id,
+      userStateName: (o.states as unknown as { name: string } | null)?.name ?? null,
+      deliveryMethod: o.delivery_method,
+      status: o.status,
+      totalAmount: tx?.amount ?? null,
+      deliveryFee: tx?.delivery_fee ?? null,
+      itemCount: countByOrder[o.id] ?? 0,
+      createdAt: o.created_at,
+      updatedAt: o.updated_at,
+    };
+  });
 
   return NextResponse.json({ data, meta: { total: count ?? 0, page, limit: LIMIT } });
 }

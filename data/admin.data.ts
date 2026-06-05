@@ -24,7 +24,9 @@ export const ADMIN_NAV_ITEMS: AdminNavItem[] = [
     children: [
       { label: "Products", href: "/admin/products" },
       { label: "Orders", href: "/admin/orders" },
+      { label: "Reviews", href: "/admin/products/reviews" },
       { label: "Sales Config", href: "/admin/products/config" },
+      { label: "Promo Codes", href: "/admin/products/promo-codes" },
     ],
   },
   {

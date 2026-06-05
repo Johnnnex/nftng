@@ -29,11 +29,12 @@ const faqSchema = z.object({
 // Step-1 schema used by react-hook-form — string fields that RHF controls natively
 export const productBasicsSchema = z.object({
   title: z.string().min(1, "Title is required").max(200, "Max 200 characters"),
+  description: z.string().max(300, "Max 300 characters").optional(),
+  about: z.string().optional(),
   basePrice: z
     .string()
     .min(1, "Base price is required")
     .refine((v) => !isNaN(Number(v)) && Number(v) > 0, "Must be a positive number"),
-  description: z.string().optional(),
   salesOpenAt: z.string().optional(),
   salesCloseAt: z.string().optional(),
 });
@@ -41,7 +42,8 @@ export type ProductBasicsData = z.infer<typeof productBasicsSchema>;
 
 export const productCreateSchema = z.object({
   title: z.string().min(1, "Title is required").max(200),
-  description: z.string().nullable().default(null),
+  description: z.string().max(300).nullable().default(null),
+  about: z.string().nullable().default(null),
   basePrice: z.number().positive("Base price must be positive"),
   baseImage: z.string().url("Must be a valid URL").nullable().default(null),
   isActive: z.boolean().default(false),

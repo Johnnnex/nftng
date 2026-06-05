@@ -8,7 +8,7 @@ type Params = { params: Promise<{ id: string }> };
 export default async function EditProductPage({ params }: Params) {
   const { id } = await params;
   return (
-    <AdminServerLoader<[ProductDetail | null]>
+    <AdminServerLoader<[{ data: ProductDetail } | null]>
       requests={[{ url: `/api/admin/products/${id}` }]}
       onSuccess={EditProductInitializer}
     >

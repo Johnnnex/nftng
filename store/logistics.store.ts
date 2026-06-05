@@ -17,19 +17,22 @@ const LIMIT = 50;
 
 type LogisticsMeta = {
   items: PaginationMeta;
+  onTripItems: PaginationMeta;
   trips: PaginationMeta;
   international: PaginationMeta;
 };
 const DEFAULT_META: LogisticsMeta = {
   items: { total: 0, page: 1, limit: LIMIT },
+  onTripItems: { total: 0, page: 1, limit: LIMIT },
   trips: { total: 0, page: 1, limit: LIMIT },
   international: { total: 0, page: 1, limit: LIMIT },
 };
 
 type LogisticsState = {
-  // Items queue
-  items: LogisticsQueueItem[];
-  itemsLoading: boolean;
+  // Items queue — both tabs pre-loaded server-side
+  items: LogisticsQueueItem[];           // "available" tab
+  onTripItems: LogisticsQueueItem[];     // "on_trip" tab
+  itemsLoading: { available: boolean; on_trip: boolean };
 
   // Trips
   trips: TripRecord[];
@@ -52,10 +55,10 @@ type LogisticsState = {
   meta: LogisticsMeta;
 
   // Items queue actions
-  fetchItems: (page: number, cityId?: string, stateId?: string) => Promise<void>;
+  fetchItems: (page: number, cityId?: string, stateId?: string, search?: string, tab?: "available" | "on_trip") => Promise<void>;
 
   // Trip actions
-  fetchTrips: (page: number) => Promise<void>;
+  fetchTrips: (page: number, search?: string, stateId?: string, cityId?: string) => Promise<void>;
   fetchTripDetail: (id: string) => Promise<void>;
   createTrip: (data: { riderName: string; riderPhone: string; riderEmail?: string; riderCompany?: string; itemIds: string[] }) => Promise<TripRecord>;
   patchTrip: (id: string, data: { riderName?: string; riderPhone?: string; riderEmail?: string; riderCompany?: string }) => Promise<void>;
@@ -63,9 +66,9 @@ type LogisticsState = {
   setActiveTrip: (trip: TripDetail | null) => void;
 
   // International actions
-  fetchInternational: (page: number) => Promise<void>;
+  fetchInternational: (page: number, search?: string) => Promise<void>;
   fetchInternationalDetail: (id: string) => Promise<void>;
-  resolveInternational: (id: string) => Promise<void>;
+  resolveInternational: (id: string, action: "resolved" | "pending" | "reverted") => Promise<void>;
   setActiveInternational: (order: OutsideNigeriaOrder | null) => void;
 
   // Geo actions
@@ -89,7 +92,8 @@ type LogisticsState = {
 
 export const useLogisticsStore = create<LogisticsState>()((set, get) => ({
   items: [],
-  itemsLoading: true,
+  onTripItems: [],
+  itemsLoading: { available: true, on_trip: true },
   trips: [],
   tripsLoading: true,
   activeTrip: null,
@@ -106,24 +110,31 @@ export const useLogisticsStore = create<LogisticsState>()((set, get) => ({
 
   // ─── Items queue ───────────────────────────────────────────────────────────
 
-  fetchItems: async (page, cityId, stateId) => {
-    set({ itemsLoading: true });
+  fetchItems: async (page, cityId, stateId, search, tab) => {
+    const t = tab ?? "available";
+    set((s) => ({ itemsLoading: { ...s.itemsLoading, [t]: true } }));
     const params = new URLSearchParams({ page: String(page), limit: String(LIMIT) });
     if (cityId) params.set("cityId", cityId);
     if (stateId) params.set("stateId", stateId);
+    if (search) params.set("search", search);
+    params.set("tab", t);
     const res = await authRequest({ url: `/api/admin/logistics/items?${params}` });
-    set((s) => ({
-      items: res.data.data,
-      meta: { ...s.meta, items: res.data.meta },
-      itemsLoading: false,
-    }));
+    if (t === "on_trip") {
+      set((s) => ({ onTripItems: res.data.data, meta: { ...s.meta, onTripItems: res.data.meta }, itemsLoading: { ...s.itemsLoading, on_trip: false } }));
+    } else {
+      set((s) => ({ items: res.data.data, meta: { ...s.meta, items: res.data.meta }, itemsLoading: { ...s.itemsLoading, available: false } }));
+    }
   },
 
   // ─── Trips ─────────────────────────────────────────────────────────────────
 
-  fetchTrips: async (page) => {
+  fetchTrips: async (page, search, stateId, cityId) => {
     set({ tripsLoading: true });
-    const res = await authRequest({ url: `/api/admin/logistics/trips?page=${page}&limit=${LIMIT}` });
+    const params = new URLSearchParams({ page: String(page), limit: String(LIMIT) });
+    if (search) params.set("search", search);
+    if (stateId) params.set("stateId", stateId);
+    if (cityId) params.set("cityId", cityId);
+    const res = await authRequest({ url: `/api/admin/logistics/trips?${params}` });
     set((s) => ({
       trips: res.data.data,
       meta: { ...s.meta, trips: res.data.meta },
@@ -171,9 +182,11 @@ export const useLogisticsStore = create<LogisticsState>()((set, get) => ({
 
   // ─── International ─────────────────────────────────────────────────────────
 
-  fetchInternational: async (page) => {
+  fetchInternational: async (page, search) => {
     set({ internationalLoading: true });
-    const res = await authRequest({ url: `/api/admin/logistics/international?page=${page}&limit=${LIMIT}` });
+    const params = new URLSearchParams({ page: String(page), limit: String(LIMIT) });
+    if (search) params.set("search", search);
+    const res = await authRequest({ url: `/api/admin/logistics/international?${params}` });
     set((s) => ({
       international: res.data.data,
       meta: { ...s.meta, international: res.data.meta },
@@ -186,15 +199,16 @@ export const useLogisticsStore = create<LogisticsState>()((set, get) => ({
     set({ activeInternational: res.data.data });
   },
 
-  resolveInternational: async (id) => {
-    await authRequest({ method: "PATCH", url: `/api/admin/logistics/international/${id}` });
+  resolveInternational: async (id, action) => {
+    await authRequest({ method: "PATCH", url: `/api/admin/logistics/international/${id}`, data: { action } });
+    const newStatus = action as "resolved" | "pending" | "reverted";
     set((s) => ({
       international: s.international.map((o) =>
-        o.id === id ? { ...o, status: "resolved" as const } : o,
+        o.id === id ? { ...o, status: newStatus } : o,
       ),
       activeInternational:
         s.activeInternational?.id === id
-          ? { ...s.activeInternational, status: "resolved" as const }
+          ? { ...s.activeInternational, status: newStatus }
           : s.activeInternational,
     }));
   },

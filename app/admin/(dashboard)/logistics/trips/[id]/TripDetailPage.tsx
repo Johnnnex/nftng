@@ -8,7 +8,7 @@ type Params = { params: Promise<{ id: string }> };
 export default async function TripDetailPage({ params }: Params) {
   const { id } = await params;
   return (
-    <AdminServerLoader<[TripDetailType | null]>
+    <AdminServerLoader<[{ data: TripDetailType } | null]>
       requests={[{ url: `/api/admin/logistics/trips/${id}` }]}
       onSuccess={TripDetailInitializer}
     >

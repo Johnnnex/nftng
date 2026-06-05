@@ -1,4 +1,4 @@
--- ecommerce schema: products, variants, stock, faqs, reviews, transactions, orders, order_items, ecommerce_config
+-- ecommerce schema: products, variants, stock, faqs, reviews, transactions, orders, order_items, ecommerce_config, promo_codes
 -- run in: supabase dashboard → sql editor
 -- depends on: admin-auth.sql (references admins), logistics-geo.sql (orders references countries/states/cities)
 -- run order: admin-auth.sql → logistics-geo.sql → ecommerce.sql → logistics-ops.sql
@@ -10,11 +10,14 @@
 drop type if exists order_status cascade;
 create type order_status as enum (
   'pending_payment',
+  'paid',
   'in_progress',
   'complete',
   'cancelled',
   'refunded'
 );
+-- Live-DB migration (run this instead of the drop/recreate above on an existing database):
+-- ALTER TYPE order_status ADD VALUE IF NOT EXISTS 'paid' AFTER 'pending_payment';
 
 -- item_status: items start as 'pending' (not 'paid'); no at_destination (trip system handles it)
 drop type if exists item_status cascade;
@@ -29,15 +32,22 @@ create type item_status as enum (
 drop type if exists payment_method_type cascade;
 create type payment_method_type as enum ('paystack', 'flutterwave');
 
+drop type if exists discount_type cascade;
+create type discount_type as enum ('percent', 'flat');
+
 -- ─── PRODUCTS ─────────────────────────────────────────────────────────────────
 -- base_image: default hero shown on cards and initial product detail load
 -- base_price: used when no price-influencing variant group exists or is selected
 -- sales_open_at / sales_close_at: per-product window; null = open immediately / never closes
 -- BOTH global ecommerce_config window AND per-product window must be open for purchase
 
+-- run in supabase sql editor if products table already exists:
+-- alter table products add column if not exists about text;
+
 create table if not exists products (
   id             uuid primary key default gen_random_uuid(),
   title          text not null,
+  about          text,                         -- short plain-text summary shown on cards / checkout
   description    text,                         -- stored as markdown, rendered via <RichText />
   base_price     numeric(10, 2) not null,
   base_image     text,                         -- cloudflare images url
@@ -300,3 +310,29 @@ create policy "public_read_own_order" on orders
 
 create policy "public_read_own_order_items" on order_items
   for select using (true);  -- further scoped in api by order_id join
+
+-- ─── Promo Codes ──────────────────────────────────────────────────────────────
+
+create table if not exists promo_codes (
+  id uuid primary key default gen_random_uuid(),
+  campaign_name text not null,
+  code text unique not null,
+  discount_type discount_type not null,
+  discount_value numeric(10,2) not null check (discount_value > 0),
+  is_active boolean not null default true,
+  usage_count integer not null default 0,
+  max_usage integer check (max_usage > 0),        -- null = unlimited
+  starts_at timestamptz,                           -- null = active immediately
+  expires_at timestamptz,                          -- null = never expires
+  created_by uuid references admins(id) on delete set null,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+create index if not exists idx_promo_codes_code on promo_codes(code);
+
+alter table promo_codes enable row level security;
+
+-- storefront: validate active codes only (admin writes go through service_role, bypass RLS)
+create policy "public_read_active_promo_codes" on promo_codes
+  for select using (is_active = true);

@@ -20,19 +20,6 @@ import { Modal, PermissionEditor, ConfirmModal } from "../_shared";
 import { MODULE_META } from "@/lib/permissions";
 import type { ModuleName, ModulePermissionsMap } from "@/lib/permissions";
 
-// ─── Skeleton ─────────────────────────────────────────────────────────────────
-
-const RolesSkeleton = () => (
-  <div className="rounded-2xl border border-[#E5E7EB] overflow-hidden animate-pulse">
-    <div className="h-14 bg-[#F3F4F6] border-b border-[#E5E7EB]" />
-    <div className="p-4 flex flex-col gap-2">
-      {Array.from({ length: 4 }).map((_, i) => (
-        <div key={i} className={`h-16 rounded-xl ${i % 2 === 0 ? "bg-[#F3F4F6]" : "bg-[#F9FAFB]"}`} />
-      ))}
-    </div>
-  </div>
-);
-
 // ─── Role Form Modal ──────────────────────────────────────────────────────────
 
 const RoleFormModal = ({
@@ -155,7 +142,7 @@ const fmt = (d: string) =>
 type ConfirmState = { target: RoleTemplate };
 
 const RoleTemplates = () => {
-  const { admin, hydrated } = useAuthStore();
+  const { admin } = useAuthStore();
   const { roles, meta, loading, deleteRole, fetchRoles } = useTeamStore();
   const LIMIT = 50;
   const canWrite = hasPermission(admin?.permissions ?? {}, admin?.isSuper ?? false, "adminManagement", "write");
@@ -250,7 +237,6 @@ const RoleTemplates = () => {
     [roles],
   );
 
-  if (!hydrated) return <RolesSkeleton />;
 
   return (
     <>

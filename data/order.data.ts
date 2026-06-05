@@ -1,9 +1,10 @@
-export type OrderStatus = "pending_payment" | "in_progress" | "complete" | "cancelled" | "refunded";
+export type OrderStatus = "pending_payment" | "paid" | "in_progress" | "complete" | "cancelled" | "refunded";
 export type ItemStatus = "pending" | "packaged" | "enroute" | "delivered" | "returned";
 export type TripStatus = "draft" | "dispatched" | "completed";
 
 export const ORDER_STATUS_LABELS: Record<OrderStatus, string> = {
   pending_payment: "Pending Payment",
+  paid: "Paid",
   in_progress: "In Progress",
   complete: "Complete",
   cancelled: "Cancelled",
@@ -101,6 +102,7 @@ export type TripItem = {
   productImage: string | null;
   variantCombo: Record<string, string>;
   quantity: number;
+  itemStatus: ItemStatus;
   orderId: string;
   orderRef: string;
   userName: string;
@@ -157,7 +159,7 @@ export type OutsideNigeriaOrder = {
   userCountryName: string | null;
   userAddress: string;
   items: OutsideNigeriaItem[];
-  status: "pending" | "resolved";
+  status: "pending" | "resolved" | "reverted";
   resolvedAt: string | null;
   createdAt: string;
 };

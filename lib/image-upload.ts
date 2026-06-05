@@ -1,12 +1,14 @@
-// Cloudflare Images upload utility
-// - uploadImageToCloudflare: immediate upload, returns URL
-// - createDebouncedUploader: returns a debounced uploader that auto-uploads after 60s of inactivity
-//   If the file changes before the timer fires, the previous timer is cancelled.
-//   Call .flush() to force-upload immediately (used when submitting the form before the timer fires).
+// R2 image upload utility — all images stored in product-images/ folder
+// - uploadProductImage: immediate upload, returns URL
+// - createDebouncedUploader: debounced uploader that auto-uploads after inactivity
+//   Call .flush() to force-upload immediately before form submit.
 
-type UploadResult = { url: string } | null;
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB
 
-export async function uploadImageToCloudflare(file: File): Promise<string> {
+export async function uploadProductImage(file: File): Promise<string> {
+  if (file.size > MAX_FILE_SIZE)
+    throw new Error("Image must be under 5 MB");
+
   const form = new FormData();
   form.append("file", file);
 
@@ -24,9 +26,9 @@ export async function uploadImageToCloudflare(file: File): Promise<string> {
   return data.data.url;
 }
 
-// Debounced uploader — waits 60 seconds before uploading.
-// Typical flow: admin picks an image → timer starts → 60s later it uploads silently.
-// If they click "Submit" before 60s, call flush() which uploads immediately and clears the timer.
+// Debounced uploader — waits delayMs before uploading.
+// Typical flow: admin picks an image → timer starts → uploads silently after delay.
+// Call flush() to force-upload immediately before form submit.
 
 export type DebouncedUploader = {
   queue: (file: File, onResolved: (url: string) => void, onError: (err: Error) => void) => void;
@@ -34,7 +36,7 @@ export type DebouncedUploader = {
   cancel: () => void;
 };
 
-export function createDebouncedUploader(delayMs = 60_000): DebouncedUploader {
+export function createDebouncedUploader(delayMs = 8_000): DebouncedUploader {
   let timer: ReturnType<typeof setTimeout> | null = null;
   let pending: { file: File; onResolved: (url: string) => void; onError: (err: Error) => void } | null = null;
 
@@ -47,7 +49,7 @@ export function createDebouncedUploader(delayMs = 60_000): DebouncedUploader {
     const { file, onResolved, onError } = pending;
     pending = null;
     try {
-      const url = await uploadImageToCloudflare(file);
+      const url = await uploadProductImage(file);
       onResolved(url);
     } catch (e) {
       onError(e instanceof Error ? e : new Error(String(e)));

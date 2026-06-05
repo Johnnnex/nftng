@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import NewProduct from "./NewProduct";
 
 export const metadata: Metadata = {
-  title: "New Product | NFTNG Admin",
+  title: "Unchain Summer | New Product",
   robots: { index: false, follow: false },
 };
 

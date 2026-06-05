@@ -45,9 +45,54 @@ export async function PATCH(req: NextRequest, { params }: Params) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
 
   const { id } = await params;
+  const body = await req.json().catch(() => ({}));
+  const validActions = ["resolved", "reverted"] as const;
+  if (!validActions.includes(body.action)) {
+    return NextResponse.json({ error: "Invalid action" }, { status: 400 });
+  }
+  const action: "resolved" | "reverted" = body.action;
+  const now = new Date().toISOString();
+
+  // Fetch current status — once resolved or reverted, no further changes allowed
+  const { data: existing } = await supabase
+    .from("outside_nigeria_orders")
+    .select("status, items")
+    .eq("id", id)
+    .single();
+
+  if (!existing) return NextResponse.json({ error: "Not found" }, { status: 404 });
+  if (existing.status !== "pending") {
+    return NextResponse.json({ error: "Order already actioned — no further changes allowed" }, { status: 400 });
+  }
+
+  if (action === "reverted") {
+    // Reverse stock for each item (best-effort, no optimistic lock needed for revert)
+    const items: { productId: string; variantCombo: Record<string, string>; qty: number }[] = existing.items ?? [];
+    await Promise.all(
+      items.map(async (item) => {
+        if (!item.productId) return;
+        const sortedCombo = Object.keys(item.variantCombo)
+          .sort()
+          .reduce((a, k) => ({ ...a, [k]: item.variantCombo[k] }), {} as Record<string, string>);
+        const { data: stock } = await supabase
+          .from("product_stocks")
+          .select("id, quantity")
+          .eq("product_id", item.productId)
+          .filter("combo", "eq", JSON.stringify(sortedCombo))
+          .single();
+        if (stock) {
+          await supabase
+            .from("product_stocks")
+            .update({ quantity: stock.quantity + item.qty })
+            .eq("id", stock.id);
+        }
+      }),
+    );
+  }
+
   const { error } = await supabase
     .from("outside_nigeria_orders")
-    .update({ status: "resolved", resolved_by: ctx.adminId, resolved_at: new Date().toISOString() })
+    .update({ status: action, resolved_by: ctx.adminId, resolved_at: now })
     .eq("id", id);
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });

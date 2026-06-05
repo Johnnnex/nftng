@@ -7,7 +7,6 @@ import React, {
   ReactNode,
   useCallback,
   useEffect,
-  useMemo,
   useRef,
   useState,
 } from "react";
@@ -175,12 +174,12 @@ const DataTable = ({
     });
   }, [JSON.stringify(columns)]);
 
-  useMemo(() => {
+  useEffect(() => {
     const selectedData = formattedData.filter((_, index) =>
       selectedCheckBoxes.includes(index),
     );
     onCheckChange(selectedData);
-  }, [JSON.stringify(selectedCheckBoxes)]);
+  }, [JSON.stringify(selectedCheckBoxes)]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const Table = React.forwardRef((restProps: any, ref) => (
     <table

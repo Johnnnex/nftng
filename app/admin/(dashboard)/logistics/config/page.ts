@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import GeoConfigPage from "./GeoConfigPage";
 
 export const metadata: Metadata = {
-  title: "Geo Configuration | NFTNG Admin",
+  title: "Unchain Summer | Geo Config",
   robots: { index: false, follow: false },
 };
 

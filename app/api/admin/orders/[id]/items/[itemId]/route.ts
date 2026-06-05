@@ -15,12 +15,14 @@ export async function PATCH(req: NextRequest, { params }: Params) {
   const { id: orderId, itemId } = await params;
   const body = await req.json();
 
-  // Branch: status advancement OR logistics_ready flag
   const statusParsed = itemStatusUpdateSchema.safeParse(body);
   const logisticsParsed = itemLogisticsReadySchema.safeParse(body);
 
   if (!statusParsed.success && !logisticsParsed.success) {
-    return NextResponse.json({ error: "Invalid payload — expected { status: 'packaged' } or { logisticsReady: true }" }, { status: 400 });
+    return NextResponse.json(
+      { error: "Invalid payload — expected { status: 'packaged' } or { logisticsReady: true }" },
+      { status: 400 },
+    );
   }
 
   if (statusParsed.success) {
@@ -33,6 +35,14 @@ export async function PATCH(req: NextRequest, { params }: Params) {
       .eq("status", "pending");
 
     if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+
+    // Move order to in_progress when the first item is packaged — only from 'paid' state (idempotent)
+    await supabase
+      .from("orders")
+      .update({ status: "in_progress", updated_at: new Date().toISOString() })
+      .eq("id", orderId)
+      .eq("status", "paid");
+
     return NextResponse.json({ data: { status: "packaged" } });
   }
 
@@ -48,12 +58,21 @@ export async function PATCH(req: NextRequest, { params }: Params) {
   if (item.status !== "packaged")
     return NextResponse.json({ error: "Item must be packaged before marking logistics ready" }, { status: 400 });
 
+  const now = new Date().toISOString();
   const { error } = await supabase
     .from("order_items")
-    .update({ logistics_ready: true, updated_at: new Date().toISOString() })
+    .update({ logistics_ready: true, updated_at: now })
     .eq("id", itemId)
     .eq("order_id", orderId);
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+
+  // Safety net: if item was packaged via bulk route the order may still be 'paid' — advance it
+  await supabase
+    .from("orders")
+    .update({ status: "in_progress", updated_at: now })
+    .eq("id", orderId)
+    .eq("status", "paid");
+
   return NextResponse.json({ data: { logisticsReady: true } });
 }

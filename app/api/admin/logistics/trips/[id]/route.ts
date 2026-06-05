@@ -26,7 +26,7 @@ export async function GET(req: NextRequest, { params }: Params) {
     .from("trip_items")
     .select(
       `id, trip_id, order_item_id,
-       order_items!inner(product_title, product_image, variant_combo, quantity,
+       order_items!inner(product_title, product_image, variant_combo, quantity, status,
          orders!inner(id, order_ref, user_name, user_email, user_address,
            cities(name, states(name))))`,
     )
@@ -40,6 +40,7 @@ export async function GET(req: NextRequest, { params }: Params) {
     productImage: ti.order_items?.product_image ?? null,
     variantCombo: ti.order_items?.variant_combo ?? {},
     quantity: ti.order_items?.quantity ?? 1,
+    itemStatus: ti.order_items?.status ?? "enroute",
     orderId: ti.order_items?.orders?.id ?? "",
     orderRef: ti.order_items?.orders?.order_ref ?? "",
     userName: ti.order_items?.orders?.user_name ?? "",
@@ -76,7 +77,7 @@ export async function PATCH(req: NextRequest, { params }: Params) {
   const { id } = await params;
   const body = await req.json();
   const parsed = patchTripSchema.safeParse(body);
-  if (!parsed.success) return NextResponse.json({ error: parsed.error.errors[0]?.message ?? "Invalid body" }, { status: 400 });
+  if (!parsed.success) return NextResponse.json({ error: parsed.error.issues?.[0]?.message ?? "Invalid body" }, { status: 400 });
 
   const update: Record<string, unknown> = {};
   if (parsed.data.riderName !== undefined) update.rider_name = parsed.data.riderName;

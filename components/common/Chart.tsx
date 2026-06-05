@@ -93,13 +93,13 @@ const CustomTooltip: React.FC<TooltipProps<number, string> & { payload?: [any]; 
   if (active && payload && payload.length) {
     return (
       <div className="bg-white shadow-lg border border-[#EAECF0] rounded-[.5rem] min-w-[13.25rem] p-[.625rem_.375rem]">
-        <p className="p-[.625rem] bg-[#F9FAFB] rounded-[.375rem] text-center font-[700] text-[.875rem] leading-[1.5rem]">{label}</p>
+        <p className="p-[.625rem] bg-[#F9FAFB] rounded-[.375rem] text-center font-bold text-[.875rem] leading-[1.5rem]">{label}</p>
         <div className="flex mt-[.5rem] flex-col gap-[.25rem]">
           {payload.map(({ name, value, color }, index) => (
             <div key={`tooltip__item__${index}__${name}`} className="flex p-[.625rem] border-[.5px] border-[#00000009] rounded-[.5rem] gap-[.5rem] items-center">
               <span style={{ backgroundColor: color }} className="rounded-[50%] h-[.5rem] aspect-square" />
-              <p className="text-[#475467] leading-[1.25rem] text-[.875rem] font-[400]">
-                {name}: <span className="font-[700]">{value}</span>
+              <p className="text-[#475467] leading-[1.25rem] text-[.875rem] font-normal">
+                {name}: <span className="font-bold">{value}</span>
               </p>
             </div>
           ))}

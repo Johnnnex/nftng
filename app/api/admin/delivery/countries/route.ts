@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
 
   const body = await req.json();
   const parsed = deliveryCountrySchema.safeParse(body);
-  if (!parsed.success) return NextResponse.json({ error: parsed.error.errors[0]?.message ?? "Invalid body" }, { status: 400 });
+  if (!parsed.success) return NextResponse.json({ error: parsed.error.issues?.[0]?.message ?? "Invalid body" }, { status: 400 });
 
   const { data, error } = await supabase.from("countries").insert(parsed.data).select().single();
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });

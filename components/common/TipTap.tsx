@@ -120,7 +120,7 @@ const TipTap = forwardRef<HTMLDivElement, TipTapProps>(
       },
       editorProps: {
         attributes: {
-          class: `outline-none text-[16px] font-[400] leading-[24px] bg-white p-[1px_14px_10px_14px] rounded-[8px] min-h-[100px] w-full`,
+          class: `outline-none text-[16px] font-normal leading-[24px] bg-white p-[1px_14px_10px_14px] rounded-[8px] min-h-[100px] w-full`,
         },
         handleDrop: (_view, event) => {
           if (!imageAllowed || !editor) return false;

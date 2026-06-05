@@ -23,8 +23,15 @@ button:disabled {
 }
 
 /* ── Scrollbar utils ───────────────────────────────────────── */
-.no-scrollbar::-webkit-scrollbar {
+.no-scrollbar::-webkit-scrollbar,
+.hide-scrollbar::-webkit-scrollbar {
   display: none;
+}
+
+.no-scrollbar,
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 /* ── Form inputs ────────────────────────────────────────────── */
@@ -76,6 +83,15 @@ input[type="number"] {
   to {
     transform: translateX(calc(-50% - var(--marquee-gap, 3.125rem)));
   }
+}
+
+/* ── Pulse green (OTP confirm delivery border) ─────────────── */
+@keyframes pulse-green {
+  0%, 100% { border-color: #6EC93E; }
+  50%       { border-color: rgba(110, 201, 62, 0.25); }
+}
+.animate-pulse-green {
+  animation: pulse-green 1s ease-in-out infinite;
 }
 
 /* ── Glare sweep (cards — auto looping) ───────────────────── */

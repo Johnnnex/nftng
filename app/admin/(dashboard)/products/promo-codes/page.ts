@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import AcceptInvite from "./AcceptInvite";
+import PromoCodesPage from "./PromoCodesPage";
 
 export const metadata: Metadata = {
-  title: "Accept Invite · NFTNG Admin",
+  title: "Unchain Summer | Promo Codes",
   robots: { index: false, follow: false },
 };
 
-export default AcceptInvite;
+export default PromoCodesPage;

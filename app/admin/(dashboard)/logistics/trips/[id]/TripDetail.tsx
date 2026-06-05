@@ -87,16 +87,32 @@ const EditRiderDrawer = ({
 export default function TripDetail({ tripId }: { tripId: string }) {
   const router = useRouter();
   const { admin, hydrated } = useAuthStore();
-  const { activeTrip, activeTripLoading, fetchTripDetail, dispatchTrip, setActiveTrip } = useLogisticsStore();
+  const { activeTrip, activeTripLoading, dispatchTrip, setActiveTrip } = useLogisticsStore();
   const canWrite = hasPermission(admin?.permissions ?? {}, admin?.isSuper ?? false, "logistics", "write");
 
   const [editRider, setEditRider] = useState(false);
   const [dispatching, setDispatching] = useState(false);
+  const [overriding, setOverriding] = useState<string | null>(null); // orderId being overridden
+
+  const handleOverrideDeliver = useCallback(async (orderId: string) => {
+    setOverriding(orderId);
+    try {
+      const res = await fetch(`/api/admin/logistics/trips/${tripId}/orders/${orderId}/deliver`, { method: "POST" });
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.error ?? "Override failed");
+      toast.success("Marked as delivered — confirmation email sent");
+      // Re-fetch trip detail to reflect updated item statuses in the UI
+      await useLogisticsStore.getState().fetchTripDetail(tripId);
+    } catch (err: any) {
+      toast.error(err?.message ?? "Override failed");
+    } finally {
+      setOverriding(null);
+    }
+  }, [tripId]);
 
   useEffect(() => {
-    if (!activeTrip || activeTrip.id !== tripId) {
-      fetchTripDetail(tripId);
-    }
+    // Data is pre-fetched by ServerLoader — no client-side fetch needed.
+    // Just clean up on unmount so stale data doesn't bleed into the next trip.
     return () => { setActiveTrip(null); };
   }, [tripId]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -219,6 +235,32 @@ export default function TripDetail({ tripId }: { tripId: string }) {
                 <span className={cn(satoshi.className, "text-[0.875rem] font-bold font-mono text-[#111827]")}>{orderGroup.orderRef}</span>
                 <span className={cn(satoshi.className, "text-[0.875rem] font-medium text-[#374151]")}>{orderGroup.userName}</span>
                 <span className={cn(satoshi.className, "text-[0.8125rem] text-[#9CA3AF]")}>{orderGroup.userEmail}</span>
+                {orderGroup.items.every((i) => i.itemStatus === "delivered") ? (
+                  <span className={cn(satoshi.className, "ml-auto flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[0.75rem] font-semibold bg-[#6EC93E]/10 text-[#3a7a1e]")}>
+                    <Icon icon="solar:check-circle-bold" className="w-3.5 h-3.5" />
+                    Delivered
+                  </span>
+                ) : (
+                  <div className="ml-auto flex items-center gap-2">
+                    <span className={cn(satoshi.className, "flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[0.75rem] font-semibold bg-blue-50 text-blue-700")}>
+                      <Icon icon="solar:delivery-bold" className="w-3.5 h-3.5" />
+                      Not yet delivered
+                    </span>
+                    {canWrite && trip.status === "dispatched" && (
+                      <button
+                        onClick={() => handleOverrideDeliver(orderGroup.orderId)}
+                        disabled={overriding === orderGroup.orderId}
+                        className={cn(satoshi.className, "flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[0.75rem] font-semibold border border-[#6EC93E]/40 text-[#3a7a1e] hover:bg-[#6EC93E]/10 transition-colors disabled:opacity-50")}
+                      >
+                        {overriding === orderGroup.orderId
+                          ? <Icon icon="svg-spinners:ring-resize" className="w-3.5 h-3.5" />
+                          : <Icon icon="solar:check-circle-bold-duotone" className="w-3.5 h-3.5" />
+                        }
+                        Override Deliver
+                      </button>
+                    )}
+                  </div>
+                )}
               </div>
               {/* Address */}
               <div className="px-5 py-3 border-b border-[#F3F4F6] flex items-center gap-2">

@@ -1,20 +1,25 @@
-type ItemStatus = "paid" | "packaged" | "on_delivery" | "at_destination" | "delivered";
-type OrderStatus = "pending_payment" | "paid" | "in_progress" | "complete" | "cancelled";
+type ItemStatus = "pending" | "packaged" | "enroute" | "delivered" | "returned";
+type OrderStatus = "pending_payment" | "paid" | "in_progress" | "complete" | "cancelled" | "refunded";
 type AdminStatus = "active" | "inactive";
 
 type StatusChipStatus = ItemStatus | OrderStatus | AdminStatus;
 
 const CHIP_CONFIG: Record<StatusChipStatus, { label: string; bg: string; text: string; dot: string }> = {
-  paid: { label: "Paid", bg: "#EFF6FF", text: "#1D4ED8", dot: "#3B82F6" },
-  packaged: { label: "Packaged", bg: "#FFF7ED", text: "#C2410C", dot: "#F97316" },
-  on_delivery: { label: "On Delivery", bg: "#F5F3FF", text: "#6D28D9", dot: "#8B5CF6" },
-  at_destination: { label: "At Destination", bg: "#F0FDFA", text: "#0F766E", dot: "#14B8A6" },
-  delivered: { label: "Delivered", bg: "#F0FDF4", text: "#166534", dot: "#6EC93E" },
+  // item statuses (DB item_status enum)
+  pending:     { label: "Confirmed",   bg: "#F0FDF4", text: "#166534", dot: "#6EC93E"  },
+  packaged:    { label: "Packaged",    bg: "#FFF7ED", text: "#C2410C", dot: "#F97316"  },
+  enroute:     { label: "En Route",    bg: "#F5F3FF", text: "#6D28D9", dot: "#8B5CF6"  },
+  delivered:   { label: "Delivered",   bg: "#F0FDF4", text: "#166534", dot: "#6EC93E"  },
+  returned:    { label: "Returned",    bg: "#FEF2F2", text: "#B91C1C", dot: "#EF4444"  },
+  // order statuses (DB order_status enum)
   pending_payment: { label: "Pending Payment", bg: "#F9FAFB", text: "#374151", dot: "#9CA3AF" },
-  in_progress: { label: "In Progress", bg: "#FFFBEB", text: "#B45309", dot: "#F59E0B" },
-  complete: { label: "Complete", bg: "#F0FDF4", text: "#166534", dot: "#6EC93E" },
-  cancelled: { label: "Cancelled", bg: "#FEF2F2", text: "#B91C1C", dot: "#EF4444" },
-  active: { label: "Active", bg: "#F0FDF4", text: "#166534", dot: "#6EC93E" },
+  paid:            { label: "Paid",            bg: "#ECFDF5", text: "#065F46", dot: "#10B981" },
+  in_progress:     { label: "In Progress",     bg: "#FFFBEB", text: "#B45309", dot: "#F59E0B" },
+  complete:        { label: "Complete",        bg: "#F0FDF4", text: "#166534", dot: "#6EC93E" },
+  cancelled:       { label: "Cancelled",       bg: "#FEF2F2", text: "#B91C1C", dot: "#EF4444" },
+  refunded:        { label: "Refunded",        bg: "#EFF6FF", text: "#1D4ED8", dot: "#3B82F6" },
+  // admin statuses
+  active:   { label: "Active",   bg: "#F0FDF4", text: "#166534", dot: "#6EC93E" },
   inactive: { label: "Inactive", bg: "#F9FAFB", text: "#374151", dot: "#9CA3AF" },
 };
 
@@ -24,7 +29,7 @@ type StatusChipProps = {
 };
 
 const StatusChip = ({ status, className = "" }: StatusChipProps) => {
-  const config = CHIP_CONFIG[status];
+  const config = CHIP_CONFIG[status] ?? { label: status, bg: "#F9FAFB", text: "#374151", dot: "#9CA3AF" };
 
   return (
     <span

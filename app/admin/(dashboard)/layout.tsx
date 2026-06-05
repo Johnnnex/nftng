@@ -16,6 +16,8 @@ const ROUTE_TITLES: Record<string, string> = {
   "/admin/products": "Products",
   "/admin/products/new": "New Product",
   "/admin/products/config": "Sales Configuration",
+  "/admin/products/reviews": "Reviews",
+  "/admin/products/promo-codes": "Promo Codes",
   "/admin/orders": "Orders",
   "/admin/logistics/items": "Items Queue",
   "/admin/logistics/trips": "Trips",

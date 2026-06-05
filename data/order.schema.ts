@@ -13,13 +13,13 @@ export const itemLogisticsReadySchema = z.object({
 export type ItemLogisticsReadyData = z.infer<typeof itemLogisticsReadySchema>;
 
 export const itemRefundSchema = z.object({
-  amount: z.number().positive(),
+  amount: z.number(),
   notes: z.string().optional(),
 });
 export type ItemRefundData = z.infer<typeof itemRefundSchema>;
 
 export const orderRefundSchema = z.object({
-  amount: z.number().positive(),
+  amount: z.number(),
   notes: z.string().optional(),
 });
 export type OrderRefundData = z.infer<typeof orderRefundSchema>;
@@ -43,7 +43,64 @@ export const patchTripSchema = z.object({
 });
 export type PatchTripData = z.infer<typeof patchTripSchema>;
 
+// ─── Storefront — create order ────────────────────────────────────────────────
+
+export const createOrderItemSchema = z.object({
+  productId: z.string().uuid(),
+  title: z.string(),
+  image: z.string().nullable(),
+  variantCombo: z.record(z.string(), z.string()),
+  price: z.number().positive(),
+  qty: z.number().int().min(1),
+});
+
+export const createOrderSchema = z
+  .object({
+    fullName: z.string().min(2, "Full name is required"),
+    email: z.string().email("Enter a valid email"),
+    phone: z.string().min(7, "Enter a valid phone number"),
+    streetAddress: z.string().min(5, "Street address is required"),
+    countryId: z.string().uuid("Select a country"),
+    countryCode: z.string(),
+    // transform "" → undefined so international orders (no state/city) pass uuid validation
+    stateId: z.string().transform((v) => v || undefined).pipe(z.string().uuid().optional()),
+    cityId: z.string().transform((v) => v || undefined).pipe(z.string().uuid().optional()),
+    deliveryMethod: z.enum(["park", "gig", "direct"] as const).optional(),
+    paymentMethod: z.enum(["paystack", "flutterwave"] as const).optional(),
+    promoCode: z.string().optional(),
+    items: z.array(createOrderItemSchema).min(1, "Cart is empty"),
+  })
+  .superRefine((d, ctx) => {
+    if (d.countryCode === "NG") {
+      if (!d.stateId) ctx.addIssue({ code: "custom", message: "Select a state", path: ["stateId"] });
+      if (!d.cityId) ctx.addIssue({ code: "custom", message: "Select a city", path: ["cityId"] });
+      if (!d.deliveryMethod) ctx.addIssue({ code: "custom", message: "Select a delivery method", path: ["deliveryMethod"] });
+      if (!d.paymentMethod) ctx.addIssue({ code: "custom", message: "Select a payment method", path: ["paymentMethod"] });
+    }
+  });
+
+export type CreateOrderData = z.infer<typeof createOrderSchema>;
+
 // ─── International orders ─────────────────────────────────────────────────────
+
+const outsideOrderItemSchema = z.object({
+  productId: z.string().uuid(),
+  productTitle: z.string(),
+  variantCombo: z.record(z.string(), z.string()),
+  qty: z.number().int().min(1),
+  unitPrice: z.number().positive(),
+  productImage: z.string().nullable().optional(),
+});
+
+export const outsideOrderSchema = z.object({
+  fullName: z.string().min(2),
+  email: z.string().email(),
+  phone: z.string().min(7),
+  streetAddress: z.string().min(3),
+  countryId: z.string().uuid(),
+  items: z.array(outsideOrderItemSchema).min(1),
+});
+export type OutsideOrderData = z.infer<typeof outsideOrderSchema>;
 
 export const resolveInternationalSchema = z.object({});
 export type ResolveInternationalData = z.infer<typeof resolveInternationalSchema>;

@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { randomUUID } from "crypto";
 import { supabase } from "@/lib/supabase";
 import { signAccessToken, signRefreshToken, verifyRefreshToken } from "@/lib/jwt";
 

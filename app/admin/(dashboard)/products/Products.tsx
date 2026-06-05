@@ -12,19 +12,6 @@ import { Table, Button, StatusChip } from "@/components";
 import type { ProductRecord, SaleStatus } from "@/data";
 import { SALE_STATUS_LABELS } from "@/data";
 
-// ─── Skeleton ────────────────────────────────────────────────────────────────
-
-const ProductsSkeleton = () => (
-  <div className="rounded-2xl border border-[#E5E7EB] overflow-hidden animate-pulse">
-    <div className="h-14 bg-[#F3F4F6] border-b border-[#E5E7EB]" />
-    <div className="p-4 flex flex-col gap-2">
-      {Array.from({ length: 5 }).map((_, i) => (
-        <div key={i} className={`h-16 rounded-xl ${i % 2 === 0 ? "bg-[#F3F4F6]" : "bg-[#F9FAFB]"}`} />
-      ))}
-    </div>
-  </div>
-);
-
 // ─── Sale status chip ─────────────────────────────────────────────────────────
 
 const SALE_STATUS_COLORS: Record<SaleStatus, string> = {
@@ -38,7 +25,13 @@ const SALE_STATUS_COLORS: Record<SaleStatus, string> = {
 };
 
 const SaleStatusChip = ({ status }: { status: SaleStatus }) => (
-  <span className={cn(satoshi.className, "inline-flex items-center px-2 py-0.5 rounded-full text-[0.75rem] font-medium", SALE_STATUS_COLORS[status])}>
+  <span
+    className={cn(
+      satoshi.className,
+      "inline-flex items-center px-2 py-0.5 rounded-full text-[0.75rem] font-medium whitespace-nowrap",
+      SALE_STATUS_COLORS[status],
+    )}
+  >
     {SALE_STATUS_LABELS[status]}
   </span>
 );
@@ -61,22 +54,46 @@ const ConfirmDelete = ({
     <div className="relative bg-white rounded-2xl shadow-xl w-full max-w-sm p-6 flex flex-col gap-4">
       <div className="flex items-center gap-3">
         <div className="w-10 h-10 rounded-xl bg-red-50 flex items-center justify-center shrink-0">
-          <Icon icon="solar:trash-bin-trash-bold" className="w-5 h-5 text-red-500" />
+          <Icon
+            icon="solar:trash-bin-trash-bold"
+            className="w-5 h-5 text-red-500"
+          />
         </div>
         <div>
-          <p className={cn(poppins.className, "text-[0.9375rem] font-semibold text-[#111827]")}>Delete Product</p>
-          <p className={cn(satoshi.className, "text-[0.8125rem] text-[#6B7280]")}>This cannot be undone.</p>
+          <p
+            className={cn(
+              poppins.className,
+              "text-[0.9375rem] font-semibold text-[#111827]",
+            )}
+          >
+            Delete Product
+          </p>
+          <p
+            className={cn(satoshi.className, "text-[0.8125rem] text-[#6B7280]")}
+          >
+            This cannot be undone.
+          </p>
         </div>
       </div>
       <p className={cn(satoshi.className, "text-[0.875rem] text-[#374151]")}>
-        Delete <span className="font-semibold">"{product.title}"</span>? All variant groups, stock and FAQs will be permanently removed.
+        Delete <span className="font-semibold">"{product.title}"</span>? All
+        variant groups, stock and FAQs will be permanently removed.
       </p>
       <div className="flex gap-2 justify-end">
-        <Button variant="secondary" onClick={onClose} className={cn(satoshi.className, "px-4 py-2 text-[0.875rem]")}>Cancel</Button>
+        <Button
+          variant="secondary"
+          onClick={onClose}
+          className={cn(satoshi.className, "px-4 py-2 text-[0.875rem]")}
+        >
+          Cancel
+        </Button>
         <Button
           loading={loading}
           onClick={onConfirm}
-          className={cn(satoshi.className, "px-4 py-2 text-[0.875rem] bg-red-500 hover:bg-red-600 text-white rounded-lg")}
+          className={cn(
+            satoshi.className,
+            "px-4 py-2 text-[0.875rem] bg-red-500 hover:bg-red-600 text-white rounded-lg",
+          )}
         >
           Delete
         </Button>
@@ -88,14 +105,32 @@ const ConfirmDelete = ({
 // ─── Main ─────────────────────────────────────────────────────────────────────
 
 const LIMIT = 50;
-const fmt = (d: string) => new Date(d).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" });
+const fmt = (d: string) =>
+  new Date(d).toLocaleDateString("en-GB", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  });
 
 const Products = () => {
   const router = useRouter();
-  const { admin, hydrated } = useAuthStore();
-  const { products, meta, loading, deleteProduct, toggleActive, fetchProducts } = useProductStore();
-  const canWrite = hasPermission(admin?.permissions ?? {}, admin?.isSuper ?? false, "products", "write");
+  const { admin } = useAuthStore();
+  const {
+    products,
+    meta,
+    loading,
+    deleteProduct,
+    toggleActive,
+    fetchProducts,
+  } = useProductStore();
+  const canWrite = hasPermission(
+    admin?.permissions ?? {},
+    admin?.isSuper ?? false,
+    "products",
+    "write",
+  );
 
+  const [search, setSearch] = useState("");
   const [deleteTarget, setDeleteTarget] = useState<ProductRecord | null>(null);
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [togglingId, setTogglingId] = useState<string | null>(null);
@@ -114,134 +149,217 @@ const Products = () => {
     }
   }, [deleteTarget, deleteProduct]);
 
-  const handleToggle = useCallback(async (product: ProductRecord) => {
-    setTogglingId(product.id);
-    try {
-      await toggleActive(product.id, !product.isActive);
-      toast.success(product.isActive ? "Product hidden" : "Product published");
-    } catch {
-      toast.error("Failed to update product");
-    } finally {
-      setTogglingId(null);
-    }
-  }, [toggleActive]);
+  const handleToggle = useCallback(
+    async (product: ProductRecord) => {
+      setTogglingId(product.id);
+      try {
+        await toggleActive(product.id, !product.isActive);
+        toast.success(
+          product.isActive ? "Product hidden" : "Product published",
+        );
+      } catch {
+        toast.error("Failed to update product");
+      } finally {
+        setTogglingId(null);
+      }
+    },
+    [toggleActive],
+  );
 
-  const columns = useMemo(() => [
-    {
-      title: "Product",
-      minWidth: 260,
-      customTableBody: (r: ProductRecord) => (
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-lg bg-[#F3F4F6] overflow-hidden shrink-0 flex items-center justify-center">
-            {r.baseImage
-              ? <img src={r.baseImage} alt="" className="w-full h-full object-cover" />
-              : <Icon icon="solar:image-bold-duotone" className="w-5 h-5 text-[#D1D5DB]" />
-            }
+  const columns = useMemo(
+    () => [
+      {
+        title: "Product",
+        customTableBody: (r: ProductRecord) => (
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-lg bg-[#F3F4F6] overflow-hidden shrink-0 flex items-center justify-center">
+              {r.baseImage ? (
+                <img
+                  src={r.baseImage}
+                  alt=""
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <Icon
+                  icon="solar:image-bold-duotone"
+                  className="w-5 h-5 text-[#D1D5DB]"
+                />
+              )}
+            </div>
+            <div className="min-w-0">
+              <p
+                className={cn(
+                  satoshi.className,
+                  "text-[0.875rem] font-semibold text-[#111827] truncate",
+                )}
+              >
+                {r.title}
+              </p>
+              <p
+                className={cn(
+                  satoshi.className,
+                  "text-[0.75rem] text-[#9CA3AF]",
+                )}
+              >
+                {r.variantGroupCount > 0
+                  ? `${r.variantGroupCount} variant group${r.variantGroupCount > 1 ? "s" : ""}`
+                  : "No variants"}
+              </p>
+            </div>
           </div>
-          <div className="min-w-0">
-            <p className={cn(satoshi.className, "text-[0.875rem] font-semibold text-[#111827] truncate")}>{r.title}</p>
-            <p className={cn(satoshi.className, "text-[0.75rem] text-[#9CA3AF]")}>
-              {r.variantGroupCount > 0 ? `${r.variantGroupCount} variant group${r.variantGroupCount > 1 ? "s" : ""}` : "No variants"}
-            </p>
-          </div>
-        </div>
-      ),
-    },
-    {
-      title: "Price",
-      width: 120,
-      customTableBody: (r: ProductRecord) => (
-        <span className={cn(satoshi.className, "text-[0.875rem] font-medium text-[#374151]")}>
-          ₦{r.basePrice.toLocaleString()}
-        </span>
-      ),
-    },
-    {
-      title: "Stock",
-      width: 80,
-      customTableBody: (r: ProductRecord) => (
-        <span className={cn(satoshi.className, "text-[0.875rem]", r.totalStock === 0 ? "text-red-500" : r.totalStock <= 5 ? "text-amber-600" : "text-[#374151]")}>
-          {r.totalStock}
-        </span>
-      ),
-    },
-    {
-      title: "Status",
-      width: 130,
-      customTableBody: (r: ProductRecord) => <SaleStatusChip status={r.saleStatus} />,
-    },
-    {
-      title: "Active",
-      width: 80,
-      customTableBody: (r: ProductRecord) => (
-        <StatusChip status={r.isActive ? "active" : "inactive"} />
-      ),
-    },
-    {
-      title: "Created",
-      width: 110,
-      customTableBody: (r: ProductRecord) => (
-        <span className={cn(satoshi.className, "text-[0.8125rem] text-[#9CA3AF]")}>{fmt(r.createdAt)}</span>
-      ),
-    },
-    {
-      title: "",
-      width: 130,
-      customTableBody: (r: ProductRecord) => (
-        <div className="flex items-center gap-1.5">
-          {canWrite && (
-            <button
-              onClick={() => handleToggle(r)}
-              disabled={togglingId === r.id}
-              title={r.isActive ? "Hide from storefront" : "Publish to storefront"}
-              className="flex items-center justify-center w-7 h-7 rounded-lg text-[#6B7280] border border-[#E5E7EB] hover:bg-[#F3F4F6] transition-colors disabled:opacity-40"
-            >
-              <Icon icon={r.isActive ? "solar:eye-closed-bold" : "solar:eye-bold"} className="w-3.5 h-3.5" />
-            </button>
-          )}
-          <button
-            onClick={() => router.push(`/admin/products/${r.id}/edit`)}
-            className={cn(satoshi.className, "flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-[0.8125rem] text-[#374151] border border-[#E5E7EB] hover:bg-[#F3F4F6] transition-colors")}
+        ),
+      },
+      {
+        title: "Price",
+        width: 120,
+        customTableBody: (r: ProductRecord) => (
+          <span
+            className={cn(
+              satoshi.className,
+              "text-[0.875rem] font-medium text-[#374151]",
+            )}
           >
-            <Icon icon="solar:pen-bold" className="w-3.5 h-3.5" />
-            Edit
-          </button>
-          {canWrite && (
+            ₦{r.basePrice.toLocaleString()}
+          </span>
+        ),
+      },
+      {
+        title: "Stock",
+        width: 80,
+        customTableBody: (r: ProductRecord) => (
+          <span
+            className={cn(
+              satoshi.className,
+              "text-[0.875rem]",
+              r.totalStock === 0
+                ? "text-red-500"
+                : r.totalStock <= 5
+                  ? "text-amber-600"
+                  : "text-[#374151]",
+            )}
+          >
+            {r.totalStock}
+          </span>
+        ),
+      },
+      {
+        title: "Status",
+        width: 130,
+        customTableBody: (r: ProductRecord) => (
+          <SaleStatusChip status={r.saleStatus} />
+        ),
+      },
+      {
+        title: "Active",
+        width: 80,
+        customTableBody: (r: ProductRecord) => (
+          <StatusChip status={r.isActive ? "active" : "inactive"} />
+        ),
+      },
+      {
+        title: "Created",
+        width: 110,
+        customTableBody: (r: ProductRecord) => (
+          <span
+            className={cn(
+              satoshi.className,
+              "text-[0.8125rem] text-nowrap text-[#9CA3AF]",
+            )}
+          >
+            {fmt(r.createdAt)}
+          </span>
+        ),
+      },
+      {
+        title: "",
+        width: 130,
+        customTableBody: (r: ProductRecord) => (
+          <div className="flex items-center gap-1.5">
+            {canWrite && (
+              <button
+                onClick={() => handleToggle(r)}
+                disabled={togglingId === r.id}
+                title={
+                  r.isActive ? "Hide from storefront" : "Publish to storefront"
+                }
+                className="flex items-center justify-center w-7 h-7 rounded-lg text-[#6B7280] border border-[#E5E7EB] hover:bg-[#F3F4F6] transition-colors disabled:opacity-60"
+              >
+                <Icon
+                  icon={togglingId === r.id ? "solar:refresh-bold" : r.isActive ? "solar:eye-closed-bold" : "solar:eye-bold"}
+                  className={cn("w-3.5 h-3.5", togglingId === r.id && "animate-spin")}
+                />
+              </button>
+            )}
             <button
-              onClick={() => setDeleteTarget(r)}
-              title="Delete product"
-              className="flex items-center justify-center w-7 h-7 rounded-lg text-red-500 border border-red-100 hover:bg-red-50 transition-colors"
+              onClick={() => router.push(`/admin/products/${r.id}/edit`)}
+              className={cn(
+                satoshi.className,
+                "flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-[0.8125rem] text-[#374151] border border-[#E5E7EB] hover:bg-[#F3F4F6] transition-colors",
+              )}
             >
-              <Icon icon="solar:trash-bin-trash-bold" className="w-3.5 h-3.5" />
+              <Icon icon="solar:pen-bold" className="w-3.5 h-3.5" />
+              Edit
             </button>
-          )}
-        </div>
-      ),
-    },
-  ], [canWrite, handleToggle, togglingId, router]);
+            {canWrite && (
+              <button
+                onClick={() => setDeleteTarget(r)}
+                title="Delete product"
+                className="flex items-center justify-center w-7 h-7 rounded-lg text-red-500 border border-red-100 hover:bg-red-50 transition-colors"
+              >
+                <Icon
+                  icon="solar:trash-bin-trash-bold"
+                  className="w-3.5 h-3.5"
+                />
+              </button>
+            )}
+          </div>
+        ),
+      },
+    ],
+    [canWrite, handleToggle, togglingId, router],
+  );
 
-  const data = useMemo(() => products.map((r) => [r, r, r, r, r, r, r]), [products]);
-
-  if (!hydrated) return <ProductsSkeleton />;
+  const data = useMemo(
+    () => products.map((r) => [r, r, r, r, r, r, r]),
+    [products],
+  );
 
   return (
     <>
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className={cn(poppins.className, "text-[1.25rem] font-bold text-[#111827]")}>
+          <h1
+            className={cn(
+              poppins.className,
+              "text-[1.25rem] font-bold text-[#111827]",
+            )}
+          >
             Products
-            <span className={cn(satoshi.className, "ml-2 text-[0.875rem] font-normal text-[#9CA3AF]")}>
+            <span
+              className={cn(
+                satoshi.className,
+                "ml-2 text-[0.875rem] font-normal text-[#9CA3AF]",
+              )}
+            >
               ({meta.products.total})
             </span>
           </h1>
-          <p className={cn(satoshi.className, "text-[0.875rem] text-[#9CA3AF] mt-0.5")}>
+          <p
+            className={cn(
+              satoshi.className,
+              "text-[0.875rem] text-[#9CA3AF] mt-0.5",
+            )}
+          >
             Manage your product catalogue
           </p>
         </div>
         {canWrite && (
           <Button
             onClick={() => router.push("/admin/products/new")}
-            className={cn(satoshi.className, "flex items-center gap-2 px-4 py-2 rounded-xl bg-[#6EC93E] text-white text-[0.875rem] font-semibold hover:bg-[#5cb535] transition-colors shadow-sm shadow-[#6EC93E]/20")}
+            className={cn(
+              satoshi.className,
+              "flex items-center gap-2 px-4 py-2 rounded-xl bg-[#6EC93E] text-white text-[0.875rem] font-semibold hover:bg-[#5cb535] transition-colors shadow-sm shadow-[#6EC93E]/20",
+            )}
           >
             <Icon icon="solar:add-circle-bold" className="w-4 h-4" />
             New Product
@@ -254,12 +372,23 @@ const Products = () => {
           columns={columns as any}
           data={data as any}
           loading={loading}
+          head
+          search={{
+            show: true,
+            placeholder: "Search by name or description…",
+            onResolve: (v) => {
+              const q = String(v);
+              setSearch(q);
+              fetchProducts(1, q || undefined);
+            },
+          }}
           pagination
           metaData={{
             currentPage: (meta.products.page - 1) * LIMIT + 1,
             endPage: Math.min(meta.products.page * LIMIT, meta.products.total),
             totalRecords: meta.products.total,
-            onPageChange: (offset) => fetchProducts(Math.floor(offset / LIMIT) + 1),
+            onPageChange: (offset) =>
+              fetchProducts(Math.floor(offset / LIMIT) + 1, search || undefined),
           }}
           emptyStateProps={{
             svg: "solar:bag-bold-duotone",

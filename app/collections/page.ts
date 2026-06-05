@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { BASE_URL, OG_IMAGE, BASE_ROBOTS } from "@/lib";
-import Collections from "./Collections";
+import CollectionsPage from "./CollectionsPage";
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
@@ -27,4 +27,4 @@ export const metadata: Metadata = {
   robots: BASE_ROBOTS,
 };
 
-export default Collections;
+export default CollectionsPage;

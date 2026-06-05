@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import TeamPage from "./TeamPage";
 
 export const metadata: Metadata = {
-  title: "Admins · NFTNG Admin",
+  title: "Unchain Summer | Team",
   robots: { index: false, follow: false },
 };
 

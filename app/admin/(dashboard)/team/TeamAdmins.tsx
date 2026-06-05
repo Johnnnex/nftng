@@ -22,21 +22,6 @@ import {
 import { Modal, PermissionEditor, ConfirmModal } from "./_shared";
 import type { ModulePermissionsMap } from "@/lib/permissions";
 
-// ─── Skeleton ─────────────────────────────────────────────────────────────────
-
-const TeamSkeleton = () => (
-  <div className="rounded-2xl border border-[#E5E7EB] overflow-hidden animate-pulse">
-    <div className="h-14 bg-[#F3F4F6] border-b border-[#E5E7EB]" />
-    <div className="p-4 flex flex-col gap-2">
-      {Array.from({ length: 5 }).map((_, i) => (
-        <div
-          key={i}
-          className={`h-16 rounded-xl ${i % 2 === 0 ? "bg-[#F3F4F6]" : "bg-[#F9FAFB]"}`}
-        />
-      ))}
-    </div>
-  </div>
-);
 
 // ─── Invite Modal ─────────────────────────────────────────────────────────────
 
@@ -99,7 +84,7 @@ const InviteModal = ({
   ];
 
   const renderField = (field: AdminFormField) => {
-    const err = errors[field.name as keyof InviteAdminData]?.message;
+    const err = errors[field.name as keyof InviteAdminData]?.message as string | undefined;
 
     if (field.kind === "select") {
       return (
@@ -131,7 +116,7 @@ const InviteModal = ({
                 name="roleId"
                 selectOptions={roleOptions}
                 value={(rhfField.value as string) ?? ""}
-                onChange={(e) => rhfField.onChange(e.target.value || null)}
+                onChange={(e: { target: { name?: string; value: string | string[] } }) => rhfField.onChange(e.target.value || null)}
                 placeholder={field.placeholder}
               />
             )}
@@ -373,7 +358,7 @@ const fmtExpiry = (d: string) => {
 };
 
 const TeamAdmins = () => {
-  const { admin, hydrated } = useAuthStore();
+  const { admin } = useAuthStore();
   const { admins, invites, meta, loading, toggleAdminActive, fetchAdmins, fetchInvites } = useTeamStore();
   const LIMIT = 50;
   const canWrite = hasPermission(
@@ -610,7 +595,6 @@ const TeamAdmins = () => {
     [invites],
   );
 
-  if (!hydrated) return <TeamSkeleton />;
 
   const confirmCopy = {
     deactivate: {

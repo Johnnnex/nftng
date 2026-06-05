@@ -44,5 +44,5 @@ api.interceptors.response.use(
   },
 );
 
-export const authRequest = <T = unknown>(config: object) =>
+export const authRequest = <T = any>(config: object) => // eslint-disable-line @typescript-eslint/no-explicit-any
   api.request<T>({ ...config, authMode: "auth" } as never);

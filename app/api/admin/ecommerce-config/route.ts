@@ -30,13 +30,13 @@ export async function PATCH(req: NextRequest) {
 
   const body = await req.json();
   const parsed = ecommerceConfigSchema.safeParse(body);
-  if (!parsed.success) return NextResponse.json({ error: parsed.error.errors[0]?.message ?? "Invalid input" }, { status: 400 });
+  if (!parsed.success) return NextResponse.json({ error: parsed.error.issues?.[0]?.message ?? "Invalid input" }, { status: 400 });
 
   const { data, error } = await supabase
     .from("ecommerce_config")
     .update({ sales_open_at: parsed.data.salesOpenAt, sales_close_at: parsed.data.salesCloseAt, updated_at: new Date().toISOString() })
+    .not("id", "is", null)
     .select("id, sales_open_at, sales_close_at, updated_at")
-    .limit(1)
     .single();
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });

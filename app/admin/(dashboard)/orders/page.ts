@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import OrdersPage from "./OrdersPage";
 
 export const metadata: Metadata = {
-  title: "Orders | NFTNG Admin",
+  title: "Unchain Summer | Orders",
   robots: { index: false, follow: false },
 };
 

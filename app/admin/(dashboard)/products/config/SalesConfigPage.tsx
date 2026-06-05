@@ -3,9 +3,11 @@ import { SalesConfigInitializer } from "./SalesConfigInitializer";
 import SalesConfig from "./SalesConfig";
 import type { EcommerceConfig } from "@/data";
 
+type WrappedConfig = { data: EcommerceConfig } | null;
+
 export default async function SalesConfigPage() {
   return (
-    <AdminServerLoader<[EcommerceConfig | null]>
+    <AdminServerLoader<[WrappedConfig]>
       requests={[{ url: "/api/admin/ecommerce-config" }]}
       onSuccess={SalesConfigInitializer}
     >

@@ -15,7 +15,12 @@ export async function GET(req: NextRequest, { params }: Params) {
 
   const { data: order, error } = await supabase
     .from("orders")
-    .select(`*, transactions ( amount, payment_method, status )`)
+    .select(`
+      *,
+      transactions ( amount, delivery_fee, payment_method, status ),
+      cities ( name ),
+      states ( name )
+    `)
     .eq("id", id)
     .single();
 
@@ -27,7 +32,12 @@ export async function GET(req: NextRequest, { params }: Params) {
     .eq("order_id", id)
     .order("created_at");
 
-  const tx = order.transactions as { amount: number; payment_method: string; status: string } | null;
+  const tx = order.transactions as {
+    amount: number;
+    delivery_fee: number | null;
+    payment_method: string;
+    status: string;
+  } | null;
 
   return NextResponse.json({
     data: {
@@ -38,8 +48,16 @@ export async function GET(req: NextRequest, { params }: Params) {
       userName: order.user_name,
       userPhone: order.user_phone,
       userAddress: order.user_address,
+      userAddressLine: order.user_address_line,
+      userCityId: order.user_city_id,
+      userCityName: (order.cities as { name: string } | null)?.name ?? null,
+      userStateId: order.user_state_id,
+      userStateName: (order.states as { name: string } | null)?.name ?? null,
+      deliveryMethod: order.delivery_method,
       status: order.status,
       totalAmount: tx?.amount ?? null,
+      deliveryFee: tx?.delivery_fee ?? null,
+      paymentMethod: tx?.payment_method ?? null,
       itemCount: items?.length ?? 0,
       overrideConfirmationCode: order.override_confirmation_code,
       overrideConfirmationUrlToken: order.override_confirmation_url_token,
@@ -55,12 +73,14 @@ export async function GET(req: NextRequest, { params }: Params) {
         quantity: i.quantity,
         unitPrice: Number(i.unit_price),
         status: i.status,
+        logisticsReady: i.logistics_ready ?? false,
+        refundAmount: i.refund_amount ?? null,
         confirmationCode: i.confirmation_code,
         confirmationUrlToken: i.confirmation_url_token,
         packagedAt: i.packaged_at,
-        onDeliveryAt: i.on_delivery_at,
-        atDestinationAt: i.at_destination_at,
+        enrouteAt: i.on_delivery_at,
         deliveredAt: i.delivered_at,
+        returnedAt: i.returned_at ?? null,
         createdAt: i.created_at,
       })),
     },

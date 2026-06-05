@@ -4,21 +4,21 @@ import TrackOrder from "./TrackOrder";
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
-  title: "Track Your Order · NFTNG",
-  description: "Enter your order ID to get real-time updates on your NFTNG merchandise.",
+  title: "Unchain Summer | Track Order",
+  description: "Track your Unchain Summer 2026 merchandise order. Enter your order ID for real-time item-by-item updates.",
   alternates: { canonical: `${BASE_URL}/track-order` },
   openGraph: {
     type: "website",
     siteName: "Unchain Summer",
-    title: "Track Your Order · NFTNG",
-    description: "Enter your order ID to get real-time updates on your NFTNG merchandise.",
+    title: "Track Order | Unchain Summer 2026",
+    description: "Track your Unchain Summer 2026 merchandise order. Enter your order ID for real-time item-by-item updates.",
     url: `${BASE_URL}/track-order`,
     images: [OG_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Track Your Order · NFTNG",
-    description: "Enter your order ID to get real-time updates on your NFTNG merchandise.",
+    title: "Track Order | Unchain Summer 2026",
+    description: "Track your Unchain Summer 2026 merchandise order. Enter your order ID for real-time item-by-item updates.",
     images: [OG_IMAGE.url],
   },
   robots: BASE_ROBOTS,

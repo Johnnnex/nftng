@@ -33,11 +33,18 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
 
   const page = Math.max(1, parseInt(req.nextUrl.searchParams.get("page") ?? "1"));
+  const search = req.nextUrl.searchParams.get("search")?.trim() ?? "";
   const offset = (page - 1) * LIMIT;
 
-  const { data: products, count, error } = await supabase
+  let query = supabase
     .from("products")
-    .select("id, title, base_price, base_image, is_active, sales_open_at, sales_close_at, created_at", { count: "exact" })
+    .select("id, title, base_price, base_image, is_active, sales_open_at, sales_close_at, created_at", { count: "exact" });
+
+  if (search) {
+    query = query.or(`title.ilike.%${search}%,description.ilike.%${search}%,about.ilike.%${search}%`);
+  }
+
+  const { data: products, count, error } = await query
     .order("created_at", { ascending: false })
     .range(offset, offset + LIMIT - 1);
 
@@ -90,13 +97,13 @@ export async function POST(req: NextRequest) {
 
   const body = await req.json();
   const parsed = productCreateSchema.safeParse(body);
-  if (!parsed.success) return NextResponse.json({ error: parsed.error.errors[0]?.message ?? "Invalid input" }, { status: 400 });
+  if (!parsed.success) return NextResponse.json({ error: parsed.error.issues?.[0]?.message ?? "Invalid input" }, { status: 400 });
 
-  const { title, description, basePrice, baseImage, isActive, salesOpenAt, salesCloseAt, variantGroups, stocks, faqs } = parsed.data;
+  const { title, about, description, basePrice, baseImage, isActive, salesOpenAt, salesCloseAt, variantGroups, stocks, faqs } = parsed.data;
 
   const { data: product, error: prodErr } = await supabase
     .from("products")
-    .insert({ title, description, base_price: basePrice, base_image: baseImage, is_active: isActive, sales_open_at: salesOpenAt, sales_close_at: salesCloseAt, created_by: ctx.adminId })
+    .insert({ title, about, description, base_price: basePrice, base_image: baseImage, is_active: isActive, sales_open_at: salesOpenAt, sales_close_at: salesCloseAt, created_by: ctx.adminId })
     .select()
     .single();
 
@@ -235,6 +242,7 @@ async function fetchProductDetail(id: string) {
   return {
     id: product.id,
     title: product.title,
+    about: product.about ?? null,
     description: product.description,
     basePrice: Number(product.base_price),
     baseImage: product.base_image,

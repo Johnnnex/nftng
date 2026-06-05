@@ -12,13 +12,18 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
 
   const page = Math.max(1, parseInt(req.nextUrl.searchParams.get("page") ?? "1"));
+  const search = req.nextUrl.searchParams.get("search")?.trim() ?? "";
   const offset = (page - 1) * LIMIT;
 
-  const { data, count, error } = await supabase
+  let query = supabase
     .from("outside_nigeria_orders")
     .select("*, countries(name)", { count: "exact" })
     .range(offset, offset + LIMIT - 1)
     .order("created_at", { ascending: false });
+
+  if (search) query = query.or(`user_name.ilike.%${search}%,user_email.ilike.%${search}%`);
+
+  const { data, count, error } = await query;
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
 

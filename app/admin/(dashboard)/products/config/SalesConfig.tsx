@@ -4,24 +4,17 @@
 import { useState, useCallback, useEffect } from "react";
 import { toast } from "sonner";
 import { Icon } from "@iconify/react";
-import { cn } from "@/lib";
+import { cn, toLocalInputValue } from "@/lib";
 import { poppins, satoshi } from "@/app/layout";
 import { useAuthStore, useProductStore } from "@/store";
 import { Button, Input } from "@/components";
 import { hasPermission } from "@/lib/permissions";
 
-const ConfigSkeleton = () => (
-  <div className="max-w-lg animate-pulse flex flex-col gap-5">
-    <div className="h-8 w-56 bg-[#F3F4F6] rounded-xl" />
-    <div className="h-48 bg-[#F3F4F6] rounded-2xl" />
-  </div>
-);
-
 const fmtLocal = (iso: string | null) => (iso ? new Date(iso).toLocaleString("en-GB", { dateStyle: "medium", timeStyle: "short" }) : "Not set");
 
 const SalesConfig = () => {
-  const { admin, hydrated } = useAuthStore();
-  const { config, fetchConfig, updateConfig } = useProductStore();
+  const { admin } = useAuthStore();
+  const { config, updateConfig } = useProductStore();
   const canWrite = hasPermission(admin?.permissions ?? {}, admin?.isSuper ?? false, "products", "write");
 
   const [openAt, setOpenAt] = useState("");
@@ -31,8 +24,8 @@ const SalesConfig = () => {
 
   useEffect(() => {
     if (config) {
-      setOpenAt(config.salesOpenAt ? config.salesOpenAt.slice(0, 16) : "");
-      setCloseAt(config.salesCloseAt ? config.salesCloseAt.slice(0, 16) : "");
+      setOpenAt(toLocalInputValue(config.salesOpenAt));
+      setCloseAt(toLocalInputValue(config.salesCloseAt));
     }
   }, [config]);
 
@@ -52,7 +45,6 @@ const SalesConfig = () => {
     }
   }, [openAt, closeAt, updateConfig]);
 
-  if (!hydrated) return <ConfigSkeleton />;
 
   return (
     <div className="max-w-lg flex flex-col gap-6">
@@ -109,7 +101,7 @@ const SalesConfig = () => {
                   <Input
                     type="datetime-local"
                     value={openAt}
-                    onChange={(e) => setOpenAt((e as any).target.value)}
+                    onChange={(e: { target: { name?: string; value: string } }) => setOpenAt(e.target.value)}
                     placeholder="Select open date & time"
                   />
                   <p className={cn(satoshi.className, "text-[0.75rem] text-[#9CA3AF] mt-1")}>Leave blank = always open</p>
@@ -119,7 +111,7 @@ const SalesConfig = () => {
                   <Input
                     type="datetime-local"
                     value={closeAt}
-                    onChange={(e) => setCloseAt((e as any).target.value)}
+                    onChange={(e: { target: { name?: string; value: string } }) => setCloseAt(e.target.value)}
                     placeholder="Select close date & time"
                   />
                   <p className={cn(satoshi.className, "text-[0.75rem] text-[#9CA3AF] mt-1")}>Leave blank = never closes</p>
@@ -135,7 +127,7 @@ const SalesConfig = () => {
                 </Button>
                 <Button
                   variant="secondary"
-                  onClick={() => { setEditing(false); if (config) { setOpenAt(config.salesOpenAt?.slice(0, 16) ?? ""); setCloseAt(config.salesCloseAt?.slice(0, 16) ?? ""); } }}
+                  onClick={() => { setEditing(false); if (config) { setOpenAt(toLocalInputValue(config.salesOpenAt)); setCloseAt(toLocalInputValue(config.salesCloseAt)); } }}
                   className={cn(satoshi.className, "px-5 py-2 rounded-xl text-[0.875rem]")}
                 >
                   Cancel

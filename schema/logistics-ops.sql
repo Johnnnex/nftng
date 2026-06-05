@@ -60,6 +60,12 @@ create index if not exists trip_orders_order_idx on trip_orders (order_id);
 -- no payment, no tracking, fully manual process
 -- user gets preview url /preview-order/:preview_token to view their order
 
+-- patch for existing DBs:
+-- alter table outside_nigeria_orders add column if not exists reverted_by uuid references admins(id) on delete set null;
+-- alter table outside_nigeria_orders add column if not exists reverted_at timestamptz;
+-- alter table outside_nigeria_orders drop constraint if exists outside_nigeria_orders_status_check;
+-- alter table outside_nigeria_orders add constraint outside_nigeria_orders_status_check check (status in ('pending', 'resolved', 'reverted'));
+
 create table if not exists outside_nigeria_orders (
   id              uuid primary key default gen_random_uuid(),
   preview_token   text unique not null,            -- nanoid 10 lowercase alphanumeric
@@ -68,10 +74,13 @@ create table if not exists outside_nigeria_orders (
   user_phone      text not null,
   user_country_id uuid references countries(id) on delete set null,
   user_address    text not null,
-  items           jsonb not null,                  -- snapshot: [{productTitle, variantCombo, qty, unitPrice, productImage}]
-  status          text not null default 'pending', -- 'pending' | 'resolved'
+  items           jsonb not null,                  -- snapshot: [{productId, productTitle, variantCombo, qty, unitPrice, productImage}]
+  status          text not null default 'pending'
+                  constraint outside_nigeria_orders_status_check check (status in ('pending', 'resolved', 'reverted')),
   resolved_by     uuid references admins(id) on delete set null,
   resolved_at     timestamptz,
+  reverted_by     uuid references admins(id) on delete set null,
+  reverted_at     timestamptz,
   created_at      timestamptz not null default now()
 );
 

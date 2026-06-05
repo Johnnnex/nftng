@@ -15,17 +15,43 @@ export async function POST(req: NextRequest, { params }: Params) {
   const { id: orderId } = await params;
   const body = await req.json();
   const parsed = orderRefundSchema.safeParse(body);
-  if (!parsed.success) return NextResponse.json({ error: parsed.error.errors[0]?.message ?? "Invalid body" }, { status: 400 });
+  if (!parsed.success) return NextResponse.json({ error: parsed.error.issues?.[0]?.message ?? "Invalid body" }, { status: 400 });
 
   const { amount, notes } = parsed.data;
   const now = new Date().toISOString();
 
-  // Mark all items returned
+  // Fetch items to reverse stock for those being returned
+  const { data: returningItems } = await supabase
+    .from("order_items")
+    .select("id, product_id, variant_combo, quantity")
+    .eq("order_id", orderId)
+    .not("status", "in", '("returned","delivered")');
+
+  // Mark all non-returned/delivered items returned
   await supabase
     .from("order_items")
     .update({ status: "returned", returned_at: now, updated_at: now })
     .eq("order_id", orderId)
     .not("status", "in", '("returned","delivered")');
+
+  // Reverse stock for each returned item
+  await Promise.all(
+    (returningItems ?? []).map(async (item) => {
+      if (!item.product_id || !item.variant_combo) return;
+      const { data: stock } = await supabase
+        .from("product_stocks")
+        .select("id, quantity")
+        .eq("product_id", item.product_id)
+        .filter("combo", "eq", JSON.stringify(item.variant_combo))
+        .single();
+      if (stock) {
+        await supabase
+          .from("product_stocks")
+          .update({ quantity: stock.quantity + item.quantity })
+          .eq("id", stock.id);
+      }
+    }),
+  );
 
   // Mark order refunded
   const { error: orderErr } = await supabase
