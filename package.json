@@ -10,7 +10,10 @@
     "seed:admin": "npx ts-node --esm scripts/seed-super-admin.ts",
     "seed:roles": "npx ts-node --esm scripts/seed-role-templates.ts",
     "seed:geo": "npx ts-node --esm scripts/seed-geo.ts",
-    "seed:config": "npx ts-node --esm scripts/seed-ecommerce-config.ts"
+    "seed:config": "npx ts-node --esm scripts/seed-ecommerce-config.ts",
+    "email:gabriella": "npx ts-node --esm scripts/send-order-confirm-gabriella.ts",
+    "email:preorder": "npx ts-node --esm scripts/send-preorder-notice.ts",
+    "seed:delivery": "npx ts-node --esm scripts/seed-delivery-configs.ts"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1057.0",

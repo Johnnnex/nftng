@@ -490,6 +490,28 @@ const Checkout = () => {
                     />
                   </div>
                 )}
+
+                {cityId && (
+                  <div className="rounded-2xl bg-[#6EC93E]/8 border border-[#6EC93E]/20 p-5">
+                    <div className="flex gap-3">
+                      <Icon
+                        icon="solar:info-circle-bold-duotone"
+                        className="w-5 h-5 text-[#6EC93E] shrink-0 mt-0.5"
+                      />
+                      <p className="text-[.9375rem] text-[#00000099] leading-relaxed">
+                        This is a{" "}
+                        <strong className="text-black font-semibold">
+                          preorder
+                        </strong>{" "}
+                        &mdash; deliveries start on{" "}
+                        <strong className="text-black font-semibold">
+                          July 1st, 2026
+                        </strong>
+                        . We&rsquo;ll notify you once your order ships.
+                      </p>
+                    </div>
+                  </div>
+                )}
               </>
             )}
 

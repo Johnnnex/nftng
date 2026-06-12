@@ -41,9 +41,9 @@ const EVENT_SCHEMA = {
     },
   },
   subEvent: [
-    { "@type": "Event", name: "Unchain Summer Football", startDate: "2026-07-26" },
-    { "@type": "Event", name: "Unchain Summer Conference", startDate: "2026-07-30" },
-    { "@type": "Event", name: "Unchain Summer Boxing Night", startDate: "2026-07-31" },
+    { "@type": "Event", name: "Unchain Summer Football", startDate: "2026-08-02" },
+    { "@type": "Event", name: "Unchain Summer Conference", startDate: "2026-08-05" },
+    { "@type": "Event", name: "Unchain Summer Boxing Night", startDate: "2026-08-06" },
   ],
 };
 
@@ -122,9 +122,9 @@ const Events = () => {
       <section className="pt-16.25 md:pt-20 px-4 lg:px-7.5 pb-16.25 md:pb-9 max-w-450 mx-auto">
         <StaggerContainer className="grid grid-cols-1 sm:grid-cols-4 lg:grid-cols-3 gap-9.25 sm:gap-2.5">
           {[
-            { date: "2026-07-31T20:00:00" }, // Boxing — card 1
-            { date: "2026-07-26T00:00:00" }, // Football — card 2
-            { date: "2026-07-30T00:00:00" }, // Conference — card 3
+            { date: "2026-08-06T20:00:00" }, // Boxing — card 1
+            { date: "2026-08-02T00:00:00" }, // Football — card 2
+            { date: "2026-08-05T00:00:00" }, // Conference — card 3
           ].map(({ date }, index) => (
             <StaggerItem
               key={`__item__${index}__`}

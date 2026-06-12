@@ -27,7 +27,7 @@ const UpcomingEvent = ({ title }: { title?: string }) => {
       <FadeUp>
         <div className="bg-[#1D1D1D] w-[90%] sm:w-[96%] mx-auto lg:w-300 md:rounded-[1.0625rem] rounded-[.9375rem] flex items-center justify-center sm:translate-y-[-12%] md:translate-y-[-10%] py-5.5 md:py-8.75">
           <CountDown
-            targetDate="2026-07-26T00:00:00"
+            targetDate="2026-08-02T00:00:00"
             className="gap-1 min-[361px]:gap-1.75 md:gap-9"
             boxClassName="md:rounded-[1.25rem] md:w-24.25 w-16.75 md:h-24.25 h-16.75"
             numberClassName="text-[1.125rem] md:text-[1.6875rem]"

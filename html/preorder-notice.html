@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="color-scheme" content="light dark" />
     <meta name="supported-color-schemes" content="light dark" />
-    <title>Your Order Has Been Delivered! — NFTNG Store</title>
+    <title>Delivery Update — NFTNG Store</title>
 
     <style>
       /* ── Responsive ───────────────────────────────── */
@@ -19,10 +19,6 @@
         }
         .body-pad {
           padding: 32px 20px !important;
-        }
-        .item-img {
-          width: 48px !important;
-          height: 48px !important;
         }
       }
       a.cta-btn:hover {
@@ -46,14 +42,14 @@
         .body-strong {
           color: #ffffff !important;
         }
-        .item-row-bg {
-          background-color: #2c2c2e !important;
+        .order-card {
+          background-color: #1d2d1a !important;
+        }
+        .notice-card {
+          background-color: #1d2d1a !important;
         }
         .divider {
           background-color: #3a3a3c !important;
-        }
-        .rate-card {
-          background-color: #1d2d1a !important;
         }
       }
 
@@ -73,10 +69,10 @@
       [data-ogsc] .body-strong {
         color: #ffffff !important;
       }
-      [data-ogsc] .item-row-bg {
-        background-color: #2c2c2e !important;
+      [data-ogsc] .order-card {
+        background-color: #1d2d1a !important;
       }
-      [data-ogsc] .rate-card {
+      [data-ogsc] .notice-card {
         background-color: #1d2d1a !important;
       }
     </style>
@@ -179,7 +175,7 @@
                     line-height: 1.75;
                   "
                 >
-                  Hey {{customerName}} 🎉
+                  Hey {{customerName}} 👋
                 </p>
 
                 <p
@@ -192,13 +188,125 @@
                     line-height: 1.75;
                   "
                 >
-                  Great news — your order
-                  <strong class="body-strong" style="color: #1a1a1a">{{orderRef}}</strong>
-                  has been delivered! Here's what you received.
+                  We have an update on your Unchain Summer 2026 merch order.
+                  Read on for the details.
                 </p>
 
-                <!-- Items list — injected via template literal -->
-                {{itemRows}}
+                <!-- Order ID card -->
+                <table
+                  width="100%"
+                  cellpadding="0"
+                  cellspacing="0"
+                  role="presentation"
+                  class="order-card"
+                  style="
+                    background-color: #f9fff5;
+                    border-left: 4px solid #6ec93e;
+                    border-radius: 0 8px 8px 0;
+                    margin-bottom: 28px;
+                  "
+                >
+                  <tr>
+                    <td style="padding: 20px 24px">
+                      <p
+                        style="
+                          margin: 0 0 4px;
+                          font-size: 11px;
+                          font-weight: 700;
+                          color: #6ec93e;
+                          text-transform: uppercase;
+                          letter-spacing: 1.5px;
+                        "
+                      >
+                        Your Order ID
+                      </p>
+                      <p
+                        class="body-strong"
+                        style="
+                          margin: 0;
+                          font-size: 22px;
+                          font-weight: 800;
+                          color: #1a1a1a;
+                          letter-spacing: -0.5px;
+                        "
+                      >
+                        {{orderRef}}
+                      </p>
+                      <p
+                        class="body-subtext"
+                        style="
+                          margin: 6px 0 0;
+                          font-size: 13px;
+                          color: #888888;
+                        "
+                      >
+                        Save this &mdash; you&rsquo;ll need it to track your order.
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+
+                <!-- Preorder delivery notice -->
+                <table
+                  width="100%"
+                  cellpadding="0"
+                  cellspacing="0"
+                  role="presentation"
+                  class="notice-card"
+                  style="
+                    background-color: #f9fff5;
+                    border-left: 4px solid #6ec93e;
+                    border-radius: 0 8px 8px 0;
+                    margin-bottom: 28px;
+                  "
+                >
+                  <tr>
+                    <td style="padding: 20px 24px">
+                      <p
+                        style="
+                          margin: 0 0 4px;
+                          font-size: 11px;
+                          font-weight: 700;
+                          color: #6ec93e;
+                          text-transform: uppercase;
+                          letter-spacing: 1.5px;
+                        "
+                      >
+                        Delivery Update
+                      </p>
+                      <p
+                        class="body-strong"
+                        style="
+                          margin: 0 0 8px;
+                          font-size: 15px;
+                          font-weight: 700;
+                          color: #1a1a1a;
+                        "
+                      >
+                        Deliveries start July 1st, 2026
+                      </p>
+                      <p
+                        class="body-subtext"
+                        style="
+                          margin: 0;
+                          font-size: 14px;
+                          color: #444444;
+                          line-height: 1.75;
+                        "
+                      >
+                        Your order is a preorder &mdash; all Unchain Summer 2026
+                        merch is scheduled to begin shipping on
+                        <strong
+                          class="body-strong"
+                          style="color: #1a1a1a; font-weight: 700"
+                          >July 1st, 2026</strong
+                        >. We&rsquo;ll send you a shipping notification the
+                        moment your order is on its way. Thanks for your
+                        patience!
+                      </p>
+                    </td>
+                  </tr>
+                </table>
 
                 <!-- Divider -->
                 <table
@@ -207,13 +315,13 @@
                   cellpadding="0"
                   cellspacing="0"
                   role="presentation"
-                  style="margin: 24px 0"
+                  style="margin: 0 0 28px"
                 >
                   <tr>
                     <td
                       height="1"
                       style="
-                        background-color: #ebebeb;
+                        background-color: #f0f0f0;
                         font-size: 0;
                         line-height: 0;
                       "
@@ -223,76 +331,36 @@
                   </tr>
                 </table>
 
-                <!-- Rate card -->
+                <!-- CTA -->
                 <table
-                  width="100%"
                   cellpadding="0"
                   cellspacing="0"
                   role="presentation"
-                  class="rate-card"
-                  style="
-                    margin-bottom: 28px;
-                    background-color: #f9fff5;
-                    border-left: 4px solid #6ec93e;
-                    border-radius: 0 8px 8px 0;
-                  "
+                  style="margin: 0 auto 32px"
                 >
                   <tr>
-                    <td style="padding: 20px 24px">
-                      <p
-                        class="body-strong"
+                    <td
+                      style="
+                        background-color: #6ec93e;
+                        border-radius: 8px;
+                        text-align: center;
+                      "
+                    >
+                      <a
+                        class="cta-btn"
+                        href="{{trackUrl}}"
                         style="
-                          margin: 0 0 6px;
+                          display: inline-block;
+                          padding: 16px 40px;
                           font-size: 15px;
                           font-weight: 700;
-                          color: #1a1a1a;
+                          color: #ffffff;
+                          text-decoration: none;
+                          letter-spacing: 0.3px;
                         "
                       >
-                        Enjoyed your order?
-                      </p>
-                      <p
-                        class="body-subtext"
-                        style="
-                          margin: 0 0 16px;
-                          font-size: 14px;
-                          color: #444444;
-                          line-height: 1.6;
-                        "
-                      >
-                        Your feedback helps other shoppers. Tap the button below
-                        to browse our store and leave a review on any of your
-                        items.
-                      </p>
-                      <table
-                        cellpadding="0"
-                        cellspacing="0"
-                        role="presentation"
-                      >
-                        <tr>
-                          <td
-                            style="
-                              background-color: #6ec93e;
-                              border-radius: 50px;
-                              text-align: center;
-                            "
-                          >
-                            <a
-                              class="cta-btn"
-                              href="{{collectionsUrl}}"
-                              style="
-                                display: inline-block;
-                                padding: 12px 28px;
-                                font-size: 14px;
-                                font-weight: 700;
-                                color: #ffffff;
-                                text-decoration: none;
-                              "
-                            >
-                              Rate Your Items
-                            </a>
-                          </td>
-                        </tr>
-                      </table>
+                        Track Your Order
+                      </a>
                     </td>
                   </tr>
                 </table>
@@ -475,7 +543,7 @@
                     font-style: italic;
                   "
                 >
-                  You received this email because a delivery was confirmed for your order on unchainsummer.nftng.io.
+                  You received this email because you placed an order on unchainsummer.nftng.io.
                 </p>
               </td>
             </tr>
