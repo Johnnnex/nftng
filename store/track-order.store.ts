@@ -20,7 +20,7 @@ export const useTrackOrderStore = create<TrackOrderState>()((set) => ({
   trackOrder: async (ref) => {
     set({ loading: true, error: null });
     try {
-      const res = await api.get<{ data: ApiTrackResult }>(`/api/orders/track?ref=${encodeURIComponent(ref)}`);
+      const res = await api.get<{ data: ApiTrackResult }>("/api/orders/track", { params: { ref } });
       const d = res.data.data;
       const result: TrackOrderResult = {
         id: d.orderRef,

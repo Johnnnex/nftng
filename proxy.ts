@@ -37,7 +37,13 @@ export async function proxy(req: NextRequest) {
   let payload: ReturnType<typeof verifyAccessToken>;
   try {
     payload = verifyAccessToken(token);
-  } catch {
+  } catch (err) {
+    // Expired token on a page route: let through so the client-side axios interceptor
+    // can call /api/admin/auth/refresh with the persisted refreshToken and retry silently.
+    // Hard-block (redirect / 401) only for missing or structurally invalid tokens.
+    if ((err as Error).name === "TokenExpiredError" && !isApiRoute) {
+      return NextResponse.next();
+    }
     if (isApiRoute) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     return NextResponse.redirect(new URL("/admin/login", req.url));
   }
