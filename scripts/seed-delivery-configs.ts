@@ -254,7 +254,8 @@ const ESTIMATED_DAYS: Record<string, string> = {
 
 // ── Helpers ────────────────────────────────────────────────────────────────────
 
-type SupabaseClient = ReturnType<typeof createClient>;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type SupabaseClient = any;
 
 async function findState(
   supabase: SupabaseClient,
@@ -299,7 +300,6 @@ async function upsertCity(
     .maybeSingle();
 
   if (existing) {
-    // Delete old delivery configs
     await supabase
       .from("delivery_configs")
       .delete()
@@ -323,8 +323,7 @@ async function insertConfigs(
   cityId: string,
   configs: { method: string; price: number }[],
 ) {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { error } = await (supabase as any)
+  const { error } = await supabase
     .from("delivery_configs")
     .insert(configs.map((c) => ({ city_id: cityId, method: c.method, price: c.price, estimated_days: ESTIMATED_DAYS[c.method] ?? null })));
 

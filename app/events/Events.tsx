@@ -18,8 +18,8 @@ const EVENT_SCHEMA = {
   "@context": "https://schema.org",
   "@type": "Event",
   name: "Unchain Summer 2026",
-  startDate: "2026-07-26",
-  endDate: "2026-08-01",
+  startDate: "2026-08-02",
+  endDate: "2026-08-06",
   description:
     "Africa's Most Immersive Web3 Experience. A week-long journey of culture, sport, education, and Web3 connection, powered by NFTNG. Theme: The North Star.",
   eventStatus: "https://schema.org/EventScheduled",
