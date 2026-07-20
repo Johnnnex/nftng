@@ -168,9 +168,9 @@ export function adminInviteEmail({
 }
 
 const EVENT_LABELS: Record<string, string> = {
-  soccer_tournament: "Football Tournament, 26 July 2026",
-  unchain_summer_conference: "Unchain Summer Conference, 30 July 2026",
-  boxing_night: "Boxing Night, 31 July 2026",
+  soccer_tournament: "Football Tournament, 2 August 2026",
+  unchain_summer_conference: "Unchain Summer Conference, 5 August 2026",
+  boxing_night: "Boxing Night, 6 August 2026",
 };
 
 export function registrationConfirmationEmail(data: RegisterFormData): string {
@@ -520,7 +520,7 @@ export function registrationConfirmationEmail(data: RegisterFormData): string {
                           line-height: 1.5;
                         "
                       >
-                        July 26 - July 31st, 2026
+                        August 2 - August 6th, 2026
                       </p>
                     </td>
                     <td width="4%"></td>

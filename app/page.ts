@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     template: "Unchain Summer | %s",
   },
   description:
-    "Unchain Summer 2026 is Africa's most immersive Web3 experience, powered by NFTNG. A week-long journey of culture, sport, education, and Web3 connection. Theme: The North Star. Lagos, July 26 – August 1.",
+    "Unchain Summer 2026 is Africa's most immersive Web3 experience, powered by NFTNG. A week-long journey of culture, sport, education, and Web3 connection. Theme: The North Star. Lagos, August 2 – August 6.",
   keywords: [
     "unchain summer 2026",
     "unchain summer nftng",
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     siteName: "Unchain Summer",
     title: "Unchain Summer 2026 | Africa's Most Immersive Web3 Experience",
     description:
-      "A week-long Web3 journey of culture, sport, education, and connection. Africa's biggest Web3 event, powered by NFTNG. Lagos, July 26 – August 1, 2026.",
+      "A week-long Web3 journey of culture, sport, education, and connection. Africa's biggest Web3 event, powered by NFTNG. Lagos, August 2 – August 6, 2026.",
     url: BASE_URL,
     images: [OG_IMAGE],
   },
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Unchain Summer 2026 | Africa's Most Immersive Web3 Experience",
     description:
-      "A week-long Web3 journey of culture, sport, education, and connection. Africa's biggest Web3 event, powered by NFTNG. Lagos, July 26 – August 1, 2026.",
+      "A week-long Web3 journey of culture, sport, education, and connection. Africa's biggest Web3 event, powered by NFTNG. Lagos, August 2 – August 6, 2026.",
     images: [OG_IMAGE.url],
   },
   robots: BASE_ROBOTS,
