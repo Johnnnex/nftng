@@ -114,13 +114,6 @@ export const FORM_FIELDS: FieldConfig[] = [
     placeholder: "Select gender",
     options: GENDERS,
   },
-  {
-    kind: "select",
-    name: "country",
-    label: "Country *",
-    placeholder: "Select country",
-    options: COUNTRIES,
-  },
   { kind: "text", name: "city", label: "City *", placeholder: "e.g. Lagos" },
   // X Handle — commented out, uncomment to re-enable
   // {
@@ -144,24 +137,10 @@ export const FORM_FIELDS: FieldConfig[] = [
     options: TOPICS,
   },
   {
-    kind: "text",
-    name: "looking_forward_to",
-    label: "What are you looking forward to experiencing at the event?",
-    placeholder: "Tell us what excites you most...",
-    type: "textarea",
-  },
-  {
     kind: "select",
     name: "first_time_attendee",
     label: "Will this be your first NFTNG/Unchain Summer event? *",
     placeholder: "Select one",
     options: FIRST_TIME,
-  },
-  {
-    kind: "text",
-    name: "how_did_you_hear",
-    label: "How did you hear about the event?",
-    placeholder: "Tell us how you found out...",
-    type: "textarea",
   },
 ];

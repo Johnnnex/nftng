@@ -9,7 +9,7 @@ import {
   RegistrationSuccessModal,
 } from "@/components";
 import { registerSchema, type RegisterFormData } from "@/data";
-import { FORM_FIELDS, REGISTRATION_EVENTS, type FieldConfig } from "@/data";
+import { FORM_FIELDS, type FieldConfig } from "@/data";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, Controller, type FieldErrors } from "react-hook-form";
 import { useState } from "react";
@@ -29,7 +29,6 @@ const Register = () => {
   } = useForm<RegisterFormData>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
-      events: [],
       topics_of_interest: [],
       agree_to_terms: false,
     },
@@ -147,59 +146,6 @@ const Register = () => {
               <div className="lg:flex-1 lg:min-h-0 px-4 sm:px-7.25 lg:px-14 lg:overflow-y-auto">
                 <div className="grid grid-cols-1 py-3.25 gap-5.25 md:max-w-130 lg:max-w-117.5">
                   {FORM_FIELDS.map(renderField)}
-
-                  {/* Events */}
-                  <Controller
-                    name="events"
-                    control={control}
-                    render={({
-                      field: { value, onChange },
-                      fieldState: { error },
-                    }) => (
-                      <div>
-                        <label className="block text-[.875rem] font-normal text-black mb-2">
-                          Choose Event(s) you want to attend *
-                        </label>
-                        {error && (
-                          <p className="text-[.8125rem] font-normal text-[#F04438] mb-2">
-                            {error.message}
-                          </p>
-                        )}
-                        <div className="flex gap-2 flex-col">
-                          {REGISTRATION_EVENTS.map((item, index) => (
-                            <div
-                              className="p-3 bg-white rounded-sm flex items-center gap-4 sm:gap-6.5"
-                              key={`__evt__${index}__`}
-                            >
-                              <figure className="sm:w-19.25 w-13.5 rounded-sm overflow-hidden aspect-[1.069]">
-                                <img
-                                  alt={`Ticket Image ${index + 1}`}
-                                  className="h-full w-full object-cover"
-                                  src={`/images/${item.image}`}
-                                />
-                              </figure>
-                              <div className="flex-1 flex items-center justify-between">
-                                <span className="text-black text-[0.6875rem] sm:text-[0.9375rem] leading-4 sm:leading-6 font-normal">
-                                  {item.name}
-                                </span>
-                                <CheckBox
-                                  value={(value ?? []).includes(item.id)}
-                                  onChange={() => {
-                                    const cur = value ?? [];
-                                    onChange(
-                                      cur.includes(item.id)
-                                        ? cur.filter((e) => e !== item.id)
-                                        : [...cur, item.id],
-                                    );
-                                  }}
-                                />
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                  />
 
                   {/* Terms */}
                   <Controller

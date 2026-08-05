@@ -174,7 +174,8 @@ const EVENT_LABELS: Record<string, string> = {
 };
 
 export function registrationConfirmationEmail(data: RegisterFormData): string {
-  const eventList = data.events
+  const allEventKeys = Object.keys(EVENT_LABELS);
+  const eventList = allEventKeys
     .map(
       (e, i, arr) =>
         `<li class="event-li" style="margin-bottom:${i < arr.length - 1 ? "8px" : "0"};font-size:15px;color:#1a1a1a;">${EVENT_LABELS[e] ?? e}</li>`,
